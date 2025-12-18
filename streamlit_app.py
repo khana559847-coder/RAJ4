@@ -3,258 +3,218 @@ import threading, time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-
-# ------------------------------------------------------------------------------------
-# 🛡️ DATABASE & SECURITY SIMULATION
-# ------------------------------------------------------------------------------------
-# Real world mein isse 'database.py' mein save karein
-if "db_keys" not in st.session_state:
-    st.session_state.db_keys = ["DEVIL-786", "ADMIN-FREE-2025", "VIP-KEY-99"]
-
-if "approved_users" not in st.session_state:
-    st.session_state.approved_users = {} # {username: password}
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # ------------------------------------------------------------------------------------
 # ⚡ PAGE CONFIG
 # ------------------------------------------------------------------------------------
-st.set_page_config(page_title="Dɘvɪl ELITE v2", page_icon="🔥", layout="wide")
+st.set_page_config(page_title="Dɘvɪl ELITE 2025", page_icon="💀", layout="wide")
 
 # ------------------------------------------------------------------------------------
-# 🎨 PREMIUM CYBERPUNK CSS
+# 🎨 HIGH-END CYBERPUNK CSS
 # ------------------------------------------------------------------------------------
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap');
 
+    /* Global Style */
     .stApp {
-        background: radial-gradient(circle at top, #0d1b2a 0%, #000000 100%);
-        color: #e0e1dd;
-        font-family: 'Rajdhani', sans-serif;
-    }
-
-    /* Glassmorphism Cards */
-    .main-card {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        border: 1px solid rgba(0, 255, 204, 0.2);
-        padding: 40px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-        text-align: center;
-        margin-bottom: 25px;
-    }
-
-    h1, h2, h3 {
-        font-family: 'Orbitron', sans-serif;
-        color: #00f2fe !important;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-    }
-
-    /* Animated Console */
-    .logbox {
         background: #050505;
-        border-left: 5px solid #00f2fe;
+        color: #00ffcc;
+        font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Modern Header */
+    .header-box {
+        text-align: center;
+        padding: 40px;
+        background: linear-gradient(135deg, rgba(0, 255, 204, 0.1), rgba(157, 0, 255, 0.1));
+        border-radius: 20px;
+        border: 1px solid #00ffcc;
+        box-shadow: 0 0 30px rgba(0, 255, 204, 0.2);
+        margin-bottom: 30px;
+    }
+    .header-box h1 {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 3rem;
+        color: #00ffcc;
+        text-shadow: 0 0 20px #00ffcc;
+        margin: 0;
+    }
+
+    /* Glass Cards */
+    .css-1r6slb0, .stCard {
+        background: rgba(20, 20, 20, 0.8) !important;
+        border-radius: 15px !important;
+        border: 1px solid rgba(0, 255, 204, 0.2) !important;
+        padding: 20px !important;
+    }
+
+    /* Terminal Console */
+    .terminal-box {
+        background: #000 !important;
+        border: 1px solid #9d00ff !important;
         border-radius: 10px;
         padding: 15px;
-        height: 350px;
+        height: 400px;
         overflow-y: auto;
-        font-family: 'Courier New', monospace;
-        box-shadow: inset 0 0 15px #000;
+        box-shadow: inset 0 0 20px rgba(157, 0, 255, 0.2);
     }
+    .log-entry {
+        font-size: 13px;
+        margin-bottom: 5px;
+        color: #9d00ff;
+    }
+    .log-success { color: #00ffcc; font-weight: bold; }
 
-    /* Premium Buttons */
-    .stButton > button {
+    /* Neon Buttons */
+    div.stButton > button {
         width: 100%;
-        background: linear-gradient(45deg, #00f2fe, #4facfe);
-        color: black !important;
+        background: transparent;
+        color: #00ffcc !important;
+        border: 2px solid #00ffcc !important;
+        border-radius: 10px;
         font-weight: bold;
-        border: none;
-        border-radius: 8px;
-        padding: 12px;
-        transition: 0.3s;
-        text-transform: uppercase;
+        font-family: 'Orbitron', sans-serif;
+        height: 50px;
+        transition: 0.5s;
+    }
+    div.stButton > button:hover {
+        background: #00ffcc !important;
+        color: #000 !important;
+        box-shadow: 0 0 25px #00ffcc;
     }
 
-    .stButton > button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+    /* Stop Button Override */
+    div.stButton > button[kind="secondary"] {
+        border-color: #ff0055 !important;
+        color: #ff0055 !important;
+    }
+    div.stButton > button[kind="secondary"]:hover {
+        background: #ff0055 !important;
+        color: #fff !important;
+        box-shadow: 0 0 25px #ff0055;
     }
 
-    /* Input Fields */
+    /* Text Inputs */
     .stTextInput input, .stTextArea textarea {
-        background: rgba(255,255,255,0.05) !important;
-        color: #00f2fe !important;
-        border: 1px solid rgba(0, 242, 254, 0.3) !important;
+        background: #111 !important;
+        color: #00ffcc !important;
+        border: 1px solid #333 !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # ------------------------------------------------------------------------------------
-# 🔥 CORE LOGIC
+# 🔥 SESSION STATE
 # ------------------------------------------------------------------------------------
-if "live_logs" not in st.session_state: st.session_state.live_logs = []
+if "logs" not in st.session_state: st.session_state.logs = []
+if "running" not in st.session_state: st.session_state.running = False
+if "count" not in st.session_state: st.session_state.count = 0
 
-def live_log(msg: str):
+def add_log(msg, type="normal"):
     ts = time.strftime("%H:%M:%S")
-    st.session_state.live_logs.append(f"[{ts}] > {msg}")
-    if len(st.session_state.live_logs) > 100: st.session_state.live_logs.pop(0)
+    style = "log-success" if type == "success" else "log-entry"
+    st.session_state.logs.append(f'<div class="{style}">[{ts}] {msg}</div>')
+    if len(st.session_state.logs) > 100: st.session_state.logs.pop(0)
 
 # ------------------------------------------------------------------------------------
-# 🔐 AUTHENTICATION INTERFACE
+# ⚙️ AUTOMATION ENGINE
 # ------------------------------------------------------------------------------------
-if "logged_in" not in st.session_state: st.session_state.logged_in = False
-if "is_admin" not in st.session_state: st.session_state.is_admin = False
-
-if not st.session_state.logged_in:
-    st.markdown('<div class="main-card"><h1>Dɘvɪl UPDATE E2E</h1><p>Next-Gen Automation Protocol</p></div>', unsafe_allow_html=True)
-    
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        tab1, tab2, tab3 = st.tabs(["🔑 LOGIN", "🛡️ REGISTER", "⚡ ADMIN"])
-        
-        with tab1:
-            u = st.text_input("Username", key="login_u")
-            p = st.text_input("Password", type="password", key="login_p")
-            if st.button("AUTHENTICATE"):
-                if u in st.session_state.approved_users and st.session_state.approved_users[u] == p:
-                    st.session_state.logged_in = True
-                    st.session_state.user_id = u
-                    st.rerun()
-                else:
-                    st.error("Access Denied: Invalid Credentials")
-
-        with tab2:
-            nu = st.text_input("New Username")
-            np = st.text_input("New Password", type="password")
-            akey = st.text_input("Approval Key (Contact Admin)")
-            if st.button("REQUEST ACCESS"):
-                if akey in st.session_state.db_keys:
-                    st.session_state.approved_users[nu] = np
-                    st.success("Registration Successful! Please Login.")
-                else:
-                    st.error("Invalid Approval Key!")
-
-        with tab3:
-            admin_pass = st.text_input("Admin Secret", type="password")
-            if st.button("ADMIN LOGIN"):
-                if admin_pass == "devil888": # Admin password
-                    st.session_state.is_admin = True
-                    st.session_state.logged_in = True
-                    st.session_state.user_id = "MASTER_ADMIN"
-                    st.rerun()
-    st.stop()
-
-# ------------------------------------------------------------------------------------
-# 🛠️ ADMIN PANEL
-# ------------------------------------------------------------------------------------
-if st.session_state.is_admin:
-    with st.expander("🛠️ MASTER CONTROL PANEL"):
-        st.subheader("Manage Approval Keys")
-        new_key = st.text_input("Generate New Key")
-        if st.button("Add Key"):
-            st.session_state.db_keys.append(new_key)
-            st.success(f"Key {new_key} Added!")
-        
-        st.write("Active Keys:", st.session_state.db_keys)
-        st.write("Registered Users:", st.session_state.approved_users)
-        if st.button("EXIT ADMIN MODE"):
-            st.session_state.is_admin = False
-            st.session_state.logged_in = False
-            st.rerun()
-
-# ------------------------------------------------------------------------------------
-# 🚀 MAIN DASHBOARD
-# ------------------------------------------------------------------------------------
-st.markdown(f"### ⚡ SESSION ACTIVE: {st.session_state.user_id}")
-
-c1, c2 = st.columns([1, 1])
-
-with c1:
-    st.markdown('<div class="main-card">', unsafe_allow_html=True)
-    chat_id = st.text_input("Target Chat ID", placeholder="1000xxxxxxx")
-    delay = st.slider("Message Delay (Seconds)", 5, 300, 15)
-    cookies = st.text_area("FB Cookies", height=100)
-    msg_list = st.text_area("Messages (One per line)", height=150)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with c2:
-    st.subheader("📡 Live Execution Console")
-    st.markdown('<div class="logbox">', unsafe_allow_html=True)
-    for log in reversed(st.session_state.live_logs):
-        st.write(log)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# ------------------------------------------------------------------------------------
-# ⚙️ AUTOMATION ENGINE (LONG RUN OPTIMIZED)
-# ------------------------------------------------------------------------------------
-def devil_engine(cid, dly, ck, msgs, state):
+def run_automation(chat_id, delay, cookies_str, messages_str):
     try:
-        live_log("System: Initializing Driver...")
-        opt = Options()
-        opt.add_argument("--headless=new")
-        opt.add_argument("--no-sandbox")
-        opt.add_argument("--disable-dev-shm-usage")
-        driver = webdriver.Chrome(options=opt)
+        add_log("SYSTEM: Booting Dɘvɪl Engine...", "success")
+        options = Options()
+        options.add_argument("--headless=new")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
         
+        driver = webdriver.Chrome(options=options)
         driver.get("https://www.facebook.com")
-        for cookie in ck.split(";"):
-            if "=" in cookie:
-                name, val = cookie.split("=", 1)
-                driver.add_cookie({"name": name.strip(), "value": val.strip(), "domain": ".facebook.com"})
         
-        driver.get(f"https://www.facebook.com/messages/t/{cid}")
-        time.sleep(8)
+        # Cookie injection
+        for c in cookies_str.split(";"):
+            if "=" in c:
+                n, v = c.split("=" , 1)
+                driver.add_cookie({"name": n.strip(), "value": v.strip(), "domain": ".facebook.com"})
         
-        msg_idx = 0
-        msg_pool = [m.strip() for m in msgs.split("\n") if m.strip()]
+        driver.get(f"https://www.facebook.com/messages/t/{chat_id}")
+        add_log(f"SYSTEM: Connection established to {chat_id}", "success")
         
-        while state["active"]:
-            current_msg = msg_pool[msg_idx % len(msg_pool)]
+        msg_list = [m.strip() for m in messages_str.split("\n") if m.strip()]
+        idx = 0
+        
+        while st.session_state.running:
+            current_msg = msg_list[idx % len(msg_list)]
             try:
-                # Optimized for speed and long-run
-                box = driver.find_element(By.CSS_SELECTOR, "div[contenteditable='true']")
+                # Find input box with wait
+                box = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, "div[contenteditable='true']"))
+                )
                 box.send_keys(current_msg)
                 box.send_keys("\n")
-                live_log(f"SENT: {current_msg}")
-                msg_idx += 1
-            except Exception as e:
-                live_log(f"Error: Box not found. Retrying...")
+                
+                st.session_state.count += 1
+                add_log(f"DISPATCHED [{st.session_state.count}]: {current_msg}", "success")
+                idx += 1
+                time.sleep(delay)
+            except Exception:
+                add_log("RETRY: Input box lost. Refreshing...")
                 driver.refresh()
                 time.sleep(10)
-            
-            time.sleep(dly)
         
         driver.quit()
+        add_log("SYSTEM: Engine offline.")
     except Exception as e:
-        live_log(f"Fatal Crash: {str(e)}")
+        add_log(f"CRITICAL ERROR: {str(e)}")
+        st.session_state.running = False
 
 # ------------------------------------------------------------------------------------
-# 🕹️ CONTROLS
+# 🖥️ UI LAYOUT
 # ------------------------------------------------------------------------------------
-if "automation_state" not in st.session_state:
-    st.session_state.automation_state = {"active": False}
+st.markdown('<div class="header-box"><h1>Dɘvɪl UPDATE E2E</h1><p>THE ULTIMATE FACEBOOK COMMANDER</p></div>', unsafe_allow_html=True)
 
-btn_col1, btn_col2 = st.columns(2)
+col1, col2 = st.columns([1, 1.2], gap="large")
 
-if btn_col1.button("▶️ START SERVER", use_container_width=True):
-    if not cookies or not msg_list:
-        st.warning("Please fill Cookies and Messages!")
+with col1:
+    st.markdown("### 🛠️ CONFIGURATION")
+    c_id = st.text_input("TARGET CHAT ID", placeholder="Enter Chat ID...")
+    d_time = st.number_input("DELAY (SECONDS)", min_value=1, value=15)
+    f_cookies = st.text_area("FB COOKIES (JSON/Plain)", height=100, placeholder="Paste cookies here...")
+    f_messages = st.text_area("MESSAGE LIST", height=150, placeholder="Message 1\nMessage 2...")
+    
+    st.divider()
+    
+    btn_start, btn_stop = st.columns(2)
+    
+    if btn_start.button("START ENGINE"):
+        if not c_id or not f_cookies or not f_messages:
+            st.error("Missing credentials!")
+        else:
+            if not st.session_state.running:
+                st.session_state.running = True
+                threading.Thread(target=run_automation, args=(c_id, d_time, f_cookies, f_messages)).start()
+                st.toast("Engine Started!")
+
+    if btn_stop.button("STOP ENGINE", kind="secondary"):
+        st.session_state.running = False
+        st.toast("Engine Stopping...")
+
+with col2:
+    st.markdown("### 📡 LIVE TERMINAL")
+    log_html = f'<div class="terminal-box">{"".join(st.session_state.logs[::-1])}</div>'
+    st.markdown(log_html, unsafe_allow_html=True)
+    
+    st.markdown(f"**MESSAGES SENT:** `{st.session_state.count}`")
+    if st.session_state.running:
+        st.success("🟢 ENGINE ACTIVE")
     else:
-        st.session_state.automation_state["active"] = True
-        thread = threading.Thread(target=devil_engine, args=(chat_id, delay, cookies, msg_list, st.session_state.automation_state))
-        thread.start()
-        live_log("System: Engine Started in Background.")
+        st.error("🔴 ENGINE STANDBY")
 
-if btn_col2.button("🛑 STOP SERVER", use_container_width=True):
-    st.session_state.automation_state["active"] = False
-    live_log("System: Stopping Engine...")
-
-if st.button("LOGOUT"):
-    st.session_state.logged_in = False
-    st.rerun()
-
-# Auto-refresh UI for logs
-if st.session_state.automation_state["active"]:
-    time.sleep(5)
+# ------------------------------------------------------------------------------------
+# 🔄 AUTO-REFRESH
+# ------------------------------------------------------------------------------------
+if st.session_state.running:
+    time.sleep(3)
     st.rerun()
