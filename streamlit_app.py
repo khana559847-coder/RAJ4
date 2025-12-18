@@ -19,7 +19,7 @@ except ImportError:
 # ------------------------------------------------------------------------------------
 # ⚡ PAGE CONFIG & NAME
 # ------------------------------------------------------------------------------------
-st.set_page_config(page_title="WALEED UPDATE E2E 2025", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title=" Dɘvɪl UPDATE E2E 2025", page_icon="🛡️", layout="wide")
 
 # ------------------------------------------------------------------------------------
 # 🔥 LIVE LOGS SYSTEM
@@ -110,7 +110,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="main-header"><h1>WALEED UPDATE E2E 2025</h1></div>', unsafe_allow_html=True)
+st.markdown('<div class="main-header"><h1>Dɘvɪl UPDATE E2E 2025</h1></div>', unsafe_allow_html=True)
 
 # ---------------- SESSION ----------------
 if "logged_in" not in st.session_state: st.session_state.logged_in = False
@@ -209,7 +209,7 @@ def find_input(driver, chat_type):
 
 def send_messages(cfg, stt):
     try:
-        live_log("🚀 Initializing Waleed Engine...")
+        live_log("🚀 Initializing Dɘvɪl Engine...")
         d = setup_browser()
         d.get("https://www.facebook.com")
         time.sleep(5)
