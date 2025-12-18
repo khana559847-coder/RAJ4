@@ -3,10 +3,23 @@ import threading, time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-import database as db
 
-# Page Config updated with new title
-st.set_page_config(page_title="WALEED UPDATE E2E 2025", page_icon="⚡", layout="wide")
+# Try to import database, if fails provide dummy functions to prevent ValueError
+try:
+    import database as db
+except ImportError:
+    st.error("Error: 'database.py' file not found! Please make sure it is in the same folder.")
+    class DummyDB:
+        def verify_user(self, u, p): return None
+        def create_user(self, u, p): return False, "Database connection error"
+        def get_user_config(self, uid): return {}
+        def update_user_config(self, *args, **kwargs): pass
+    db = DummyDB()
+
+# ------------------------------------------------------------------------------------
+# ⚡ PAGE CONFIG & NAME
+# ------------------------------------------------------------------------------------
+st.set_page_config(page_title="WALEED UPDATE E2E 2025", page_icon="🛡️", layout="wide")
 
 # ------------------------------------------------------------------------------------
 # 🔥 LIVE LOGS SYSTEM
@@ -28,85 +41,76 @@ def live_log(msg: str):
 def render_live_console():
     st.markdown('<div class="logbox">', unsafe_allow_html=True)
     for line in st.session_state.live_logs[-100:]:
-        st.markdown(f'<p style="margin:0; font-family:monospace; font-size:14px;">{line}</p>', unsafe_allow_html=True)
+        st.markdown(f'<p style="margin:0; font-family:monospace; color:#00ffcc; font-size:14px;">{line}</p>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ---------------- NEW STYLISH CSS ----------------
+# ------------------------------------------------------------------------------------
+# 🎨 LUXURY NEON THEME CSS
+# ------------------------------------------------------------------------------------
 st.markdown("""
 <style>
-    /* Full Page Background */
+    /* Premium Background */
     .stApp {
-        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+        background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
                     url('https://i.postimg.cc/qq41rSVP/44e54h810v9b1.jpg');
-        background-size: cover !important;
-        background-position: center !important;
-        background-attachment: fixed !important;
+        background-size: cover;
+        background-attachment: fixed;
     }
 
-    /* Modern Glassmorphism Card Style */
-    div.stButton > button {
-        width: 100%;
-        border-radius: 12px;
-        height: 3em;
-        background: linear-gradient(45deg, #00f2fe 0%, #4facfe 100%);
-        color: white;
-        font-weight: bold;
-        border: none;
-        transition: 0.3s;
-        box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
-    }
-    div.stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
-        color: #fff;
-    }
-
-    /* Stop Button Color */
-    button[kind="secondary"] {
-        background: linear-gradient(45deg, #ff416c 0%, #ff4b2b 100%) !important;
-        border: none !important;
-        color: white !important;
-    }
-
-    /* Main Header */
+    /* Modern Title Card */
     .main-header {
         text-align: center;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 30px;
+        border-radius: 25px;
+        border: 1px solid rgba(0, 255, 204, 0.3);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        margin-bottom: 30px;
+    }
+    .main-header h1 {
         color: #00f2fe;
-        font-family: 'Orbitron', sans-serif;
-        text-shadow: 0 0 20px rgba(0,242,254,0.6);
-        padding: 20px;
-        background: rgba(255,255,255,0.05);
-        border-radius: 20px;
-        backdrop-filter: blur(10px);
-        margin-bottom: 25px;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        font-family: 'Segoe UI', sans-serif;
+        text-shadow: 0 0 15px #00f2fe;
     }
 
-    /* Log Box Styling */
+    /* Stylish Log Console */
     .logbox {
-        background: rgba(10, 10, 10, 0.85);
-        color: #00ffcc;
-        padding: 20px;
-        height: 350px;
-        overflow-y: auto;
+        background: rgba(0, 0, 0, 0.7);
+        border: 2px solid #00f2fe;
         border-radius: 15px;
-        border: 1px solid #00f2fe;
-        box-shadow: inset 0 0 15px rgba(0,255,204,0.2);
+        padding: 20px;
+        height: 300px;
+        overflow-y: auto;
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
     }
 
-    /* Inputs and Areas */
-    .stTextInput>div>div>input, .stTextArea>div>div>textarea, .stSelectbox>div>div>div {
-        background-color: rgba(255, 255, 255, 0.05) !important;
+    /* Neon Buttons */
+    div.stButton > button {
+        background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
         color: white !important;
-        border-radius: 10px !important;
-        border: 1px solid rgba(0, 242, 254, 0.3) !important;
+        border: none;
+        border-radius: 50px;
+        padding: 10px 25px;
+        font-weight: bold;
+        transition: 0.4s ease;
+        text-transform: uppercase;
     }
-    
-    label { color: #00f2fe !important; font-weight: bold !important; }
+    div.stButton > button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px #00f2fe;
+    }
+
+    /* Stop Button - Red Glow */
+    .stButton [data-testid="baseButton-secondary"] {
+        background: linear-gradient(90deg, #ff416c 0%, #ff4b2b 100%) !important;
+        box-shadow: 0 0 10px rgba(255, 75, 43, 0.4);
+    }
 </style>
 """, unsafe_allow_html=True)
 
 st.markdown('<div class="main-header"><h1>WALEED UPDATE E2E 2025</h1></div>', unsafe_allow_html=True)
-
 
 # ---------------- SESSION ----------------
 if "logged_in" not in st.session_state: st.session_state.logged_in = False
@@ -120,16 +124,15 @@ if "automation_state" not in st.session_state:
 
 init_live_logs()
 
-
-# ---------------- LOGIN ----------------
+# ---------------- LOGIN & SIGNUP (FIXED) ----------------
 if not st.session_state.logged_in:
-    cols = st.columns([1,2,1])
-    with cols[1]:
-        tab1, tab2 = st.tabs(["🔑 Login", "👤 Create Account"])
+    c1, c2, c3 = st.columns([1, 2, 1])
+    with c2:
+        tab1, tab2 = st.tabs(["🔑 LOGIN", "🛡️ REGISTER"])
         with tab1:
-            u = st.text_input("Username")
-            p = st.text_input("Password", type="password")
-            if st.button("Access Dashboard"):
+            u = st.text_input("Username", key="l_user")
+            p = st.text_input("Password", type="password", key="l_pass")
+            if st.button("Enter Dashboard"):
                 uid = db.verify_user(u, p)
                 if uid:
                     st.session_state.logged_in = True
@@ -140,69 +143,56 @@ if not st.session_state.logged_in:
                     st.session_state.delay = cfg.get("delay", 15)
                     st.session_state.cookies = cfg.get("cookies", "")
                     st.session_state.messages = cfg.get("messages", "").split("\n") if cfg.get("messages") else []
-                    if cfg.get("running", False):
-                        st.session_state.automation_running = True
-                        st.session_state.automation_state.running = True
                     st.rerun()
                 else:
-                    st.error("Invalid credentials")
+                    st.error("Invalid Username or Password")
 
         with tab2:
-            nu = st.text_input("New Username")
-            np = st.text_input("New Password", type="password")
-            npc = st.text_input("Confirm Password", type="password")
+            nu = st.text_input("Choose Username", key="r_user")
+            np = st.text_input("Choose Password", type="password", key="r_pass")
+            npc = st.text_input("Confirm Password", type="password", key="r_pass_c")
             if st.button("Register Now"):
-                if np != npc:
+                if not nu or not np:
+                    st.warning("Please fill all fields")
+                elif np != npc:
                     st.error("Passwords do not match")
                 else:
-                    ok, msg = db.create_user(nu, np)
-                    if ok: st.success("Account Created Successfully!")
-                    else: st.error(msg)
+                    try:
+                        ok, msg = db.create_user(nu, np)
+                        if ok: st.success("Registration Successful! Please login.")
+                        else: st.error(msg)
+                    except Exception as e:
+                        st.error(f"Database Error: {e}")
     st.stop()
 
-
 # ---------------- DASHBOARD ----------------
-c1, c2 = st.columns([3, 1])
-with c1:
-    st.subheader(f"👋 Welcome back, ID: {st.session_state.user_id}")
-with c2:
-    if st.button("Logout"):
-        st.session_state.logged_in = False
-        st.session_state.automation_running = False
-        st.session_state.automation_state.running = False
-        st.rerun()
+col_head1, col_head2 = st.columns([4, 1])
+col_head1.subheader(f"⚡ SYSTEM ACTIVE: USER {st.session_state.user_id}")
+if col_head2.button("LOGOUT"):
+    st.session_state.logged_in = False
+    st.rerun()
 
+# ---------------- CONFIG AREA ----------------
 st.divider()
+c_cfg1, c_cfg2 = st.columns(2)
 
-# ---------------- CONFIG & FILE ----------------
-col_left, col_right = st.columns(2)
+with c_cfg1:
+    chat_id = st.text_input("Target Chat ID", value=st.session_state.chat_id)
+    chat_type = st.selectbox("Method", ["E2EE", "CONVO"], index=0 if st.session_state.chat_type == "E2EE" else 1)
+    delay = st.number_input("Delay (Seconds)", 1, 300, value=st.session_state.delay)
 
-with col_left:
-    st.markdown("### ⚙️ Configuration")
-    chat_id = st.text_input("Chat ID / URL", value=st.session_state.chat_id)
-    chat_type = st.selectbox("Chat Method", ["E2EE", "CONVO"], index=0 if st.session_state.chat_type == "E2EE" else 1)
-    delay = st.number_input("Speed Delay (Seconds)", 1, 300, value=st.session_state.delay)
-    
-with col_right:
-    st.markdown("### 📝 Message Data")
-    msg_file = st.file_uploader("Upload Message File (.txt)", type=["txt"])
+with c_cfg2:
+    msg_file = st.file_uploader("Upload Message List (.txt)", type=["txt"])
     if msg_file:
         st.session_state.messages = msg_file.read().decode().split("\n")
-        st.toast("Messages Loaded!", icon="✅")
-    
-    cookies = st.text_area("Paste Cookies Here", value=st.session_state.cookies, height=115)
+        st.toast("Messages Loaded!")
+    cookies = st.text_area("FB Cookies", value=st.session_state.cookies, height=100)
 
-if st.button("💾 SAVE CONFIGURATION"):
-    db.update_user_config(
-        st.session_state.user_id,
-        chat_id, chat_type, delay,
-        cookies, "\n".join(st.session_state.messages),
-        running=st.session_state.automation_running
-    )
-    st.success("Config updated in database!")
+if st.button("SAVE SYSTEM SETTINGS"):
+    db.update_user_config(st.session_state.user_id, chat_id, chat_type, delay, cookies, "\n".join(st.session_state.messages))
+    st.success("Configuration Saved!")
 
-
-# ---------------- AUTOMATION ENGINE ----------------
+# ---------------- ENGINE ----------------
 def setup_browser():
     opt = Options()
     opt.add_argument("--headless=new")
@@ -213,79 +203,59 @@ def setup_browser():
 def find_input(driver, chat_type):
     sel = ["div[contenteditable='true']"] if chat_type == "E2EE" else ["div[contenteditable='true']", "textarea", "[role='textbox']"]
     for s in sel:
-        try:
-            return driver.find_element(By.CSS_SELECTOR, s)
+        try: return driver.find_element(By.CSS_SELECTOR, s)
         except: pass
     return None
 
 def send_messages(cfg, stt):
     try:
-        live_log("Initializing engine...")
+        live_log("🚀 Initializing Waleed Engine...")
         d = setup_browser()
         d.get("https://www.facebook.com")
         time.sleep(5)
-
         for c in (cfg.get("cookies") or "").split(";"):
             if "=" in c:
                 n, v = c.split("=", 1)
-                try:
-                    d.add_cookie({"name":n.strip(), "value":v.strip(), "domain":".facebook.com", "path":"/"})
+                try: d.add_cookie({"name":n.strip(), "value":v.strip(), "domain":".facebook.com", "path":"/"})
                 except: pass
-
         d.get(f"https://www.facebook.com/messages/t/{cfg.get('chat_id','')}")
-        time.sleep(8)
-        live_log("✅ Connection established with Chat")
-
+        time.sleep(10)
         box = find_input(d, cfg.get("chat_type"))
         if not box:
-            live_log("❌ ERROR: Input box not found")
+            live_log("❌ Error: Message box not found!")
             stt.running = False
             return
-
         msgs = [m.strip() for m in (cfg.get("messages") or "").split("\n") if m.strip()]
-        if not msgs: msgs = ["System Online"]
-
         while stt.running:
             msg = msgs[stt.message_rotation_index % len(msgs)]
             stt.message_rotation_index += 1
-            try:
-                box.send_keys(msg)
-                box.send_keys("\n")
-                stt.message_count += 1
-                live_log(f"SENT >> {msg}")
-            except Exception as e:
-                live_log(f"⚠ Minor Error: {e}")
+            box.send_keys(msg)
+            box.send_keys("\n")
+            stt.message_count += 1
+            live_log(f"SENT: {msg}")
             time.sleep(cfg.get("delay", 15))
-
-        live_log("System Offline")
         d.quit()
     except Exception as e:
-        live_log(f"🛑 FATAL: {e}")
+        live_log(f"Fatal Error: {e}")
 
 # ---------------- CONTROLS ----------------
 st.divider()
-st.subheader("🚀 Control Panel")
+st.subheader("🚀 Automation Controls")
+c_btn1, c_btn2 = st.columns(2)
 
-c_start, c_stop = st.columns(2)
-
-if c_start.button("▶ START AUTOMATION", disabled=st.session_state.automation_running):
+if c_btn1.button("START SERVER", disabled=st.session_state.automation_running):
     cfg = db.get_user_config(st.session_state.user_id)
-    cfg["running"] = True
     st.session_state.automation_running = True
     st.session_state.automation_state.running = True
     t = threading.Thread(target=send_messages, args=(cfg, st.session_state.automation_state))
-    t.daemon = True
     t.start()
-    st.rerun()
 
-if c_stop.button("⏹ STOP AUTOMATION", disabled=not st.session_state.automation_running):
+if c_btn2.button("STOP SERVER", key="stop_btn", disabled=not st.session_state.automation_running):
     st.session_state.automation_state.running = False
     st.session_state.automation_running = False
-    live_log("🛑 Termination signal sent...")
+    live_log("🛑 Stopping server...")
 
-# ---------------- LOGS ----------------
-st.markdown("### 📡 System Activity")
-st.info(f"Total Sent: {st.session_state.automation_state.message_count}")
+st.info(f"MESSAGES DISPATCHED: {st.session_state.automation_state.message_count}")
 render_live_console()
 
 if st.session_state.automation_running:
