@@ -4,260 +4,257 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
-# Try to import database, if fails provide dummy functions to prevent ValueError
-try:
-    import database as db
-except ImportError:
-    st.error("Error: 'database.py' file not found! Please make sure it is in the same folder.")
-    class DummyDB:
-        def verify_user(self, u, p): return None
-        def create_user(self, u, p): return False, "Database connection error"
-        def get_user_config(self, uid): return {}
-        def update_user_config(self, *args, **kwargs): pass
-    db = DummyDB()
+# ------------------------------------------------------------------------------------
+# 🛡️ DATABASE & SECURITY SIMULATION
+# ------------------------------------------------------------------------------------
+# Real world mein isse 'database.py' mein save karein
+if "db_keys" not in st.session_state:
+    st.session_state.db_keys = ["DEVIL-786", "ADMIN-FREE-2025", "VIP-KEY-99"]
+
+if "approved_users" not in st.session_state:
+    st.session_state.approved_users = {} # {username: password}
 
 # ------------------------------------------------------------------------------------
-# ⚡ PAGE CONFIG & NAME
+# ⚡ PAGE CONFIG
 # ------------------------------------------------------------------------------------
-st.set_page_config(page_title=" Dɘvɪl UPDATE E2E 2025", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="Dɘvɪl ELITE v2", page_icon="🔥", layout="wide")
 
 # ------------------------------------------------------------------------------------
-# 🔥 LIVE LOGS SYSTEM
-# ------------------------------------------------------------------------------------
-def init_live_logs(max_lines: int = 200):
-    if "live_logs" not in st.session_state:
-        st.session_state.live_logs = []
-    if "live_logs_max" not in st.session_state:
-        st.session_state.live_logs_max = max_lines
-
-def live_log(msg: str):
-    ts = time.strftime("%H:%M:%S")
-    line = f"[{ts}] {msg}"
-    init_live_logs()
-    st.session_state.live_logs.append(line)
-    if len(st.session_state.live_logs) > st.session_state.live_logs_max:
-        st.session_state.live_logs = st.session_state.live_logs[-st.session_state.live_logs_max:]
-
-def render_live_console():
-    st.markdown('<div class="logbox">', unsafe_allow_html=True)
-    for line in st.session_state.live_logs[-100:]:
-        st.markdown(f'<p style="margin:0; font-family:monospace; color:#00ffcc; font-size:14px;">{line}</p>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# ------------------------------------------------------------------------------------
-# 🎨 LUXURY NEON THEME CSS
+# 🎨 PREMIUM CYBERPUNK CSS
 # ------------------------------------------------------------------------------------
 st.markdown("""
 <style>
-    /* Premium Background */
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500&display=swap');
+
     .stApp {
-        background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
-                    url('https://i.postimg.cc/qq41rSVP/44e54h810v9b1.jpg');
-        background-size: cover;
-        background-attachment: fixed;
+        background: radial-gradient(circle at top, #0d1b2a 0%, #000000 100%);
+        color: #e0e1dd;
+        font-family: 'Rajdhani', sans-serif;
     }
 
-    /* Modern Title Card */
-    .main-header {
+    /* Glassmorphism Cards */
+    .main-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(0, 255, 204, 0.2);
+        padding: 40px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
         text-align: center;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 30px;
-        border-radius: 25px;
-        border: 1px solid rgba(0, 255, 204, 0.3);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        margin-bottom: 30px;
-    }
-    .main-header h1 {
-        color: #00f2fe;
-        text-transform: uppercase;
-        letter-spacing: 5px;
-        font-family: 'Segoe UI', sans-serif;
-        text-shadow: 0 0 15px #00f2fe;
+        margin-bottom: 25px;
     }
 
-    /* Stylish Log Console */
+    h1, h2, h3 {
+        font-family: 'Orbitron', sans-serif;
+        color: #00f2fe !important;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+    }
+
+    /* Animated Console */
     .logbox {
-        background: rgba(0, 0, 0, 0.7);
-        border: 2px solid #00f2fe;
-        border-radius: 15px;
-        padding: 20px;
-        height: 300px;
+        background: #050505;
+        border-left: 5px solid #00f2fe;
+        border-radius: 10px;
+        padding: 15px;
+        height: 350px;
         overflow-y: auto;
-        box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+        font-family: 'Courier New', monospace;
+        box-shadow: inset 0 0 15px #000;
     }
 
-    /* Neon Buttons */
-    div.stButton > button {
-        background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
-        color: white !important;
-        border: none;
-        border-radius: 50px;
-        padding: 10px 25px;
+    /* Premium Buttons */
+    .stButton > button {
+        width: 100%;
+        background: linear-gradient(45deg, #00f2fe, #4facfe);
+        color: black !important;
         font-weight: bold;
-        transition: 0.4s ease;
+        border: none;
+        border-radius: 8px;
+        padding: 12px;
+        transition: 0.3s;
         text-transform: uppercase;
     }
-    div.stButton > button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 20px #00f2fe;
+
+    .stButton > button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
     }
 
-    /* Stop Button - Red Glow */
-    .stButton [data-testid="baseButton-secondary"] {
-        background: linear-gradient(90deg, #ff416c 0%, #ff4b2b 100%) !important;
-        box-shadow: 0 0 10px rgba(255, 75, 43, 0.4);
+    /* Input Fields */
+    .stTextInput input, .stTextArea textarea {
+        background: rgba(255,255,255,0.05) !important;
+        color: #00f2fe !important;
+        border: 1px solid rgba(0, 242, 254, 0.3) !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="main-header"><h1>Dɘvɪl UPDATE E2E 2025</h1></div>', unsafe_allow_html=True)
+# ------------------------------------------------------------------------------------
+# 🔥 CORE LOGIC
+# ------------------------------------------------------------------------------------
+if "live_logs" not in st.session_state: st.session_state.live_logs = []
 
-# ---------------- SESSION ----------------
+def live_log(msg: str):
+    ts = time.strftime("%H:%M:%S")
+    st.session_state.live_logs.append(f"[{ts}] > {msg}")
+    if len(st.session_state.live_logs) > 100: st.session_state.live_logs.pop(0)
+
+# ------------------------------------------------------------------------------------
+# 🔐 AUTHENTICATION INTERFACE
+# ------------------------------------------------------------------------------------
 if "logged_in" not in st.session_state: st.session_state.logged_in = False
-if "automation_running" not in st.session_state: st.session_state.automation_running = False
-if "automation_state" not in st.session_state:
-    st.session_state.automation_state = type('obj',(object,),{
-        "running": False,
-        "message_count": 0,
-        "message_rotation_index": 0
-    })()
+if "is_admin" not in st.session_state: st.session_state.is_admin = False
 
-init_live_logs()
-
-# ---------------- LOGIN & SIGNUP (FIXED) ----------------
 if not st.session_state.logged_in:
-    c1, c2, c3 = st.columns([1, 2, 1])
-    with c2:
-        tab1, tab2 = st.tabs(["🔑 LOGIN", "🛡️ REGISTER"])
+    st.markdown('<div class="main-card"><h1>Dɘvɪl UPDATE E2E</h1><p>Next-Gen Automation Protocol</p></div>', unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        tab1, tab2, tab3 = st.tabs(["🔑 LOGIN", "🛡️ REGISTER", "⚡ ADMIN"])
+        
         with tab1:
-            u = st.text_input("Username", key="l_user")
-            p = st.text_input("Password", type="password", key="l_pass")
-            if st.button("Enter Dashboard"):
-                uid = db.verify_user(u, p)
-                if uid:
+            u = st.text_input("Username", key="login_u")
+            p = st.text_input("Password", type="password", key="login_p")
+            if st.button("AUTHENTICATE"):
+                if u in st.session_state.approved_users and st.session_state.approved_users[u] == p:
                     st.session_state.logged_in = True
-                    st.session_state.user_id = uid
-                    cfg = db.get_user_config(uid)
-                    st.session_state.chat_id = cfg.get("chat_id", "")
-                    st.session_state.chat_type = cfg.get("chat_type", "E2EE")
-                    st.session_state.delay = cfg.get("delay", 15)
-                    st.session_state.cookies = cfg.get("cookies", "")
-                    st.session_state.messages = cfg.get("messages", "").split("\n") if cfg.get("messages") else []
+                    st.session_state.user_id = u
                     st.rerun()
                 else:
-                    st.error("Invalid Username or Password")
+                    st.error("Access Denied: Invalid Credentials")
 
         with tab2:
-            nu = st.text_input("Choose Username", key="r_user")
-            np = st.text_input("Choose Password", type="password", key="r_pass")
-            npc = st.text_input("Confirm Password", type="password", key="r_pass_c")
-            if st.button("Register Now"):
-                if not nu or not np:
-                    st.warning("Please fill all fields")
-                elif np != npc:
-                    st.error("Passwords do not match")
+            nu = st.text_input("New Username")
+            np = st.text_input("New Password", type="password")
+            akey = st.text_input("Approval Key (Contact Admin)")
+            if st.button("REQUEST ACCESS"):
+                if akey in st.session_state.db_keys:
+                    st.session_state.approved_users[nu] = np
+                    st.success("Registration Successful! Please Login.")
                 else:
-                    try:
-                        ok, msg = db.create_user(nu, np)
-                        if ok: st.success("Registration Successful! Please login.")
-                        else: st.error(msg)
-                    except Exception as e:
-                        st.error(f"Database Error: {e}")
+                    st.error("Invalid Approval Key!")
+
+        with tab3:
+            admin_pass = st.text_input("Admin Secret", type="password")
+            if st.button("ADMIN LOGIN"):
+                if admin_pass == "devil888": # Admin password
+                    st.session_state.is_admin = True
+                    st.session_state.logged_in = True
+                    st.session_state.user_id = "MASTER_ADMIN"
+                    st.rerun()
     st.stop()
 
-# ---------------- DASHBOARD ----------------
-col_head1, col_head2 = st.columns([4, 1])
-col_head1.subheader(f"⚡ SYSTEM ACTIVE: USER {st.session_state.user_id}")
-if col_head2.button("LOGOUT"):
+# ------------------------------------------------------------------------------------
+# 🛠️ ADMIN PANEL
+# ------------------------------------------------------------------------------------
+if st.session_state.is_admin:
+    with st.expander("🛠️ MASTER CONTROL PANEL"):
+        st.subheader("Manage Approval Keys")
+        new_key = st.text_input("Generate New Key")
+        if st.button("Add Key"):
+            st.session_state.db_keys.append(new_key)
+            st.success(f"Key {new_key} Added!")
+        
+        st.write("Active Keys:", st.session_state.db_keys)
+        st.write("Registered Users:", st.session_state.approved_users)
+        if st.button("EXIT ADMIN MODE"):
+            st.session_state.is_admin = False
+            st.session_state.logged_in = False
+            st.rerun()
+
+# ------------------------------------------------------------------------------------
+# 🚀 MAIN DASHBOARD
+# ------------------------------------------------------------------------------------
+st.markdown(f"### ⚡ SESSION ACTIVE: {st.session_state.user_id}")
+
+c1, c2 = st.columns([1, 1])
+
+with c1:
+    st.markdown('<div class="main-card">', unsafe_allow_html=True)
+    chat_id = st.text_input("Target Chat ID", placeholder="1000xxxxxxx")
+    delay = st.slider("Message Delay (Seconds)", 5, 300, 15)
+    cookies = st.text_area("FB Cookies", height=100)
+    msg_list = st.text_area("Messages (One per line)", height=150)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+with c2:
+    st.subheader("📡 Live Execution Console")
+    st.markdown('<div class="logbox">', unsafe_allow_html=True)
+    for log in reversed(st.session_state.live_logs):
+        st.write(log)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# ------------------------------------------------------------------------------------
+# ⚙️ AUTOMATION ENGINE (LONG RUN OPTIMIZED)
+# ------------------------------------------------------------------------------------
+def devil_engine(cid, dly, ck, msgs, state):
+    try:
+        live_log("System: Initializing Driver...")
+        opt = Options()
+        opt.add_argument("--headless=new")
+        opt.add_argument("--no-sandbox")
+        opt.add_argument("--disable-dev-shm-usage")
+        driver = webdriver.Chrome(options=opt)
+        
+        driver.get("https://www.facebook.com")
+        for cookie in ck.split(";"):
+            if "=" in cookie:
+                name, val = cookie.split("=", 1)
+                driver.add_cookie({"name": name.strip(), "value": val.strip(), "domain": ".facebook.com"})
+        
+        driver.get(f"https://www.facebook.com/messages/t/{cid}")
+        time.sleep(8)
+        
+        msg_idx = 0
+        msg_pool = [m.strip() for m in msgs.split("\n") if m.strip()]
+        
+        while state["active"]:
+            current_msg = msg_pool[msg_idx % len(msg_pool)]
+            try:
+                # Optimized for speed and long-run
+                box = driver.find_element(By.CSS_SELECTOR, "div[contenteditable='true']")
+                box.send_keys(current_msg)
+                box.send_keys("\n")
+                live_log(f"SENT: {current_msg}")
+                msg_idx += 1
+            except Exception as e:
+                live_log(f"Error: Box not found. Retrying...")
+                driver.refresh()
+                time.sleep(10)
+            
+            time.sleep(dly)
+        
+        driver.quit()
+    except Exception as e:
+        live_log(f"Fatal Crash: {str(e)}")
+
+# ------------------------------------------------------------------------------------
+# 🕹️ CONTROLS
+# ------------------------------------------------------------------------------------
+if "automation_state" not in st.session_state:
+    st.session_state.automation_state = {"active": False}
+
+btn_col1, btn_col2 = st.columns(2)
+
+if btn_col1.button("▶️ START SERVER", use_container_width=True):
+    if not cookies or not msg_list:
+        st.warning("Please fill Cookies and Messages!")
+    else:
+        st.session_state.automation_state["active"] = True
+        thread = threading.Thread(target=devil_engine, args=(chat_id, delay, cookies, msg_list, st.session_state.automation_state))
+        thread.start()
+        live_log("System: Engine Started in Background.")
+
+if btn_col2.button("🛑 STOP SERVER", use_container_width=True):
+    st.session_state.automation_state["active"] = False
+    live_log("System: Stopping Engine...")
+
+if st.button("LOGOUT"):
     st.session_state.logged_in = False
     st.rerun()
 
-# ---------------- CONFIG AREA ----------------
-st.divider()
-c_cfg1, c_cfg2 = st.columns(2)
-
-with c_cfg1:
-    chat_id = st.text_input("Target Chat ID", value=st.session_state.chat_id)
-    chat_type = st.selectbox("Method", ["E2EE", "CONVO"], index=0 if st.session_state.chat_type == "E2EE" else 1)
-    delay = st.number_input("Delay (Seconds)", 1, 300, value=st.session_state.delay)
-
-with c_cfg2:
-    msg_file = st.file_uploader("Upload Message List (.txt)", type=["txt"])
-    if msg_file:
-        st.session_state.messages = msg_file.read().decode().split("\n")
-        st.toast("Messages Loaded!")
-    cookies = st.text_area("FB Cookies", value=st.session_state.cookies, height=100)
-
-if st.button("SAVE SYSTEM SETTINGS"):
-    db.update_user_config(st.session_state.user_id, chat_id, chat_type, delay, cookies, "\n".join(st.session_state.messages))
-    st.success("Configuration Saved!")
-
-# ---------------- ENGINE ----------------
-def setup_browser():
-    opt = Options()
-    opt.add_argument("--headless=new")
-    opt.add_argument("--no-sandbox")
-    opt.add_argument("--disable-dev-shm-usage")
-    return webdriver.Chrome(options=opt)
-
-def find_input(driver, chat_type):
-    sel = ["div[contenteditable='true']"] if chat_type == "E2EE" else ["div[contenteditable='true']", "textarea", "[role='textbox']"]
-    for s in sel:
-        try: return driver.find_element(By.CSS_SELECTOR, s)
-        except: pass
-    return None
-
-def send_messages(cfg, stt):
-    try:
-        live_log("🚀 Initializing Dɘvɪl Engine...")
-        d = setup_browser()
-        d.get("https://www.facebook.com")
-        time.sleep(5)
-        for c in (cfg.get("cookies") or "").split(";"):
-            if "=" in c:
-                n, v = c.split("=", 1)
-                try: d.add_cookie({"name":n.strip(), "value":v.strip(), "domain":".facebook.com", "path":"/"})
-                except: pass
-        d.get(f"https://www.facebook.com/messages/t/{cfg.get('chat_id','')}")
-        time.sleep(10)
-        box = find_input(d, cfg.get("chat_type"))
-        if not box:
-            live_log("❌ Error: Message box not found!")
-            stt.running = False
-            return
-        msgs = [m.strip() for m in (cfg.get("messages") or "").split("\n") if m.strip()]
-        while stt.running:
-            msg = msgs[stt.message_rotation_index % len(msgs)]
-            stt.message_rotation_index += 1
-            box.send_keys(msg)
-            box.send_keys("\n")
-            stt.message_count += 1
-            live_log(f"SENT: {msg}")
-            time.sleep(cfg.get("delay", 15))
-        d.quit()
-    except Exception as e:
-        live_log(f"Fatal Error: {e}")
-
-# ---------------- CONTROLS ----------------
-st.divider()
-st.subheader("🚀 Automation Controls")
-c_btn1, c_btn2 = st.columns(2)
-
-if c_btn1.button("START SERVER", disabled=st.session_state.automation_running):
-    cfg = db.get_user_config(st.session_state.user_id)
-    st.session_state.automation_running = True
-    st.session_state.automation_state.running = True
-    t = threading.Thread(target=send_messages, args=(cfg, st.session_state.automation_state))
-    t.start()
-
-if c_btn2.button("STOP SERVER", key="stop_btn", disabled=not st.session_state.automation_running):
-    st.session_state.automation_state.running = False
-    st.session_state.automation_running = False
-    live_log("🛑 Stopping server...")
-
-st.info(f"MESSAGES DISPATCHED: {st.session_state.automation_state.message_count}")
-render_live_console()
-
-if st.session_state.automation_running:
-    time.sleep(2)
+# Auto-refresh UI for logs
+if st.session_state.automation_state["active"]:
+    time.sleep(5)
     st.rerun()
