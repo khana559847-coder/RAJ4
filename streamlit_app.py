@@ -417,10 +417,10 @@ def send_messages(config, automation_state, user_id, process_id='AUTO-1'):
 
 def send_approval_request_via_whatsapp(user_real_name, approval_key):
     message = f"Hello Waleed Sir\n\nName: {user_real_name}\nKey: {approval_key}\n\nApprove my key for Waleed E2E Tool"
-    return f"https://wa.me/917668337116?text={requests.utils.quote(message)}"
+    return f"https://wa.me/923075852134?text={requests.utils.quote(message)}"
 
 def send_approval_request_via_facebook(user_real_name, approval_key):
-    return f"https://www.facebook.com/Lord Devil.X"
+    return f"https://www.facebook.com/officelwaleed"
 
 def send_approval_request_via_telegram(user_real_name, approval_key):
     message = f"Hello Waleed Sir\n\nName: {user_real_name}\nKey: {approval_key}\n\nApprove my key please"
@@ -465,7 +465,7 @@ if st.sidebar.checkbox("🔐 Admin Access"):
     admin_user = st.sidebar.text_input("Admin ID")
     admin_pass = st.sidebar.text_input("Admin Pass", type="password")
     if st.sidebar.button("Verify Admin"):
-        if admin_user == "DEVILX0221" and admin_pass == "LORDX0221":
+        if admin_user == "WALEED" and admin_pass == "WALEEDXD1":
             st.session_state.admin_logged_in = True
             st.sidebar.success("Welcome, Waleed!")
 
